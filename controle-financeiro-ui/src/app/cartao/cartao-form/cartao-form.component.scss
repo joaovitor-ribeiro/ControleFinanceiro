@@ -1,0 +1,35 @@
+.example-form-field {
+  width: 200px;
+}
+
+.divCartao{
+  padding: 50px;
+  width: 65vh;
+}
+
+.tamanho{
+  width: 50vh;
+  margin-bottom: 16px;
+}
+
+.card{
+  border: 0.5px solid #9b98989d;
+}
+
+.cardContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::ng-deep .cardHeader{
+  .mat-card-header-text{
+    width: 100%;
+  }
+  text-align: center;
+}
+
+.divBotoes{
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,61 @@
+<div class="dadosCartoes">
+  <div class="cabecalho">
+    <div style="width: 75%;">
+      <mat-grid-list cols="2" rowHeight="50px">
+        <mat-grid-tile>
+          <h2 class="titulo">Cartões cadastrados</h2>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <button
+            mat-stroked-button
+            color="primary"
+            routerLink="/cartoes/novocartao"
+            (click)="inserir()"
+          >
+            Novo cartão
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+     <mat-divider></mat-divider>
+    </div>
+
+  <div style="margin-top: 30px;">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="bandeira">
+        <th mat-header-cell *matHeaderCellDef> Bandeira </th>
+        <td mat-cell *matCellDef="let element"> {{element.bandeira}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef> Número </th>
+        <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="limite">
+        <th mat-header-cell *matHeaderCellDef> Limite </th>
+        <td mat-cell *matCellDef="let element"> {{element.limite}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="primary" style="margin-right: 3px;" (click)="editar(element.id)"><mat-icon>mode_edit</mat-icon></button>
+          <button mat-mini-fab color="primary"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  </div>
+</div>

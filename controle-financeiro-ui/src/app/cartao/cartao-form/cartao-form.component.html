@@ -1,0 +1,100 @@
+<div class="divCartao">
+  <mat-card class="card">
+    <mat-card-header class="cardHeader">
+      <mat-card-title>
+        <h3>Cadastro de cartões</h3>
+      </mat-card-title>
+    </mat-card-header>
+
+    <form [formGroup]="cartaoFormulario" (ngSubmit)="enviarFormulario()">
+      <mat-card-content class="cardContent">
+        <div class="row">
+          <mat-form-field class="example-form-field tamanho" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput type="text" formControlName="nome" required maxlength="20">
+
+            <mat-error *ngIf="propriedade.nome.touched && propriedade.nome.errors?.required">
+                Insira o nome.
+            </mat-error>
+
+            <mat-error *ngIf="propriedade.nome.errors?.minlength && propriedade.nome.errors?.minlength">
+                O nome não pode ter menos do que 3 caracteres.
+            </mat-error>
+
+            <button matSuffix mat-icon-button (click)="limparBotoes('nome')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="example-form-field tamanho" appearance="outline">
+            <mat-label>Bandeira</mat-label>
+            <input matInput type="text" formControlName="bandeira" required maxlength="20">
+
+            <mat-error *ngIf="propriedade.bandeira.touched && propriedade.bandeira.errors?.required">
+              Insira a bandeira.
+            </mat-error>
+
+            <mat-error *ngIf="propriedade.bandeira.errors?.minlength && propriedade.bandeira.errors?.minlength">
+              A bandeira não pode ter menos do que 3 caracteres.
+            </mat-error>
+            <button matSuffix mat-icon-button (click)="limparBotoes('bandeira')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="example-form-field tamanho" appearance="outline" >
+            <mat-label>Número</mat-label>
+            <input matInput type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            formControlName="numero" required maxlength="16">
+
+            <mat-error *ngIf="propriedade.numero.touched && propriedade.numero.errors?.required">
+              Insira o número.
+            </mat-error>
+
+            <mat-error *ngIf="propriedade.numero.touched && propriedade.numero.errors?.minlength">
+              O número deve conter entre 13 e 16 dígitos.
+            </mat-error>
+
+            <button matSuffix mat-icon-button (click)="limparBotoes('numero')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="example-form-field tamanho" appearance="outline">
+            <mat-label>Limite</mat-label>
+            <input matInput type="text"  formControlName="limite" required
+            mask="separator.2" thousandSeparator="." [align]="'right'">
+
+            <mat-error *ngIf="propriedade.limite.touched && propriedade.limite.errors?.required">
+              Insira o limite.
+            </mat-error>
+
+            <mat-error *ngIf="propriedade.limite.touched && propriedade.limite.errors?.limiteInvalido">
+              O limite tem que ser maior que 0.
+            </mat-error>
+
+            <button matSuffix mat-icon-button (click)="limparBotoes('limite')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions>
+        <div class="divBotoes">
+          <button type="submit" mat-raised-button color="primary">Salvar</button>
+          <button type="button" mat-raised-button>Voltar</button>
+        </div>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>
