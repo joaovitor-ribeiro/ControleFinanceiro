@@ -37,9 +37,9 @@ export class CartaoFormComponent implements OnInit {
     });
 
     this.route.params.subscribe(value => { //subscribe é usado para receber algo que é retornado por um observable
-      if (value) {
+      if (value?.id) {
         this.editar = true;
-        this.id = value['id'];
+        this.id = value.id;
         this.cartaoService.retornarCartaoId(this.id)
         .subscribe( result => {
           this.cartao = result;
@@ -68,16 +68,19 @@ export class CartaoFormComponent implements OnInit {
     }else{
       let cartao = this.cartaoFormulario.getRawValue();
       cartao.limite = cartao.limite.replace('/[^0-9]/g', '');
-      cartao.limite = cartao.limite.replace(',', '.');
-      cartao.limite = Number(cartao.limite.replace('R$', ''));
-      if (this.editar) {
 
+      console.log(cartao.limite.replace(',', ''));
+      cartao.limite = cartao.limite.replace('.', '');
+      cartao.limite = Number(cartao.limite.replace(',', ''));
+      console.log(cartao.limite);
+
+      if (this.editar) {
         this.cartaoService.editar(this.id, cartao).subscribe(() => {
-          this.router.navigate(['']);
+          this.router.navigate(['/listar']);
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
-          this.router.navigate(['']);
+          this.router.navigate(['/listar']);
         });
       }
     }
@@ -92,7 +95,7 @@ export class CartaoFormComponent implements OnInit {
       nome: this.cartao.nome,
       bandeira: this.cartao.bandeira,
       numero: this.cartao.numero,
-      limite: Number(this.cartao.limite).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+      limite: Number(this.cartao.limite).toLocaleString('pt-BR', { minimumFractionDigits: 2})
     })
   }
 }

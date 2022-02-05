@@ -14,8 +14,7 @@ public class CartaoService {
 	@Autowired
 	private CartaoRepository cartaoRepository; //Instanciando o Repository
 	
-	public void inserir (Cartao cartao) throws Exception {
-		
+	private void validacoes(Cartao cartao) throws Exception{
 		if (cartao.getNome().isEmpty()) {
 			throw new Exception("O campo nome é de preenchimento obrigatório!");
 		} else if (cartao.getNome().length() < 3) {
@@ -38,13 +37,16 @@ public class CartaoService {
 		} else if (cartao.getNumero().length() < 13 || cartao.getNumero().length() > 16) {			
 			throw new Exception("Número de cartão inválido!");
 		} else if (!cartao.getNumero().matches("[0-9]*")) {
-			throw new Exception("Número de cartão deve conter somente números!");
+			throw new Exception("Permitido somente números!");
 		}
 		
 		if (cartao.getLimite() <= 0) {
 			throw new Exception("O limite não pode ser menor ou igual a zero!");		
-		}
-			
+		}			
+	}
+	
+	public void inserir (Cartao cartao) throws Exception {		
+		validacoes(cartao);	
 		cartao.setLimite(Double.parseDouble(cartao.getLimite().toString().replace("/[^0-9]/g", "")));		
 		cartaoRepository.save(cartao);		
 	}
@@ -66,8 +68,9 @@ public class CartaoService {
 	public void editar(Integer id, Cartao cartaoNovo) throws Exception {
 		Optional<Cartao> optionalCartaoAntigo = cartaoRepository.findById(id);
 		
-		if (optionalCartaoAntigo.isPresent()) {
+		if (optionalCartaoAntigo.isPresent()) {			
 			Cartao cartaoAntigo =  optionalCartaoAntigo.get();
+			validacoes(cartaoAntigo);
 			cartaoAntigo.setNome(cartaoNovo.getNome());
 			cartaoAntigo.setBandeira(cartaoNovo.getBandeira());
 			cartaoAntigo.setLimite(cartaoNovo.getLimite());
@@ -75,5 +78,16 @@ public class CartaoService {
 		} else {
 			throw new Exception("Cartão não foi encontrado para a edição!");
 		}		
+	}
+
+	public void excluir(Integer id) throws Exception {
+		Optional<Cartao> optionalCartaoAntigo = cartaoRepository.findById(id);
+		
+		if (optionalCartaoAntigo.isPresent()) {	
+			cartaoRepository.deleteById(id);
+		} else {
+			throw new Exception("Cartão não foi encontrado para a exclusão!");
+		}
+		
 	}	
 }

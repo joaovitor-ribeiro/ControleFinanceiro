@@ -21,6 +21,18 @@ export class CartaoListaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.listar();
+  }
+
+  inserir(){
+    this.router.navigate([`cartao`]);
+  }
+
+  editar(id: number){
+    this.router.navigate([`cartao/${id}`]);
+  }
+
+  listar(){
     this.cartaoService.listar()
     .subscribe(result => {
       result.forEach(cartao => {
@@ -32,12 +44,11 @@ export class CartaoListaComponent implements OnInit {
     });
   }
 
-  inserir(){
-    this.router.navigate([`cartao`]);
-  }
+  excluir(id: number){
+    this.cartaoService.excluir(id).subscribe(() => {
+      this.listar();
+    });
 
-  editar(id: number){
-    this.router.navigate([`cartao/${id}`]);
   }
 
 }

@@ -14,14 +14,14 @@
             <input matInput type="text" formControlName="nome" required maxlength="20">
 
             <mat-error *ngIf="propriedade.nome.touched && propriedade.nome.errors?.required">
-                Insira o nome.
+              Insira o nome.
             </mat-error>
 
             <mat-error *ngIf="propriedade.nome.errors?.minlength && propriedade.nome.errors?.minlength">
-                O nome não pode ter menos do que 3 caracteres.
+              O nome não pode ter menos do que 3 caracteres.
             </mat-error>
 
-            <button matSuffix mat-icon-button (click)="limparBotoes('nome')">
+            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('nome')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
@@ -39,17 +39,17 @@
             <mat-error *ngIf="propriedade.bandeira.errors?.minlength && propriedade.bandeira.errors?.minlength">
               A bandeira não pode ter menos do que 3 caracteres.
             </mat-error>
-            <button matSuffix mat-icon-button (click)="limparBotoes('bandeira')">
+            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('bandeira')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </div>
 
         <div class="row">
-          <mat-form-field class="example-form-field tamanho" appearance="outline" >
+          <mat-form-field class="example-form-field tamanho" appearance="outline">
             <mat-label>Número</mat-label>
             <input matInput type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-            formControlName="numero" required maxlength="16">
+              formControlName="numero" required maxlength="16">
 
             <mat-error *ngIf="propriedade.numero.touched && propriedade.numero.errors?.required">
               Insira o número.
@@ -59,7 +59,7 @@
               O número deve conter entre 13 e 16 dígitos.
             </mat-error>
 
-            <button matSuffix mat-icon-button (click)="limparBotoes('numero')">
+            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('numero')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
@@ -68,8 +68,8 @@
         <div class="row">
           <mat-form-field class="example-form-field tamanho" appearance="outline">
             <mat-label>Limite</mat-label>
-            <input matInput type="text"  formControlName="limite" required
-            mask="separator.2" thousandSeparator="." [align]="'right'">
+            <input matInput type="text" formControlName="limite" required mask="separator.2" thousandSeparator="."
+              [align]="'right'">
 
             <mat-error *ngIf="propriedade.limite.touched && propriedade.limite.errors?.required">
               Insira o limite.
@@ -79,7 +79,7 @@
               O limite tem que ser maior que 0.
             </mat-error>
 
-            <button matSuffix mat-icon-button (click)="limparBotoes('limite')">
+            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('limite')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>

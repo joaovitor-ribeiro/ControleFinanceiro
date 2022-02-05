@@ -8,7 +8,9 @@ const routes: Routes = [
 
   {path: 'cartao/:id', component: CartaoFormComponent},
 
-  {path: '', component: CartaoListaComponent}
+  {path: 'listar', component: CartaoListaComponent},
+
+  {path: '', redirectTo: 'listar', pathMatch: 'full'}
 ];
 
 @NgModule({

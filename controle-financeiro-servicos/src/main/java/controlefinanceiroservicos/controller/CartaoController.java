@@ -46,7 +46,14 @@ public class CartaoController {
 	@RequestMapping (method = RequestMethod.PUT, path = "/editar/{id}")
 	@Transactional
 	@CrossOrigin
-	public void editar(@PathVariable Integer id, @RequestBody Cartao cartaoNovo) throws Exception { //@RequestBody: Indica que as informações vão vir no corpo da requisição
+	public void editar(@PathVariable Integer id, @RequestBody Cartao cartaoNovo) throws Exception {
 		cartaoService.editar(id, cartaoNovo);
+	}
+	
+	@ResponseStatus (HttpStatus.NO_CONTENT)
+	@RequestMapping (method = RequestMethod.DELETE, path = "/excluir/{id}")
+	@Transactional
+	public void excluir(@PathVariable Integer id) throws Exception {
+		cartaoService.excluir(id);
 	}
 }

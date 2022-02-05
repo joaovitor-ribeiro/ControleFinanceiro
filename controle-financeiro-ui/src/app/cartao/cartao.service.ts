@@ -30,4 +30,8 @@ export class CartaoService {
   editar(id: number, cartao: Cartao) {
     return this.http.put<void>(this.url + `/editar/${id}`, cartao);
   }
+
+  excluir(id: number) {
+    return this.http.delete<void>(this.url + `/excluir/${id}`);
+  }
 }
