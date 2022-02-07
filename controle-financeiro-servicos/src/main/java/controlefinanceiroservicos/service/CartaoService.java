@@ -69,8 +69,8 @@ public class CartaoService {
 		Optional<Cartao> optionalCartaoAntigo = cartaoRepository.findById(id);
 		
 		if (optionalCartaoAntigo.isPresent()) {			
-			Cartao cartaoAntigo =  optionalCartaoAntigo.get();
-			validacoes(cartaoAntigo);
+			Cartao cartaoAntigo = optionalCartaoAntigo.get();
+			validacoes(cartaoNovo);
 			cartaoAntigo.setNome(cartaoNovo.getNome());
 			cartaoAntigo.setBandeira(cartaoNovo.getBandeira());
 			cartaoAntigo.setLimite(cartaoNovo.getLimite());

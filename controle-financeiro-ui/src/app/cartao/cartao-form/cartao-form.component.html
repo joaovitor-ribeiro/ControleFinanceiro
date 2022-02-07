@@ -1,4 +1,8 @@
-<div class="divCartao">
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size="medium" color = "#fff" type = "pacman" [fullScreen] = "true">
+  <p style="color: white">Carregando... </p>
+</ngx-spinner>
+
+<div *ngIf="!carregando" class="divCartao">
   <mat-card class="card">
     <mat-card-header class="cardHeader">
       <mat-card-title>
@@ -21,7 +25,7 @@
               O nome não pode ter menos do que 3 caracteres.
             </mat-error>
 
-            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('nome')">
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('nome')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
@@ -39,7 +43,7 @@
             <mat-error *ngIf="propriedade.bandeira.errors?.minlength && propriedade.bandeira.errors?.minlength">
               A bandeira não pode ter menos do que 3 caracteres.
             </mat-error>
-            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('bandeira')">
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('bandeira')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
@@ -59,7 +63,7 @@
               O número deve conter entre 13 e 16 dígitos.
             </mat-error>
 
-            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('numero')">
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('numero')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
@@ -79,7 +83,7 @@
               O limite tem que ser maior que 0.
             </mat-error>
 
-            <button matSuffix mat-icon-button type="button" (click)="limparBotoes('limite')">
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('limite')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>

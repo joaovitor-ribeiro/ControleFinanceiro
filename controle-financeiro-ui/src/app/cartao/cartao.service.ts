@@ -2,7 +2,7 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cartao } from './cartao.model';
-import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,13 @@ export class CartaoService {
   }
 
   listar() {
-    return this.http.get<Cartao[]>(this.url + '/listar');
+    return this.http.get<Cartao[]>(this.url + '/listar').pipe(map((result: Cartao[]) => {
+      result.forEach(cartao => {
+        cartao.limite = Number(cartao.limite).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+        cartao.numero = cartao.numero.replace(/(\d{4})?(\d{4})?(\d{4})?(\d{4})/, '$1 $2 $3 $4');
+      });
+      return result;
+    }));
   }
 
   retornarCartaoId(id: number) {

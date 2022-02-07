@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cartao } from '../cartao.model';
+import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+import { finalize } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cartao-form',
@@ -16,6 +19,7 @@ export class CartaoFormComponent implements OnInit {
   id!: number;
   cartao!: Cartao;
   editar = false;
+  carregando = false;
 
   get propriedade() {
     return this.cartaoFormulario.controls;
@@ -25,7 +29,9 @@ export class CartaoFormComponent implements OnInit {
     private formBuilder: FormBuilder, //Instaciando o fomulário
     private cartaoService: CartaoService,
     private route: ActivatedRoute, //Através da url podemos pegar/passar variáveis. Ex.: pegar o id para editar
-    private router: Router
+    private router: Router,
+    private alertService: AlertModalService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -38,10 +44,14 @@ export class CartaoFormComponent implements OnInit {
 
     this.route.params.subscribe(value => { //subscribe é usado para receber algo que é retornado por um observable
       if (value?.id) {
-        this.editar = true;
         this.id = value.id;
-        this.cartaoService.retornarCartaoId(this.id)
-        .subscribe( result => {
+        this.editar = true;
+        this.carregando = true;
+        this.spinner.show();
+        this.cartaoService.retornarCartaoId(this.id).pipe(finalize(() => {
+          this.spinner.hide();
+          this.carregando = false;
+        })).subscribe( result => {
           this.cartao = result;
           this.preencherFormulario();
         });
@@ -52,7 +62,7 @@ export class CartaoFormComponent implements OnInit {
   //Validação assíncrona
   async validarLimite(formControl: FormControl) {
     //Exemplo de operador ternário
-    return formControl.value <= 0 ? {limiteInvalido: true} : null;
+    return formControl.value <= 0 ? { limiteInvalido: true } : null;
 
     /*
     if (formControl.value <= 0) {
@@ -67,20 +77,20 @@ export class CartaoFormComponent implements OnInit {
       this.cartaoFormulario.markAllAsTouched();
     }else{
       let cartao = this.cartaoFormulario.getRawValue();
-      cartao.limite = cartao.limite.replace('/[^0-9]/g', '');
 
-      console.log(cartao.limite.replace(',', ''));
+      cartao.limite = cartao.limite.replace('/[^0-9]/g', '');
       cartao.limite = cartao.limite.replace('.', '');
-      cartao.limite = Number(cartao.limite.replace(',', ''));
-      console.log(cartao.limite);
+      cartao.limite = Number(cartao.limite.replace(',', '.'));
 
       if (this.editar) {
         this.cartaoService.editar(this.id, cartao).subscribe(() => {
           this.router.navigate(['/listar']);
+          this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
           this.router.navigate(['/listar']);
+          this.alertService.showAlertSuccess('Cartão editado com sucesso');
         });
       }
     }
