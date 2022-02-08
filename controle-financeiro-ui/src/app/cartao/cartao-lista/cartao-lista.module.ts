@@ -4,8 +4,9 @@ import { MatTableModule } from '@angular/material/table';
 import { CartaoListaComponent } from './cartao-lista.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatDividerModule,
     MatGridListModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgxSpinnerModule
   ]
 })
 export class CartaoListaModule { }

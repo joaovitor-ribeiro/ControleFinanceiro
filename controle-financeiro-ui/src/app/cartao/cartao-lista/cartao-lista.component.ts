@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Cartao } from '../cartao.model';
 import { CartaoService } from '../cartao.service';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
+import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 
 @Component({
   selector: 'app-cartao-lista',
@@ -14,10 +17,14 @@ export class CartaoListaComponent implements OnInit {
   cartao!: Cartao[];
   displayedColumns: string[] = ['nome', 'bandeira', 'numero', 'limite', 'acoes'];
   dataSource!: Cartao[];
+  carregando = false;
 
   constructor(
     private cartaoService: CartaoService,
-    private router: Router
+    private router: Router,
+    private dialogService: ConfirmModalService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertModalService
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +32,7 @@ export class CartaoListaComponent implements OnInit {
   }
 
   inserir(){
-    this.router.navigate([`cartao`]);
+    this.router.navigate([`cartao/inserir`]);
   }
 
   editar(id: number){
@@ -33,22 +40,26 @@ export class CartaoListaComponent implements OnInit {
   }
 
   listar(){
-    this.cartaoService.listar()
-    .subscribe(result => {
-      result.forEach(cartao => {
-        cartao.limite = Number(cartao.limite).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
-        cartao.numero = cartao.numero.replace(/(\d{4})?(\d{4})?(\d{4})?(\d{4})/, '$1 $2 $3 $4');
-      });
+    this.carregando = true;
+    this.spinner.show();
+    this.cartaoService.listar().pipe(finalize(() => {
+      this.spinner.hide();
+      this.carregando = false;
+    })).subscribe(result => {
       this.cartao = result;
       this.dataSource = result;
     });
   }
 
   excluir(id: number){
-    this.cartaoService.excluir(id).subscribe(() => {
-      this.listar();
-    });
-
+    this.dialogService.showConfirm('Deseja realmente excluir esse cartão?').subscribe(result => {
+      if (result) {
+        this.cartaoService.excluir(id).subscribe(() => {
+          this.listar();
+          this.alertService.showAlertSuccess('Cartão excluído com sucesso!');
+        });
+      }
+    })
   }
 
 }

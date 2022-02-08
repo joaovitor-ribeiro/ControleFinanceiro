@@ -1,0 +1,33 @@
+.no-margin {
+  margin-bottom: 0;
+}
+
+::ng-deep app-alert-modal {
+  width: 110vh;
+  display: flex;
+  justify-content: flex-end;
+}
+
+::ng-deep .modal-content {
+  background-color: unset!important;
+  border: unset!important;
+}
+
+::ng-deep .modal-body {
+  padding: 1rem 1rem 0 1rem;
+}
+
+::ng-deep .modal-backdrop {
+  background-color: unset!important;
+}
+
+.alerta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.botaoAlerta {
+  margin-left: 5px;
+}

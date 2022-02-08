@@ -4,13 +4,13 @@ import { CartaoFormComponent } from './cartao/cartao-form/cartao-form.component'
 import { CartaoListaComponent } from './cartao/cartao-lista/cartao-lista.component';
 
 const routes: Routes = [
-  {path: 'cartao', component: CartaoFormComponent},
+  {path: 'cartao/listar', component: CartaoListaComponent},
+
+  {path: 'cartao/inserir', component: CartaoFormComponent},
 
   {path: 'cartao/:id', component: CartaoFormComponent},
 
-  {path: 'listar', component: CartaoListaComponent},
-
-  {path: '', redirectTo: 'listar', pathMatch: 'full'}
+  {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'}
 ];
 
 @NgModule({
