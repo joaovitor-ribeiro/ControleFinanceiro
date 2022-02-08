@@ -79,7 +79,7 @@ export class CartaoFormComponent implements OnInit {
       let cartao = this.cartaoFormulario.getRawValue();
 
       cartao.limite = cartao.limite.replace('/[^0-9]/g', '');
-      cartao.limite = cartao.limite.replace('.', '');
+      cartao.limite = cartao.limite.replace('.', '')
       cartao.limite = Number(cartao.limite.replace(',', '.'));
 
       if (this.editar) {
