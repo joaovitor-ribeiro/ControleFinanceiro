@@ -1,0 +1,58 @@
+.circle {
+  border-radius: 50%;
+  height: 7vh!important;
+  margin: 20px;
+}
+
+.backgroud {
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1
+}
+
+::ng-deep .mat-drawer-container {
+  height: 100%!important;
+}
+
+::ng-deep .mat-list-base {
+  padding-top: 0!important;
+}
+
+.sidenav {
+  width: 280px;
+}
+
+.selectionList {
+  cursor: pointer
+}
+
+.optionUsuario {
+  height:20vh!important;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.imagemBackgroud {
+  width: 100%;
+  height: 100%;
+}
+
+.spanUsuario {
+  position: absolute!important;
+  bottom: 25px!important;
+  margin-left: 20px!important;
+}
+
+.divOption {
+  display: flex;
+  align-items: center;
+}
+
+.marginIcon {
+  margin-right: 5px!important;
+}

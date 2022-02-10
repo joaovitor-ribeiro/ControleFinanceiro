@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'controle-financeiro-ui';
+
+  constructor(private router : Router) {}
+
+  isSelected(url: string) {
+    return this.router.url.includes(url);
+  }
 }
