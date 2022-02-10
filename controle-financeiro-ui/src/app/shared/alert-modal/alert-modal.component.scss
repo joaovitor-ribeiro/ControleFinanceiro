@@ -21,11 +21,32 @@
   background-color: unset!important;
 }
 
-.alerta {
+::ng-deep .alerta {
+  min-width: 19vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 10px;
+  border-radius: 5px;
+
+  app-alert-modal {
+    width: 110vh;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .modal-content {
+    background-color: unset!important;
+    border: unset!important;
+  }
+
+  .modal-body {
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  .modal-backdrop {
+    background-color: unset!important;
+  }
+
 }
 
 .botaoAlerta {
