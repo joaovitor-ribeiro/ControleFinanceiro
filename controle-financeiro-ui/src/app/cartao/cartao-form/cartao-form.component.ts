@@ -84,13 +84,13 @@ export class CartaoFormComponent implements OnInit {
 
       if (this.editar) {
         this.cartaoService.editar(this.id, cartao).subscribe(() => {
-          this.router.navigate(['/listar']);
-          this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
+          this.router.navigate(['/cartao/listar']);
+          this.alertService.showAlertSuccess('Cartão editado com sucesso');
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
-          this.router.navigate(['/listar']);
-          this.alertService.showAlertSuccess('Cartão editado com sucesso');
+          this.router.navigate(['/cartao/listar']);
+          this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
         });
       }
     }
@@ -107,5 +107,9 @@ export class CartaoFormComponent implements OnInit {
       numero: this.cartao.numero,
       limite: Number(this.cartao.limite).toLocaleString('pt-BR', { minimumFractionDigits: 2})
     })
+  }
+
+  voltar(){
+    this.router.navigate(['/cartao/listar']);
   }
 }
