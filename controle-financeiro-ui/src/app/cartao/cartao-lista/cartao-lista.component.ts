@@ -6,6 +6,7 @@ import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 @Component({
   selector: 'app-cartao-lista',
@@ -24,7 +25,8 @@ export class CartaoListaComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmModalService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertModalService
+    private alertService: AlertModalService,
+    private erroService: ErrorModalService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +50,9 @@ export class CartaoListaComponent implements OnInit {
     })).subscribe(result => {
       this.cartao = result;
       this.dataSource = result;
+    },
+    error => {
+      this.erroService.showError(error.error.message);
     });
   }
 
@@ -57,6 +62,9 @@ export class CartaoListaComponent implements OnInit {
         this.cartaoService.excluir(id).subscribe(() => {
           this.listar();
           this.alertService.showAlertSuccess('Cartão excluído com sucesso!');
+        },
+        error => {
+          this.erroService.showError(error.error.message);
         });
       }
     })

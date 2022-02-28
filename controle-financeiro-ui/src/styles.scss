@@ -8,3 +8,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Importing Datepicker SCSS file. */
 @import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+
+.divCartao{
+  padding: 50px;
+  width: 35vw;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.tamanho{
+  width: 31vw;
+  margin-bottom: 16px;
+}
+
+.card{
+  border: 0.5px solid #9b98989d;
+}
+
+.cardContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.divBotoes{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.row {
+  margin: 0;
+}
+

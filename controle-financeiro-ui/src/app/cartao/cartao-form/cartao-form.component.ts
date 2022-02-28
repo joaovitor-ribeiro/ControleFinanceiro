@@ -2,10 +2,11 @@ import { CartaoService } from './../cartao.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Cartao } from '../cartao.model';
+import { Bandeira, Cartao } from '../cartao.model';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 @Component({
   selector: 'app-cartao-form',
@@ -20,6 +21,7 @@ export class CartaoFormComponent implements OnInit {
   cartao!: Cartao;
   editar = false;
   carregando = false;
+  bandeiras = ['Visa', 'Mastercard', 'American Express', 'JCB', 'Diners Club', 'Aura', 'Hipercard'];
 
   get propriedade() {
     return this.cartaoFormulario.controls;
@@ -31,6 +33,7 @@ export class CartaoFormComponent implements OnInit {
     private route: ActivatedRoute, //Através da url podemos pegar/passar variáveis. Ex.: pegar o id para editar
     private router: Router,
     private alertService: AlertModalService,
+    private erroService: ErrorModalService,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -38,7 +41,7 @@ export class CartaoFormComponent implements OnInit {
     this.cartaoFormulario = this.formBuilder.group({ //Criaando o formulário
       nome: ['', [Validators.required, Validators.minLength(3)]],
       bandeira: ['', [Validators.required, Validators.minLength(3)]],
-      numero: ['', [Validators.required, Validators.minLength(13)]],
+      numero: ['', [Validators.required, Validators.minLength(13)], [/*this.validarCartao.bind(this),*/ this.validarNumeroCorrespondeABandeira.bind(this)]],
       limite: ['', Validators.required, this.validarLimite]
     });
 
@@ -51,12 +54,14 @@ export class CartaoFormComponent implements OnInit {
         this.cartaoService.retornarCartaoId(this.id).pipe(finalize(() => {
           this.spinner.hide();
           this.carregando = false;
+          this.colocarFocoCampoNome();
         })).subscribe( result => {
           this.cartao = result;
           this.preencherFormulario();
         });
       }
     });
+    this.colocarFocoCampoNome();
   }
 
   //Validação assíncrona
@@ -70,6 +75,14 @@ export class CartaoFormComponent implements OnInit {
     }
     return null;
     */
+  }
+
+  async validarCartao(formControl: FormControl) {
+    return this.validarNumero(String(formControl.value)) ? null : { cartaoInvalido: true };
+  }
+
+  async validarNumeroCorrespondeABandeira(formControl: FormControl) {
+    return this.validarNumeroCorrespondenteABandeira() ? null : { numeroNaoCorrespondeABandeira: true };
   }
 
   enviarFormulario() {
@@ -86,11 +99,17 @@ export class CartaoFormComponent implements OnInit {
         this.cartaoService.editar(this.id, cartao).subscribe(() => {
           this.router.navigate(['/cartao/listar']);
           this.alertService.showAlertSuccess('Cartão editado com sucesso');
+        },
+        error => {
+          this.erroService.showError(error.error.message);
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
           this.router.navigate(['/cartao/listar']);
           this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
+        },
+        error => {
+          this.erroService.showError(error.error.message);
         });
       }
     }
@@ -112,4 +131,65 @@ export class CartaoFormComponent implements OnInit {
   voltar(){
     this.router.navigate(['/cartao/listar']);
   }
+
+  colocarFocoCampoNome() {
+    setTimeout(() => {
+      document.getElementById('nome')?.focus();
+    }, 300);
+  }
+
+  validarNumero(numero: string) {
+    let total = 0;
+    for (let i = 0; i < numero.length; i++) {
+      let digito = +numero[i];
+      if (i % 2 === 0) {
+        digito *= 2;
+        if (digito > 9) digito -= 9;
+      }
+      total += digito;
+    }
+    return total % 10 === 0;
+  }
+
+  verificarErrorsNumeroCartao() {
+    setTimeout(() => {
+      if (this.validarNumeroCorrespondenteABandeira()) {
+        let errors = this.cartaoFormulario.get('numero')?.errors;
+        if (errors) {
+          delete errors.numeroNaoCorrespondeABandeira;
+          this.cartaoFormulario.get('numero')?.setErrors(Object.keys(errors).length > 0 ? errors : null);
+        }
+      } else {
+        this.cartaoFormulario.get('numero')?.setErrors({ numeroNaoCorrespondeABandeira: true });
+      }
+    }, 50);
+  }
+
+  validarNumeroCorrespondenteABandeira() {
+    const bandeira = this.cartaoFormulario.get('bandeira')?.value;
+    const numero   = String(this.cartaoFormulario.get('numero')?.value);
+
+    switch (bandeira) {
+      case Bandeira.mastercard:
+        return numero.startsWith("51") || numero.startsWith("52") || numero.startsWith("53") ||
+               numero.startsWith("54") || numero.startsWith("55");
+      case Bandeira.visa:
+        return numero.startsWith("4");
+      case Bandeira.jcb:
+        return numero.startsWith("35");
+      case Bandeira.americanExpress:
+        return numero.startsWith("34") || numero.startsWith("37");
+      case Bandeira.disnerClub:
+        return numero.startsWith("300") || numero.startsWith("301") || numero.startsWith("302") ||
+               numero.startsWith("303") || numero.startsWith("304") || numero.startsWith("305") ||
+               numero.startsWith("36")  || numero.startsWith("38");
+      case Bandeira.aura:
+        return numero.startsWith("50");
+      case Bandeira.hipercard:
+        return numero.startsWith("606282");
+      default:
+        return false;
+    }
+  }
+
 }

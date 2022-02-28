@@ -2,7 +2,8 @@ import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cartao } from './cartao.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ErrorModalService } from '../shared/error-modal/error-modal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class CartaoService {
   private url = `${environment.url}cartao`
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private erroService: ErrorModalService,
   ) { }
 
   inserir(cartao: Cartao) {
@@ -23,7 +25,17 @@ export class CartaoService {
     return this.http.get<Cartao[]>(this.url + '/listar').pipe(map((result: Cartao[]) => {
       result.forEach(cartao => {
         cartao.limite = Number(cartao.limite).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
-        cartao.numero = cartao.numero.replace(/(\d{4})?(\d{4})?(\d{4})?(\d{4})/, '$1 $2 $3 $4');
+        switch (cartao.numero.length) {
+          case 16:
+            cartao.numero = cartao.numero.replace(/(\d{4})?(\d{4})?(\d{4})?(\d{4})/, '$1 $2 $3 $4');
+            break;
+          case 15:
+            cartao.numero = cartao.numero.replace(/(\d{4})?(\d{6})?(\d{5})/, '$1 $2 $3');
+            break;
+          case 14:
+            cartao.numero = cartao.numero.replace(/(\d{4})?(\d{6})?(\d{4})/, '$1 $2 $3');
+            break;
+        }
       });
       return result;
     }));
@@ -40,4 +52,5 @@ export class CartaoService {
   excluir(id: number) {
     return this.http.delete<void>(this.url + `/excluir/${id}`);
   }
+
 }

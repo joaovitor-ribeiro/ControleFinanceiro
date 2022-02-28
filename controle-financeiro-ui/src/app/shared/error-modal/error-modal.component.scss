@@ -29,6 +29,7 @@
     border: 1px solid rgba(0, 0, 0, 0.2)!important;
   }
 }
+
 ::ng-deep .modal-content {
   background-color: unset;
   background-clip: unset;
@@ -47,4 +48,8 @@
 
 .botaoFechar {
   margin-right: 5px;
+}
+
+.icon {
+   color: orange;
 }

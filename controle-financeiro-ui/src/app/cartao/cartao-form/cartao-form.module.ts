@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { NgxMaskModule } from 'ngx-mask';
 import { AlertModalModule } from 'src/app/shared/alert-modal/alert-modal.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxMaskModule,
     NgxMaskModule.forRoot(),
     AlertModalModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatSelectModule
   ]
 })
 export class CartaoFormModule { }
