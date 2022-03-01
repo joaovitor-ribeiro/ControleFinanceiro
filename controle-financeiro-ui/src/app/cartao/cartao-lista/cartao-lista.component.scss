@@ -13,3 +13,14 @@ table {
 .marginTable {
   margin-top: 30px;
 }
+
+.botaoFiltrar {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .campoFiltro {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+}

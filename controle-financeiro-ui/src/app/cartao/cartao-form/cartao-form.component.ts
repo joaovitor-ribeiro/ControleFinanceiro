@@ -41,7 +41,7 @@ export class CartaoFormComponent implements OnInit {
     this.cartaoFormulario = this.formBuilder.group({ //Criaando o formulário
       nome: ['', [Validators.required, Validators.minLength(3)]],
       bandeira: ['', [Validators.required, Validators.minLength(3)]],
-      numero: ['', [Validators.required, Validators.minLength(13)], [/*this.validarCartao.bind(this),*/ this.validarNumeroCorrespondeABandeira.bind(this)]],
+      numero: ['', [Validators.required, Validators.minLength(13)], [this.validarCartao.bind(this), this.validarNumeroCorrespondeABandeira.bind(this)]],
       limite: ['', Validators.required, this.validarLimite]
     });
 
@@ -101,15 +101,15 @@ export class CartaoFormComponent implements OnInit {
           this.alertService.showAlertSuccess('Cartão editado com sucesso');
         },
         error => {
-          this.erroService.showError(error.error.message);
+          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
-          this.router.navigate(['/cartao/listar']);
+          this.router.navigate(['/cartao/listar'], { queryParamsHandling: 'preserve' });
           this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
         },
         error => {
-          this.erroService.showError(error.error.message);
+          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }
@@ -129,7 +129,7 @@ export class CartaoFormComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['/cartao/listar']);
+    this.router.navigate(['/cartao/listar'], { queryParamsHandling: 'preserve' });
   }
 
   colocarFocoCampoNome() {
@@ -153,14 +153,16 @@ export class CartaoFormComponent implements OnInit {
 
   verificarErrorsNumeroCartao() {
     setTimeout(() => {
+      let errors = this.cartaoFormulario.get('numero')?.errors;
       if (this.validarNumeroCorrespondenteABandeira()) {
-        let errors = this.cartaoFormulario.get('numero')?.errors;
         if (errors) {
           delete errors.numeroNaoCorrespondeABandeira;
           this.cartaoFormulario.get('numero')?.setErrors(Object.keys(errors).length > 0 ? errors : null);
+        } else {
+          this.cartaoFormulario.get('numero')?.setErrors(null);
         }
       } else {
-        this.cartaoFormulario.get('numero')?.setErrors({ numeroNaoCorrespondeABandeira: true });
+        this.cartaoFormulario.get('numero')?.setErrors({ numeroNaoCorrespondeABandeira: true, ...errors });
       }
     }, 50);
   }

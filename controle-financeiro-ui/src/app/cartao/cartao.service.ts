@@ -1,8 +1,8 @@
 import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Cartao } from './cartao.model';
-import { catchError, map } from 'rxjs/operators';
+import { Cartao, FiltroCartao } from './cartao.model';
+import { map } from 'rxjs/operators';
 import { ErrorModalService } from '../shared/error-modal/error-modal.service';
 
 @Injectable({
@@ -21,9 +21,15 @@ export class CartaoService {
     return this.http.post<void>(this.url + '/inserir', cartao);
   }
 
-  listar() {
-    return this.http.get<Cartao[]>(this.url + '/listar').pipe(map((result: Cartao[]) => {
-      result.forEach(cartao => {
+  listar(filtro: FiltroCartao) {
+
+    const params = {
+      nome: filtro?.nome || '',
+      bandeiras: filtro?.bandeiras ||  ''
+    };
+
+    return this.http.get<Cartao[]>(this.url + '/listar', {params}).pipe(map((result: Cartao[]) => {
+    result.forEach(cartao => {
         cartao.limite = Number(cartao.limite).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
         switch (cartao.numero.length) {
           case 16:

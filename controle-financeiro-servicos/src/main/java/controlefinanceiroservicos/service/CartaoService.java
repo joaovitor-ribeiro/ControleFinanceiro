@@ -21,7 +21,14 @@ public class CartaoService {
 		cartaoRepository.save(cartao);		
 	}
 	
-	public List<Cartao> listar() {
+	public List<Cartao> listar(String nome, List<String> bandeiras) {
+		if(!(nome == null || nome.isEmpty()) && !(bandeiras == null || bandeiras.isEmpty())) {
+			return cartaoRepository.findNomeAndBandeiras(nome, bandeiras);
+		} else if(!(nome == null || nome.isEmpty())) {
+			return cartaoRepository.findByNome(nome);
+		} else if (!(bandeiras == null || bandeiras.isEmpty())) {
+			return cartaoRepository.findByBandeiras(bandeiras);
+		}
 		return cartaoRepository.findAll();
 	}
 
@@ -129,5 +136,5 @@ public class CartaoService {
 		}
 		
 	}
-	
+
 }

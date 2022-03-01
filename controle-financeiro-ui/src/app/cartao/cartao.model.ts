@@ -6,6 +6,11 @@ export interface Cartao {
   limite: string;
 }
 
+export interface FiltroCartao {
+  nome: string;
+  bandeiras: string[];
+}
+
 export enum Bandeira {
   visa = 'Visa',
   mastercard = 'Mastercard',

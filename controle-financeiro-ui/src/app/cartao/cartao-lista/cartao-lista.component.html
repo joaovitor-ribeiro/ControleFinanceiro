@@ -20,6 +20,38 @@
       <mat-divider></mat-divider>
     </div>
 
+    <form [formGroup]="filtroFormulario" (ngSubmit)="listar()">
+      <div class="row mt-2 campoFiltro" style="width: 70%;">
+        <div class="col-md">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput id="nome" type="text" formControlName="nome" maxlength="20">
+
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('nome')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="col-md">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Bandeira</mat-label>
+
+            <mat-select multiple formControlName="bandeiras">
+              <mat-option *ngFor="let bandeira of bandeiras" [value]="bandeira">{{bandeira}}</mat-option>
+            </mat-select>
+
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('bandeiras')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="botaoFiltrar">
+          <button type="submit" mat-raised-button color="primary">Filtrar</button>
+        </div>
+      </div>
+
+    </form>
+
     <div class="marginTable">
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -47,10 +79,10 @@
         <ng-container matColumnDef="acoes">
           <th mat-header-cell *matHeaderCellDef> Ações </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" style="margin-right: 3px;" (click)="editar(element.id)">
+            <button type="button" mat-icon-button color="primary" style="margin-right: 3px;" (click)="editar(element.id)">
               <mat-icon>mode_edit</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="excluir(element.id)">
+            <button type="button" mat-icon-button color="primary" (click)="excluir(element.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
