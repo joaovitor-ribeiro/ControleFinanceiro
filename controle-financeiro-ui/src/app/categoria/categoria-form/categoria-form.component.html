@@ -1,0 +1,67 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size="medium" color = "#fff" type = "pacman" [fullScreen] = "true">
+  <p style="color: white">Carregando... </p>
+</ngx-spinner>
+
+<div *ngIf="!carregando" class="divCartao">
+  <mat-card class="card">
+    <mat-card-header class="cardHeader">
+      <mat-card-title>
+        <h3>Cadastro de categorias</h3>
+      </mat-card-title>
+    </mat-card-header>
+
+    <form [formGroup]="categoriaFormulario" (ngSubmit)="enviarFormulario()">
+      <mat-card-content class="cardContent">
+        <div class="row">
+          <mat-form-field class="example-form-field tamanho" appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput type="text" formControlName="nome" required maxlength="20">
+
+            <mat-error *ngIf="propriedade.nome.touched && propriedade.nome.errors?.required">
+              Insira o nome.
+            </mat-error>
+
+            <mat-error *ngIf="propriedade.nome.errors?.minlength && propriedade.nome.errors?.minlength">
+              O nome não pode ter menos do que 3 caracteres.
+            </mat-error>
+
+            <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('nome')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="row w-100">
+          <div class="col-md mb-1">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Tipos</mat-label>
+
+              <mat-select  formControlName="tipo">
+                <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">{{tipo.label}}</mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="propriedade.tipo.touched && propriedade.tipo.errors?.required">
+                Insira o Tipo.
+              </mat-error>
+
+              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('tipo')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions>
+        <div class="divBotoes">
+          <button type="submit" mat-raised-button color="primary">Salvar</button>
+          <button type="button" mat-raised-button (click)="voltar()">Voltar</button>
+        </div>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>

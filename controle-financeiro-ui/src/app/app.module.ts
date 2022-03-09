@@ -10,11 +10,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule}  from '@angular/material/list';
+import { CategoriaModule } from './categoria/categoria.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +23,7 @@ import { MatListModule}  from '@angular/material/list';
     BrowserAnimationsModule,
     HttpClientModule,
     CartaoModule,
+    CategoriaModule,
     MatSidenavModule,
     MatIconModule,
     MatDividerModule,

@@ -41,4 +41,15 @@ public class CategoriaController {
 	public void editar(@RequestBody Categoria categoria,@PathVariable Integer id){
 		categoriaService.editar(categoria, id);
 	}
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@Transactional
+	@RequestMapping (method = RequestMethod.DELETE, path =  "/excluir/{id}")
+	public void excluir(@PathVariable Integer id) {
+		categoriaService.excluir(id);
+	}
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping (method = RequestMethod.GET, path = "/{id}")
+	public Categoria retornarCategoriaId(@PathVariable Integer id) {
+		return categoriaService.retornarCategoriaId(id);
+	} 
 }

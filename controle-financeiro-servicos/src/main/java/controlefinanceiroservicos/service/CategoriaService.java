@@ -42,12 +42,32 @@ public class CategoriaService {
 
 	public void editar(Categoria categoria, Integer id) {		
 		Optional<Categoria> optionCategoria= categoriaRepository.findById(id);
-		if(optionCategoria.isPresent())  { 
+		if (optionCategoria.isPresent())  { 
 			validacoes(categoria);
 			Categoria categoriaDadosAntigos = optionCategoria.get();
 			categoriaDadosAntigos.setNome(categoria.getNome());
 			categoriaDadosAntigos.setTipo(categoria.getTipo());
+		} else {
+			throw new RuntimeException("Categoria não foi encontrada para edição!");
 		}
+		
+	}
+
+	public void excluir(Integer id) {
+		Optional<Categoria> optionCategoria = categoriaRepository.findById(id);
+		if (optionCategoria.isPresent()) {
+			categoriaRepository.deleteById(id);
+		} else {
+			throw new RuntimeException("Categoria não foi encontrada para exclusão!");
+		}
+	}
+
+	public Categoria retornarCategoriaId(Integer id) {
+		Optional<Categoria> optionCategoria = categoriaRepository.findById(id);
+		if (optionCategoria.isPresent()) {
+			return optionCategoria.get();
+		}
+		throw new RuntimeException("Categoria não encontrada!");
 	}
 	
 }
