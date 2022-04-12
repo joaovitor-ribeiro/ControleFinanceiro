@@ -1,9 +1,8 @@
-import { environment } from './../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Cartao, FiltroCartao } from './cartao.model';
 import { map } from 'rxjs/operators';
-import { ErrorModalService } from '../shared/error-modal/error-modal.service';
+import { environment } from './../../environments/environment';
+import { Cartao, FiltroCartao } from './cartao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +13,13 @@ export class CartaoService {
 
   constructor(
     private http: HttpClient,
-    private erroService: ErrorModalService,
   ) { }
 
   inserir(cartao: Cartao) {
     return this.http.post<void>(this.url + '/inserir', cartao);
   }
 
-  listar(filtro: FiltroCartao) {
+  listar(filtro?: FiltroCartao) {
 
     const params = {
       nome: filtro?.nome || '',

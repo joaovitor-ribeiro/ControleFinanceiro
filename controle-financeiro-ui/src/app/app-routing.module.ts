@@ -5,13 +5,17 @@ import { CartaoListaComponent } from './cartao/cartao-lista/cartao-lista.compone
 import { CategoriaFormComponent } from './categoria/categoria-form/categoria-form.component';
 
 const routes: Routes = [
-  {path: 'cartao/listar', component: CartaoListaComponent},
+  {
+    path: 'despesa',
+    loadChildren: () => import('./despesa/despesa.module').then(m => m.DespesaModule)
+  },
 
-  {path: 'cartao/inserir', component: CartaoFormComponent},
+  {
+    path: 'cartao',
+    loadChildren: () => import('./cartao/cartao.module').then(m => m.CartaoModule)
+  },
 
   {path: 'categoria/inserir', component: CategoriaFormComponent},
-
-  {path: 'cartao/:id', component: CartaoFormComponent},
 
   {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'}
 ];

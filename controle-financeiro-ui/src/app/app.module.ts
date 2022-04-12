@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule}  from '@angular/material/list';
 import { CategoriaModule } from './categoria/categoria.module';
+import { DespesaModule } from './despesa/despesa.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CategoriaModule } from './categoria/categoria.module';
     MatSidenavModule,
     MatIconModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    DespesaModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

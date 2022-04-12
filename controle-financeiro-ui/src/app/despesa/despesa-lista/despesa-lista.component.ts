@@ -1,4 +1,3 @@
-import { AlertModalService } from './../../shared/alert-modal/alert-modal.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
@@ -11,6 +10,7 @@ import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.servic
 
 import { Despesa } from '../despesa.model';
 import { CategoriaService } from './../../categoria/categoria.service';
+import { AlertModalService } from './../../shared/alert-modal/alert-modal.service';
 import { ConfirmModalService } from './../../shared/confirm-modal/confirm-modal.service';
 import { PageDespesa, Paginacao } from './../despesa.model';
 import { DespesaService } from './../despesa.service';
