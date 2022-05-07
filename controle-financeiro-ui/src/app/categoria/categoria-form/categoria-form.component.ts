@@ -14,10 +14,12 @@ interface Tipo {
 })
 export class CategoriaFormComponent implements OnInit {
   categoriaFormulario!: FormGroup;
-  carregando!:boolean;
+  carregando!: boolean;
+
   get propriedade() {
     return this.categoriaFormulario.controls;
   }
+
   tipos: Tipo[] = [
     {
       label: 'Ganho',
@@ -26,23 +28,30 @@ export class CategoriaFormComponent implements OnInit {
     {
       label: 'Despesa',
       value: 'D'
-    }];
+    }
+  ];
 
-  constructor(private formBuilder: FormBuilder, private service:CategoriaFormService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: CategoriaFormService
+  ) { }
 
   ngOnInit(): void {
     this.categoriaFormulario = this.formBuilder.group({
-      nome:[''],
-      tipo:[''],
-
-    })
+      nome: [''],
+      tipo: [''],
+    });
   }
-    enviarFormulario(){
+
+  enviarFormulario() {
     const categoria = this.categoriaFormulario.getRawValue();
     this.service.inserir(categoria).subscribe();
-    }
-    limparBotoes(valor:string){
-    }
-    voltar(){
-    }
+  }
+
+  limparBotoes(valor: string) {
+  }
+
+  voltar() {
+  }
+
 }
