@@ -61,7 +61,6 @@ export class CartaoListaComponent implements OnInit {
   }
 
   listar(){
-
     let filtro = this.filtroFormulario?.getRawValue();
 
     this.carregando = true;
@@ -83,7 +82,12 @@ export class CartaoListaComponent implements OnInit {
   excluir(id: number){
     this.dialogService.showConfirm('Deseja realmente excluir esse cartão?').subscribe(result => {
       if (result) {
-        this.cartaoService.excluir(id).subscribe(() => {
+        this.carregando = true;
+        this.spinner.show();
+        this.cartaoService.excluir(id).pipe(finalize(() => {
+          this.carregando = false;
+          this.spinner.hide();
+        })).subscribe(() => {
           this.listar();
           this.alertService.showAlertSuccess('Cartão excluído com sucesso!');
         },

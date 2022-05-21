@@ -1,15 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { CategoriaFormModule } from './categoria-form/categoria-form.module';
-
-
+import { CategoriaListaModule } from './categoria-lista/categoria-lista.module';
+import { CategoriaRoutingModule } from './categoria-routing.module';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
-    CategoriaFormModule
+    CategoriaFormModule,
+    CategoriaListaModule,
+    CategoriaRoutingModule
   ]
 })
 export class CategoriaModule { }

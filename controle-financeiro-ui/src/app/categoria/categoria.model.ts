@@ -3,3 +3,8 @@ export interface Categoria {
   nome: string;
   tipo: string;
 }
+
+export interface FiltroCategoria {
+  nome: string;
+  tipo: string;
+}

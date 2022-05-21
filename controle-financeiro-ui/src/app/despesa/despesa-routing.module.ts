@@ -11,7 +11,7 @@ const despesasRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(despesasRoutes)],
+  imports: [RouterModule.forChild(despesasRoutes)],
   exports: [RouterModule]
 })
 export class DespesaRoutingModule { }

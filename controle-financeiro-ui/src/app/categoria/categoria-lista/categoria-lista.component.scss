@@ -1,0 +1,46 @@
+table {
+  width: 50%;
+  @media screen and (max-width: 1650px) {
+    width: 100%;
+  }
+}
+
+.cabecalho{
+  padding-bottom: 30px;
+}
+
+.dadosCartoes{
+  padding: 30px;
+}
+
+.marginTable {
+  @media screen and (max-width: 1650px) {
+    width: 100%;
+  }
+  margin-top: 30px;
+}
+
+.botaoFiltrar {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .campoFiltro {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+}
+
+.widthCabecalho {
+  width: 50%;
+  @media screen and (max-width: 1650px) {
+    width: 100%;
+  }
+}
+
+.widthFiltros {
+  width: 90%;
+  @media screen and (max-width: 1650px) {
+    width: 100%;
+  }
+}

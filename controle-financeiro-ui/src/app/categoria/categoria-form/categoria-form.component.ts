@@ -1,6 +1,13 @@
-import { CategoriaFormService } from './categoria-form.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
+import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
+import { Categoria } from '../categoria.model';
+
+import { CategoriaService } from '../categoria.service';
 
 interface Tipo {
   label: string;
@@ -13,11 +20,17 @@ interface Tipo {
   styleUrls: ['./categoria-form.component.scss']
 })
 export class CategoriaFormComponent implements OnInit {
+
   categoriaFormulario!: FormGroup;
-  carregando!:boolean;
+  carregando = true;
+  id!: number;
+  categoria!: Categoria;
+  editar!: boolean;
+
   get propriedade() {
     return this.categoriaFormulario.controls;
   }
+
   tipos: Tipo[] = [
     {
       label: 'Ganho',
@@ -28,21 +41,84 @@ export class CategoriaFormComponent implements OnInit {
       value: 'D'
     }];
 
-  constructor(private formBuilder: FormBuilder, private service:CategoriaFormService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: CategoriaService,
+    private spinner: NgxSpinnerService,
+    private erroService: ErrorModalService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertService: AlertModalService,
+  ) { }
 
   ngOnInit(): void {
-    this.categoriaFormulario = this.formBuilder.group({
-      nome:[''],
-      tipo:[''],
+    this.spinner.show();
 
-    })
+    this.categoriaFormulario = this.formBuilder.group({
+      nome:['', [Validators.required, Validators.minLength(3)]],
+      tipo:['', [Validators.required]],
+    });
+
+    this.route.params?.subscribe(value => {
+      if (value?.id) {
+        this.id = value.id;
+        this.editar = true;
+        this.service.retornarCategoriaId(this.id).subscribe( result => {
+          this.categoria = result;
+          this.preencherFormulario();
+        });
+      }
+    });
+
+    this.spinner.hide();
+    this.carregando = false;
+
+    this.colocarFocoCampoNome();
   }
-    enviarFormulario(){
-    const categoria = this.categoriaFormulario.getRawValue();
-    this.service.inserir(categoria).subscribe();
+
+  preencherFormulario(){
+    this.categoriaFormulario.patchValue({
+      nome: this.categoria.nome,
+      tipo: this.categoria.tipo,
+    });
+  }
+
+  enviarFormulario(){
+    if (this.categoriaFormulario.invalid) {
+      this.categoriaFormulario.markAllAsTouched();
+    }else{
+      const categoria = this.categoriaFormulario.getRawValue();
+      if (this.editar) {
+        this.service.editar(this.id, categoria).subscribe(() => {
+          this.router.navigate(['categoria/listar'], { queryParamsHandling: 'preserve' });
+           this.alertService.showAlertSuccess('Categoria editada com sucesso');
+        },
+        error => {
+          this.erroService.showError(error?.error?.message || 'Falha na conexão');
+        });
+      } else {
+        this.service.inserir(categoria).subscribe(() => {
+          this.router.navigate(['categoria/listar'], { queryParamsHandling: 'preserve' });
+           this.alertService.showAlertSuccess('Categoria cadastrada com sucesso');
+        },
+        error => {
+          this.erroService.showError(error?.error?.message || 'Falha na conexão');
+        });
+      }
     }
-    limparBotoes(valor:string){
-    }
-    voltar(){
-    }
+  }
+
+  limparBotoes(campo:string){
+    this.categoriaFormulario.get(campo)?.setValue('');
+  }
+
+  voltar(){
+    this.router.navigate(['categoria/listar']);
+  }
+
+  colocarFocoCampoNome() {
+    setTimeout(() => {
+      document.getElementById('nome')?.focus();
+    }, 300);
+  }
 }

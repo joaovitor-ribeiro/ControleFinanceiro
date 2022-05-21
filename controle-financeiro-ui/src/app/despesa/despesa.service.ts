@@ -63,7 +63,7 @@ export class DespesaService {
   }
 
   retornarDespesaId(id: number) {
-    return this.http.get<Despesa>(this.url + `${id}`);
+    return this.http.get<Despesa>(this.url + id);
   }
 
 }

@@ -2,6 +2,7 @@ package controlefinanceiroservicos.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,15 @@ public interface DespesaRepository extends JpaRepository<Despesa, Integer>{
 			+ "and "
 			+ ":dataFinal is null or data <= :dataFinal", nativeQuery = true)
 	Page<Despesa> find(String descricao, List<Integer> categorias, Date dataInicial, Date dataFinal, Pageable paginacao);
+
+	@Query(value = ""
+			+ "select * from despesa "
+			+ "where categoria_id = :categoria", nativeQuery = true)
+	Optional<Despesa> findDespesaByIdCategoria(Integer categoria);
+	
+	@Query(value = ""
+			+ "select * from despesa "
+			+ "where cartao_id = :cartao", nativeQuery = true)
+	Optional<Despesa> findDespesaByIdCartao(Integer cartao);
+	
 }

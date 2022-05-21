@@ -7,19 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import controlefinanceiroservicos.model.Categoria;
+import controlefinanceiroservicos.model.Despesa;
 import controlefinanceiroservicos.repository.CategoriaRepository;
+import controlefinanceiroservicos.repository.DespesaRepository;
 
 @Service
 public class CategoriaService {
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public void inserir(Categoria categoria){
+	@Autowired
+	private DespesaRepository despesaRepository;
+	
+	public void inserir(Categoria categoria) {
 		validacoes(categoria);
 		categoriaRepository.save(categoria);
 	}
 
-	private void validacoes(Categoria categoria){
+	private void validacoes(Categoria categoria) {
 		if (categoria.getNome().isEmpty()) {
 			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
 		} else if(categoria.getNome().length() < 3){
@@ -36,7 +42,14 @@ public class CategoriaService {
 		} 
 	}
 
-	public List<Categoria> listar() {
+	public List<Categoria> listar(String nome, String tipo) {
+		if (!(nome == null || nome.isEmpty()) && !(tipo == null || tipo.isEmpty() || tipo.equals("T"))) {
+			return categoriaRepository.findNomeAndTipo(nome, tipo);
+		} else if (!(nome == null || nome.isEmpty())) {
+			return categoriaRepository.findByNome(nome);
+		} else if (!(tipo == null || tipo.isEmpty() || tipo.equals("T"))) {
+			return categoriaRepository.findByTipo(tipo);
+		}
 		return categoriaRepository.findAll();
 	}
 
@@ -56,6 +69,16 @@ public class CategoriaService {
 	public void excluir(Integer id) {
 		Optional<Categoria> optionCategoria = categoriaRepository.findById(id);
 		if (optionCategoria.isPresent()) {
+			Categoria categoria = optionCategoria.get();
+			if (categoria.getTipo().equals("D")) {
+				Optional<Despesa> optionalDespesa = despesaRepository.findDespesaByIdCategoria(id);
+				if (optionalDespesa.isPresent()) {
+					Despesa despesa = optionalDespesa.get();
+					throw new RuntimeException("Essa categoria não pode ser excluída pois está vinculada a despesa: " + despesa.getDescricao() + "!");
+				}
+			} else {
+				//TODO Leid faz a boa
+			}
 			categoriaRepository.deleteById(id);
 		} else {
 			throw new RuntimeException("Categoria não foi encontrada para exclusão!");

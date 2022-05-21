@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import controlefinanceiroservicos.model.Cartao;
+import controlefinanceiroservicos.model.Despesa;
 import controlefinanceiroservicos.repository.CartaoRepository;
+import controlefinanceiroservicos.repository.DespesaRepository;
 
 @Service
 public class CartaoService {	
 	
 	@Autowired
 	private CartaoRepository cartaoRepository; //Instanciando o Repository
+	
+	@Autowired
+	private DespesaRepository despesaRepository; 
 	
 	public void inserir (Cartao cartao){		
 		validacoes(cartao);	
@@ -58,9 +63,14 @@ public class CartaoService {
 	}
 
 	public void excluir(Integer id){
-		Optional<Cartao> optionalCartaoAntigo = cartaoRepository.findById(id);
+		Optional<Cartao> optionalCartao = cartaoRepository.findById(id);
 		
-		if (optionalCartaoAntigo.isPresent()) {	
+		if (optionalCartao.isPresent()) {	
+			Optional<Despesa> optionalDespesa = despesaRepository.findDespesaByIdCartao(id);
+			if (optionalDespesa.isPresent()) {
+				Despesa despesa = optionalDespesa.get();
+				throw new RuntimeException("Esse cartão não pode ser excluído pois está vinculado a despesa: " + despesa.getDescricao() + "!");
+			}
 			cartaoRepository.deleteById(id);
 		} else {
 			throw new RuntimeException("Cartão não foi encontrado para a exclusão!");

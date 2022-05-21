@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { Cartao } from 'src/app/cartao/cartao.model';
 import { CartaoService } from 'src/app/cartao/cartao.service';
-import { Categoria } from 'src/app/categoria/categoria.model';
+import { Categoria, FiltroCategoria } from 'src/app/categoria/categoria.model';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
@@ -22,7 +22,7 @@ import { DespesaService } from './../despesa.service';
 export class DespesaFormComponent implements OnInit {
 
   despesaFormulario!: FormGroup;
-  carregando!: boolean;
+  carregando = true;
   cartoes!: Cartao[];
   categorias!: Categoria[];
   id!: number;
@@ -49,28 +49,21 @@ export class DespesaFormComponent implements OnInit {
   async ngOnInit() {
     this.adapter.setLocale('pt-br');
 
-    this.carregando = true;
     this.spinner.show();
 
     this.despesaFormulario = this.formBuilder.group({
-      cartao: ['', Validators.required],
-      descricao: ['', Validators.required],
-      categoria: ['', Validators.required],
-      valor: ['', Validators.required],
-      data: ['', Validators.required],
+      cartao: ['', [Validators.required]],
+      descricao: ['', [Validators.required, Validators.minLength(3)]],
+      categoria: ['', [Validators.required]],
+      valor: ['', [Validators.required]],
+      data: ['', [Validators.required]],
     });
 
     this.route.params?.subscribe(value => { //subscribe é usado para receber algo que é retornado por um observable
       if (value?.id) {
         this.id = value.id;
         this.editar = true;
-        this.carregando = true;
-        this.spinner.show();
-        this.despesaService.retornarDespesaId(this.id).pipe(finalize(() => {
-          this.spinner.hide();
-          this.carregando = false;
-          this.colocarFocoCampoCartao();
-        })).subscribe( result => {
+        this.despesaService.retornarDespesaId(this.id).subscribe( result => {
           this.despesa = result;
           this.preencherFormulario();
         });
@@ -103,7 +96,8 @@ export class DespesaFormComponent implements OnInit {
   }
 
   private async carregarCategoria() {
-    await this.categoriaService.listar().toPromise().then(categorias => {
+    await this.categoriaService.listar({nome: '', tipo: 'D'} as FiltroCategoria)
+    .toPromise().then(categorias => {
       this.categorias = categorias;
     });
   }
@@ -120,7 +114,7 @@ export class DespesaFormComponent implements OnInit {
       if (this.editar) {
         this.despesaService.editar(this.id, despesa).subscribe(() => {
           this.router.navigate(['/despesa/listar'], { queryParamsHandling: 'preserve' });
-           this.alertService.showAlertSuccess('Despesa editado com sucesso');
+           this.alertService.showAlertSuccess('Despesa editada com sucesso');
         },
         error => {
           this.erroService.showError(error?.error?.message || 'Falha na conexão');
