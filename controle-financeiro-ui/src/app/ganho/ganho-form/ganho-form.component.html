@@ -1,0 +1,106 @@
+<!--
+  http://localhost:4200/ganho/inserir
+-->
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size="medium" color = "#fff" type = "pacman" [fullScreen] = "true">
+  <p style="color: white">Carregando... </p>
+</ngx-spinner>
+
+<div *ngIf="!carregando" class="divCartao">
+  <mat-card class="card">
+    <mat-card-header class="cardHeader">
+      <mat-card-title>
+        <h3>Cadastro de ganhos</h3>
+      </mat-card-title>
+    </mat-card-header>
+
+    <form [formGroup]="ganhoFormulario" (ngSubmit)="enviarFormulario()">
+      <mat-card-content class="cardContent">
+
+        <div class="row w-100">
+          <div class="col-md mb-1">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Descrição</mat-label>
+              <input matInput id="descricao" type="text" formControlName="descricao" required maxlength="20" id="descricao">
+
+              <mat-error *ngIf="propriedade.descricao.touched && propriedade.descricao.errors?.required">
+                Insira a descrição.
+              </mat-error>
+
+              <mat-error *ngIf="propriedade.descricao.errors?.minlength && propriedade.descricao.errors?.minlength">
+                A descrição não pode ter menos do que 3 caracteres.
+              </mat-error>
+
+              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('descricao')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row w-100">
+          <div class="col-md mb-1">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Categorias</mat-label>
+
+              <mat-select  formControlName="categoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="propriedade.categoria.touched && propriedade.categoria.errors?.required">
+                Escolha uma Categoria.
+              </mat-error>
+
+              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('categoria')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row w-100">
+          <div class="col-md mb-1">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Valor</mat-label>
+              <input matInput type="text" formControlName="valor" required mask="separator.2" thousandSeparator="."
+                [align]="'right'">
+
+              <mat-error *ngIf="propriedade.valor.touched && propriedade.valor.errors?.required">
+                Insira o valor.
+              </mat-error>
+
+              <mat-error *ngIf="propriedade.valor.touched && propriedade.valor.errors?.valorInvalido">
+                O valor tem que ser maior que 0.
+              </mat-error>
+
+              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('valor')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row w-100">
+          <div class="col-md mb-1">
+            <mat-form-field class="w-100" color="blue" appearance="outline">
+              <mat-label>Escolha uma data</mat-label>
+              <input matInput [matDatepicker]="picker1" formControlName="data">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions>
+        <div class="divBotoes mb-1">
+          <button type="submit" mat-raised-button color="primary">Salvar</button>
+          <button type="button" mat-raised-button (click)="voltar()">Voltar</button>
+        </div>
+      </mat-card-actions>
+
+    </form>
+  </mat-card>
+</div>

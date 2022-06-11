@@ -2,35 +2,34 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { NgxMaskModule } from 'ngx-mask';
+import { MatTableModule } from '@angular/material/table';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { AlertModalModule } from 'src/app/shared/alert-modal/alert-modal.module';
 
-import { CartaoFormComponent } from './cartao-form.component';
+import { GanhoListaComponent } from './ganho-lista.component';
 
 @NgModule({
-  declarations: [
-    CartaoFormComponent
-  ],
+  declarations: [GanhoListaComponent],
   imports: [
     CommonModule,
+    MatTableModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatIconModule,
+    NgxSpinnerModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDividerModule,
-    NgxMaskModule,
-    NgxMaskModule.forRoot(),
-    AlertModalModule,
-    NgxSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatDatepickerModule
   ]
 })
-export class CartaoFormModule { }
+export class GanhoListaModule { }

@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule}  from '@angular/material/list';
 import { CategoriaModule } from './categoria/categoria.module';
 import { DespesaModule } from './despesa/despesa.module';
+import { GanhoModule } from './ganho/ganho.module';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { DespesaModule } from './despesa/despesa.module';
     MatDividerModule,
     MatListModule,
     DespesaModule,
+    GanhoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
