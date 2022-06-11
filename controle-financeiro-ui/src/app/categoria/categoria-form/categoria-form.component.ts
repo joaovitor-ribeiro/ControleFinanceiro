@@ -119,6 +119,6 @@ export class CategoriaFormComponent implements OnInit {
   colocarFocoCampoNome() {
     setTimeout(() => {
       document.getElementById('nome')?.focus();
-    }, 300);
+    }, 100);
   }
 }

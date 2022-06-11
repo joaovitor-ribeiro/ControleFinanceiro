@@ -1,6 +1,6 @@
 import { finalize } from 'rxjs/operators';
 import { Ganho } from './../ganho.model';
-import { Categoria } from './../../categoria/categoria.model';
+import { Categoria, FiltroCategoria } from './../../categoria/categoria.model';
 import { GanhoService } from './../ganho.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -90,7 +90,7 @@ export class GanhoFormComponent implements OnInit {
   }
 
   private async carregarCategoria() {
-    await this.categoriaService.listar().toPromise().then(categorias => {
+    await this.categoriaService.listar({nome: '', tipo: 'G'} as FiltroCategoria).toPromise().then(categorias => {
       this.categorias = categorias;
     });
   }

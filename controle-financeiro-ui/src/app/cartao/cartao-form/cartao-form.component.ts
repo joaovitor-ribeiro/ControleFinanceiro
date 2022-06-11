@@ -135,18 +135,20 @@ export class CartaoFormComponent implements OnInit {
   colocarFocoCampoNome() {
     setTimeout(() => {
       document.getElementById('nome')?.focus();
-    }, 300);
+    }, 100);
   }
 
   validarNumero(numero: string) {
     let total = 0;
-    for (let i = 0; i < numero.length; i++) {
+    let deveDobrar = false;
+    for (let i = numero.length - 1; i >=0; i--) {
       let digito = +numero[i];
-      if (i % 2 === 0) {
+      if (deveDobrar) {
         digito *= 2;
         if (digito > 9) digito -= 9;
       }
       total += digito;
+      deveDobrar = !deveDobrar;
     }
     return total % 10 === 0;
   }

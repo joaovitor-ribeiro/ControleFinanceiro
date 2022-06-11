@@ -17,6 +17,11 @@ const routes: Routes = [
     loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
   },
 
+  {
+    path: 'ganho',
+    loadChildren: () => import('./ganho/ganho.module').then(m => m.GanhoModule)
+  },
+
   {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'}
 ];
 

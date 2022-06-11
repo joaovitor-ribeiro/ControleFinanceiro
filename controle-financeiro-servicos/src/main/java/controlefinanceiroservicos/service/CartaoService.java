@@ -77,7 +77,7 @@ public class CartaoService {
 		}
 	}
 	
-	private void validacoes(Cartao cartao){
+	public void validacoes(Cartao cartao){
 		if (cartao.getNome().isEmpty()) {
 			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
 		} else if (cartao.getNome().length() < 3) {
@@ -109,20 +109,22 @@ public class CartaoService {
 		}			
 	}
 	
-	private boolean validarNumeroCartao(String numero) {
+	public boolean validarNumeroCartao(String numero) {
 		int total = 0;
-		for (int i = 0; i < numero.length() ; i++) {
-			int digito = Integer.parseInt(numero.substring(i, i + 1));
-			if (i % 2 == 0) {
+		boolean deveDobrar = false;
+		for (int i = numero.length() - 1; i >= 0; i--) {
+			int digito = Integer.parseInt(numero.substring(i, (i + 1)));
+			if (deveDobrar) {
 				digito *= 2;
 				if (digito > 9) digito -= 9;
 			}
 			total += digito;
+			deveDobrar = !deveDobrar;
 		}
 		return total % 10 == 0;
 	}
 	
-	private boolean validarNumeroCorrespondenteABandeira(String numero, String bandeira) {
+	public boolean validarNumeroCorrespondenteABandeira(String numero, String bandeira) {
 		switch (bandeira) {
 		case "Mastercard":
 			return numero.startsWith("51") || numero.startsWith("52") || numero.startsWith("53") || 
