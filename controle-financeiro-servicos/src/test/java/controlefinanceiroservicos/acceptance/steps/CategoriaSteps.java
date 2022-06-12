@@ -11,15 +11,18 @@ import io.cucumber.java.pt.Quando;
 
 public class CategoriaSteps {
 	
-	CategoriaPage categoriaPage = new CategoriaPage();
+	CategoriaPage categoriaPage;
 	
 	@After
-	public void fecharNavegador() {
-		categoriaPage.fecharNavegador();
+	public void depois() {
+		if (categoriaPage != null) {
+			categoriaPage.sair();
+		}
 	}
 	
 	@Dado("que estou na página de cadastro de categoria")
 	public void que_estou_na_página_de_cadastro_de_categoria() {
+		categoriaPage = new CategoriaPage();
 		categoriaPage.navegaParaCategoriaListar();
 		categoriaPage.clicoBotaoNovaCategoria();
 	}

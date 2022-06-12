@@ -18,5 +18,5 @@ public class CategoriaPage extends PageObject {
 		browser.findElement(By.cssSelector("mat-select[formcontrolname=tipo]")).sendKeys(tipo);
 		espesar();
 	}
-
+	
 }

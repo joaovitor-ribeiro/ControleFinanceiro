@@ -36,6 +36,10 @@ public class PageObject {
 		wait = new WebDriverWait(browser, 40);
 	}
 	
+	public void sair() {
+		browser.quit();
+	}
+	
 	public void acionoBotaoSalvar() {
 		browser.findElement(By.cssSelector("button[type=submit]")).click();
 	}

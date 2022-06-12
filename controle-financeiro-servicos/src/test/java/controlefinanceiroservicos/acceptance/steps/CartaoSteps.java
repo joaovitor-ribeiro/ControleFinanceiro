@@ -11,15 +11,18 @@ import io.cucumber.java.pt.Quando;
 
 public class CartaoSteps {
 	
-	CartaoPage cartaoPage = new CartaoPage();
+	CartaoPage cartaoPage;
 	
 	@After
-	public void fecharNavegador() {
-		cartaoPage.fecharNavegador();
+	public void depois() {
+		if (cartaoPage != null) {
+			cartaoPage.sair();
+		}
 	}
 	
 	@Dado("que estou na página de cadastro de cartão")
 	public void que_estou_na_página_de_cadastro_de_cartão() {
+		cartaoPage = new CartaoPage();
 		cartaoPage.navegaParaCartaoListar();
 		cartaoPage.clicoBotaoNovoCartao();
 	}
