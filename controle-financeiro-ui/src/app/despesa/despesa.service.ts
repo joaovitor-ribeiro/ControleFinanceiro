@@ -38,6 +38,7 @@ export class DespesaService {
 
     return this.http.get<PageDespesa>(this.url + 'listar', {params}).pipe(map(pageDespesa => {
       pageDespesa.content.forEach(despesa => {
+        despesa.valor = Number(despesa.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
         switch (despesa.cartao.numero.length) {
           case 16:
             despesa.cartao.numero = despesa.cartao.numero.replace(/(\d{4})?(\d{4})?(\d{4})?(\d{4})/, '$1 $2 $3 $4');

@@ -16,11 +16,11 @@ public class PageObject {
 //  publico e todos consegue acessar, no de baixo não usamos pq o public vem por padrão quando
 //  não colocamos nada.
 	
-	WebDriver     browser;
+	WebDriver browser;
 	
 	WebDriverWait wait;
 	
-	public PageObject() {
+	public void iniciarDriver() {
 		// Avisa o sistema onde está o nosso chromedriver, 
 		// é necessário pq o driver não está na raiz do projeto
 		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
@@ -34,10 +34,6 @@ public class PageObject {
 		// Instancia nosso wait (espera) falando que quando formos utilizar essa variavel para esperar
 		// ela irá esperar por 40 segundos no máximo
 		wait = new WebDriverWait(browser, 40);
-	}
-	
-	public void sair() {
-		browser.quit();
 	}
 	
 	public void acionoBotaoSalvar() {
@@ -61,8 +57,10 @@ public class PageObject {
 		return wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.className("mat-error")))).getText();
 	}
 	
-	public void fecharNavegador() {
-		this.browser.quit();
+	public void sair() {
+		if (browser != null) {
+			browser.quit();
+		}
 	}
 	
 	public void espesar() {

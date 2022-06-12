@@ -139,8 +139,8 @@ export class GanhoFormComponent implements OnInit {
       categoria: this.categorias.filter(categoria => categoria.id === Number(this.ganhoFormulario.get('categoria')?.value))[0],
     } as Ganho;
 
-    let valor = String(ganho.valor).replace(/\D/g, '');
-    ganho.valor = Number(valor);
+    // let valor = String(ganho.valor).replace(/\D/g, '');
+    ganho.valor =  this.formataValor(ganho.valor);
 
     return ganho;
   }
@@ -152,4 +152,12 @@ export class GanhoFormComponent implements OnInit {
   async validarValor(formControl: FormControl) {
     return formControl.value <= 0 ? { valorInvalido: true } : null;
   }
+
+  formataValor(valor: any) {
+    valor = valor.replace('/[^0-9]/g', '');
+    valor = valor.replace('.', '')
+    valor = Number(valor.replace(',', '.'));
+    return valor;
+  }
+
 }

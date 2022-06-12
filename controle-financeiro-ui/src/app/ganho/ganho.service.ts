@@ -50,6 +50,9 @@ export class GanhoService {
     }
 
     return this.http.get<PageGanho>(this.url + 'listar', {params}).pipe(map(pageGanho => {
+      pageGanho.content.forEach(ganho => {
+        ganho.valor = Number(ganho.valor).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+      });
       return pageGanho;
     }));
   }

@@ -12,7 +12,7 @@ Funcionalidade: Cadastro de categoria
 	@categoria-cadastra-sucesso
 	Esquema do Cenario: Cadastro da categoria "<nome>" realizado com sucesso
     Quando O preencho os campos nome "<nome>" tipo "<tipo>" 
-    E aciono o botao salvar do cadastro de categoria
+    E aciono o botão salvar do cadastro de categoria
     Entao será exibido a mensagem "Categoria cadastrada com sucesso"
     E o usuário será redirecionado para a grid da categoria
   

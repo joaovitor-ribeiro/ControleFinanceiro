@@ -10,7 +10,6 @@ const cartaoRoutes: Routes = [
   {path: ':id', component: CartaoFormComponent},
 ];
 
-
 @NgModule({
   imports: [RouterModule.forChild(cartaoRoutes)],
   exports: [RouterModule]

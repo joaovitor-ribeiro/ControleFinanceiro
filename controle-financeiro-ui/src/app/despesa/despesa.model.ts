@@ -6,7 +6,7 @@ export interface Despesa {
   categoria: Categoria;
   descricao: string;
   cartao: Cartao;
-  valor: number;
+  valor: string;
   data: Date;
 }
 

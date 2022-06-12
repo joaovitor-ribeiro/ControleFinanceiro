@@ -4,7 +4,7 @@ export interface Ganho {
   id: number;
   descricao: string;
   categoria: Categoria;
-  valor: number;
+  valor: string;
   data: string;
 }
 

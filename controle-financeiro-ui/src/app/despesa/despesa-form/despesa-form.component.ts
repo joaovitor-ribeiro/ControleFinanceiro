@@ -140,11 +140,11 @@ export class DespesaFormComponent implements OnInit {
       data: this.despesaFormulario.get('data')?.value,
     } as Despesa;
 
-    let limite = despesa.cartao.limite.replace(/\D/g, '');
-    despesa.cartao.limite = limite;
+    // let limite = despesa.cartao.limite.replace(/\D/g, '');
+    despesa.cartao.limite = this.formataValor(despesa.cartao.limite);
 
-    let valor = String(despesa.valor).replace(/\D/g, '');
-    despesa.valor = Number(valor);
+    // let valor = String(despesa.valor).replace(/\D/g, '');
+    despesa.valor = this.formataValor(despesa.valor);
 
     return despesa;
   }
@@ -156,7 +156,14 @@ export class DespesaFormComponent implements OnInit {
   colocarFocoCampoCartao() {
     setTimeout(() => {
       document.getElementById('cartao')?.focus();
-    }, 300);
+    }, 100);
+  }
+
+  formataValor(valor: any) {
+    valor = valor.replace('/[^0-9]/g', '');
+    valor = valor.replace('.', '')
+    valor = Number(valor.replace(',', '.'));
+    return valor;
   }
 
 }

@@ -11,18 +11,17 @@ import io.cucumber.java.pt.Quando;
 
 public class CategoriaSteps {
 	
-	CategoriaPage categoriaPage;
+	CategoriaPage categoriaPage = new CategoriaPage();
 	
+	//@After vai executar depois de cada teste.
 	@After
 	public void depois() {
-		if (categoriaPage != null) {
-			categoriaPage.sair();
-		}
+		categoriaPage.sair();
 	}
 	
 	@Dado("que estou na página de cadastro de categoria")
 	public void que_estou_na_página_de_cadastro_de_categoria() {
-		categoriaPage = new CategoriaPage();
+		categoriaPage.iniciarDriver();
 		categoriaPage.navegaParaCategoriaListar();
 		categoriaPage.clicoBotaoNovaCategoria();
 	}
@@ -33,7 +32,7 @@ public class CategoriaSteps {
 		categoriaPage.preencherFormulario(nome, tipo);
 	}
 	
-	@Quando("aciono o botao salvar do cadastro de categoria")
+	@Quando("aciono o botão salvar do cadastro de categoria")
 	public void aciono_o_botao_salvar_do_cadastro_de_categoria() {
 		categoriaPage.acionoBotaoSalvar();
 	}

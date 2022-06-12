@@ -11,18 +11,17 @@ import io.cucumber.java.pt.Quando;
 
 public class CartaoSteps {
 	
-	CartaoPage cartaoPage;
+	CartaoPage cartaoPage = new CartaoPage();
 	
+	//@After vai executar depois de cada teste.
 	@After
 	public void depois() {
-		if (cartaoPage != null) {
-			cartaoPage.sair();
-		}
+		cartaoPage.sair();
 	}
 	
 	@Dado("que estou na página de cadastro de cartão")
 	public void que_estou_na_página_de_cadastro_de_cartão() {
-		cartaoPage = new CartaoPage();
+		cartaoPage.iniciarDriver();
 		cartaoPage.navegaParaCartaoListar();
 		cartaoPage.clicoBotaoNovoCartao();
 	}
