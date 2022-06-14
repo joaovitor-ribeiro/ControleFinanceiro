@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UsuarioFormComponent } from './usuario/usuario-form/usuario-form.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,13 @@ const routes: Routes = [
     loadChildren: () => import('./ganho/ganho.module').then(m => m.GanhoModule)
   },
 
-  {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'}
+  {path: 'usuario/inserir', component: UsuarioFormComponent},
+
+  {path: 'usuario/:id', component: UsuarioFormComponent},
+
+  {path: '', redirectTo: 'usuario/inserir', pathMatch: 'full'},
+
+  {path: '**', redirectTo: 'cartao/listar', pathMatch: 'full'}
 ];
 
 @NgModule({

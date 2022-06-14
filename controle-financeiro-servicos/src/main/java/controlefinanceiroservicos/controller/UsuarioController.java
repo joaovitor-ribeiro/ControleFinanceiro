@@ -1,6 +1,6 @@
 package controlefinanceiroservicos.controller;
 
-import java.util.List;
+import java.io.IOException;
 
 import javax.transaction.Transactional;
 
@@ -14,47 +14,50 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import controlefinanceiroservicos.model.Cartao;
-import controlefinanceiroservicos.service.CartaoService;
+import controlefinanceiroservicos.model.Usuario;
+import controlefinanceiroservicos.service.UsuarioService;
 
 @RestController
-@RequestMapping ("cartao")
+@RequestMapping("usuario")
 @CrossOrigin
-public class CartaoController {
+public class UsuarioController {
 	
-	@Autowired //Instância o service
-	private CartaoService cartaoService;
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	@ResponseStatus(HttpStatus.CREATED)
-	@RequestMapping(method = RequestMethod.POST, path = "/inserir")	
-	public void inserir(@RequestBody Cartao cartao){ //@RequestBody: Indica que as informações vão vir no corpo da requisição
-		cartaoService.inserir(cartao);
+	@RequestMapping(method = RequestMethod.POST, path = "/inserir")
+	public Integer inserir(@RequestBody Usuario usuario) {
+		return usuarioService.inserir(usuario);		
 	}
 	
-	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(method = RequestMethod.GET, path = "/listar")
-	public List<Cartao> listar(@RequestParam(required = false) String nome, @RequestParam(required = false) List<String> bandeiras) {
-		return cartaoService.listar(nome, bandeiras);
+	@ResponseStatus(HttpStatus.CREATED)
+	@RequestMapping(method = RequestMethod.POST, path = "/inserir/{id}")
+	@Transactional
+	public void inserirFoto(@RequestParam("file") MultipartFile foto, @PathVariable Integer id) throws IOException {
+		usuarioService.inserirFoto(foto, id);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
-	public Cartao retornarCartaoId(@PathVariable Integer id){
-		return cartaoService.retornarCartaoId(id);
+	public Usuario retornarUsuarioId(@PathVariable Integer id) {
+		return usuarioService.retornarUsuarioId(id);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(method = RequestMethod.PUT, path = "/editar/{id}")
 	@Transactional
-	public void editar(@PathVariable Integer id, @RequestBody Cartao cartaoNovo){
-		cartaoService.editar(id, cartaoNovo);
+	public void editar(@PathVariable Integer id, @RequestBody Usuario usuarioNovo) {
+		usuarioService.editar(id, usuarioNovo);		
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(method = RequestMethod.DELETE, path = "/excluir/{id}")
 	@Transactional
-	public void excluir(@PathVariable Integer id){
-		cartaoService.excluir(id);
+	public void excluir(@PathVariable Integer id) {
+		usuarioService.excluir(id);
 	}
+	
 }

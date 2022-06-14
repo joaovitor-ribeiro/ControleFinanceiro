@@ -1,0 +1,50 @@
+.divCartaoUsuario {
+  padding: 50px;
+  width: 60vw;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.divAll {
+  display: flex;
+  justify-content: space-between;
+}
+
+.divForm {
+  width: 100%;
+}
+
+.tamanhoImagem {
+  width: 10vw;
+}
+
+.divBotoesUsuario {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkFacaLogin {
+  font-weight: 500;
+}
+
+::ng-deep .cardHeader{
+  .mat-card-header-text{
+    width: 100%;
+    display: flex;
+  }
+}
+
+.divEscolherFoto {
+  display: flex;
+  justify-content: center;
+  padding-top: 18px;
+}
+
+
+.corTexto {
+  color: #0000ffcc;
+  border: 1px solid #00000042;
+}
