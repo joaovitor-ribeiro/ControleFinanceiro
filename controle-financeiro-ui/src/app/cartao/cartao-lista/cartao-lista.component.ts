@@ -104,7 +104,7 @@ export class CartaoListaComponent implements OnInit {
 
   anexarConculta() {
     const bandeiras = this.filtroFormulario.get('bandeiras')?.value || null
-    this.router.navigate([''], {
+    this.router.navigate([], {
       queryParams: {
         nome: this.filtroFormulario.get('nome')?.value || null,
         bandeiras: bandeiras,

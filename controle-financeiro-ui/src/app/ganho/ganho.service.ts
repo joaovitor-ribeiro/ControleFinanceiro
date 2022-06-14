@@ -5,6 +5,7 @@ import { ErrorModalService } from '../shared/error-modal/error-modal.service';
 import { environment } from './../../environments/environment';
 import { Ganho, FiltroGanho, PageGanho, Paginacao } from './ganho.model';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

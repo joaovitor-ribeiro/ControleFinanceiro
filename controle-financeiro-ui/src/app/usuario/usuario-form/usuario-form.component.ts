@@ -54,7 +54,7 @@ export class UsuarioFormComponent implements OnInit {
         this.editar = true;
         this.carregando = true;
         this.spinner.show();
-        this.usuarioService.retornarUsuarioId(this.id).subscribe( usuario => {
+        this.usuarioService.retornarUsuarioId(this.id).subscribe(usuario => {
           this.usuario = usuario;
           let objectURL = 'data:image/png;base64,' + usuario.foto;
           this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);

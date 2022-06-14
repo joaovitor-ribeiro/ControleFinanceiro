@@ -5,9 +5,9 @@ import { CartaoFormComponent } from './cartao-form/cartao-form.component';
 import { CartaoListaComponent } from './cartao-lista/cartao-lista.component';
 
 const cartaoRoutes: Routes = [
-  {path: 'listar', component: CartaoListaComponent},
+  {path: 'listar',  component: CartaoListaComponent},
   {path: 'inserir', component: CartaoFormComponent},
-  {path: ':id', component: CartaoFormComponent},
+  {path: ':id',     component: CartaoFormComponent},
 ];
 
 @NgModule({
