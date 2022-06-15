@@ -14,7 +14,7 @@ public class CartaoPage extends PageObject {
 	
 	public void preencherFormulario(String nome, String bandeira, String numero, String limite) {
 		// Espera o foco ir para o campo nome
-		espesar();
+		esperar();
 		
 		browser.findElement(By.cssSelector("input[formcontrolname=nome]")).sendKeys(nome);
 		browser.findElement(By.cssSelector("mat-select[formcontrolname=bandeira]")).sendKeys(bandeira);
@@ -23,7 +23,7 @@ public class CartaoPage extends PageObject {
 		
 		// Espera ser feitas todas as validações exemplo: verificar se o número é válido 
 		// verificar se o número corresponde a bandeira
-		espesar();
+		esperar();
 	}
 	
 }

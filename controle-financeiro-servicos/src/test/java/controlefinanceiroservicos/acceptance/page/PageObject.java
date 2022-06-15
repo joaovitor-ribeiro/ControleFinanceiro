@@ -63,7 +63,7 @@ public class PageObject {
 		}
 	}
 	
-	public void espesar() {
+	public void esperar() {
 		try {
 			Thread.sleep(250);
 		} catch (InterruptedException e) {

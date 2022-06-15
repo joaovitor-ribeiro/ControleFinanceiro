@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class) 
-@CucumberOptions(features = "classpath:features", tags = "@cadastro-categoria")
+@CucumberOptions(features = "classpath:features", tags = "@ganho-cadastro-sucesso")
 public class CucumberRunner {
 
 }

@@ -13,10 +13,10 @@ public class CategoriaPage extends PageObject {
 	}
 	
 	public void preencherFormulario(String nome, String tipo) {
-		espesar();
+		esperar();
 		browser.findElement(By.cssSelector("input[formcontrolname=nome]")).sendKeys(nome);
 		browser.findElement(By.cssSelector("mat-select[formcontrolname=tipo]")).sendKeys(tipo);
-		espesar();
+		esperar();
 	}
 	
 }
