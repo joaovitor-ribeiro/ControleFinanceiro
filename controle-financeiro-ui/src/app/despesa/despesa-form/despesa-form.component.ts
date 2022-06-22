@@ -84,7 +84,7 @@ export class DespesaFormComponent implements OnInit {
       cartao: this.despesa.cartao.id,
       descricao: this.despesa.descricao,
       categoria: this.despesa.categoria.id,
-      valor: this.despesa.valor,
+      valor: Number(this.despesa.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2}),
       data: new Date(this.despesa.data),
     });
   }
@@ -160,9 +160,11 @@ export class DespesaFormComponent implements OnInit {
   }
 
   formataValor(valor: any) {
-    valor = valor.replace('/[^0-9]/g', '');
-    valor = valor.replace('.', '')
-    valor = Number(valor.replace(',', '.'));
+    if (String(valor).includes('.') || String(valor).includes(',')) {
+      valor = valor.replace('/[^0-9]/g', '');
+      valor = valor.replace('.', '')
+      valor = Number(valor.replace(',', '.'));
+    }
     return valor;
   }
 
