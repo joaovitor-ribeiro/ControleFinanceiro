@@ -9,6 +9,7 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
 
+
 public class CategoriaSteps {
 	
 	CategoriaPage categoriaPage = new CategoriaPage();
@@ -27,7 +28,7 @@ public class CategoriaSteps {
 	}
 
 
-	@Quando("O preencho os campos nome {string} tipo {string}")
+	@Quando("preencho os campos nome {string} tipo {string}")
 	public void o_preencho_os_campos_nome_tipo(String nome, String tipo) {
 		categoriaPage.preencherFormulario(nome, tipo);
 	}

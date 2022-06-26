@@ -26,7 +26,7 @@ public class CartaoSteps {
 		cartaoPage.clicoBotaoNovoCartao();
 	}
 
-	@Quando("O preencho os campos nome {string} bandeira {string} numero {string} limite {string}")
+	@Quando("preencho os campos nome {string} bandeira {string} numero {string} limite {string}")
 	public void o_preencho_os_campos_nome_bandeira_numero_limite(String nome, String bandeira, String numero, String limite) {
 		cartaoPage.preencherFormulario(nome, bandeira, numero, limite);
 	}

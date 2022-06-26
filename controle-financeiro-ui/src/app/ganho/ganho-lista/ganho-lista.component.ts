@@ -96,8 +96,10 @@ export class GanhoListaComponent implements OnInit {
   private async carregarCategoria() {
     await this.categoriaService.listar().toPromise().then(categorias => {
       this.categorias = categorias;
-    },
-    () => {});
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
+    });
   }
 
   limparBotoes(valor: string) {

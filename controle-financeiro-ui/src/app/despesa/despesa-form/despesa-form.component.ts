@@ -59,7 +59,7 @@ export class DespesaFormComponent implements OnInit {
       data: ['', [Validators.required]],
     });
 
-    this.route.params?.subscribe(value => { //subscribe é usado para receber algo que é retornado por um observable
+    this.route.params?.subscribe(value => {
       if (value?.id) {
         this.id = value.id;
         this.editar = true;
@@ -80,11 +80,11 @@ export class DespesaFormComponent implements OnInit {
   }
 
   preencherFormulario(){
-    this.despesaFormulario.patchValue({ //Passando os valores para o formulário
+    this.despesaFormulario.patchValue({
       cartao: this.despesa.cartao.id,
       descricao: this.despesa.descricao,
       categoria: this.despesa.categoria.id,
-      valor: this.despesa.valor,
+      valor: Number(this.despesa.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2}),
       data: new Date(this.despesa.data),
     });
   }
@@ -92,6 +92,9 @@ export class DespesaFormComponent implements OnInit {
   private async carregarCartao() {
     await this.cartaoService.listar().toPromise().then(cartoes => {
       this.cartoes = cartoes;
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
     });
   }
 
@@ -99,6 +102,9 @@ export class DespesaFormComponent implements OnInit {
     await this.categoriaService.listar({nome: '', tipo: 'D'} as FiltroCategoria)
     .toPromise().then(categorias => {
       this.categorias = categorias;
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
     });
   }
 
@@ -160,9 +166,11 @@ export class DespesaFormComponent implements OnInit {
   }
 
   formataValor(valor: any) {
-    valor = valor.replace('/[^0-9]/g', '');
-    valor = valor.replace('.', '')
-    valor = Number(valor.replace(',', '.'));
+    if (String(valor).includes('.') || String(valor).includes(',')) {
+      valor = valor.replace('/[^0-9]/g', '');
+      valor = valor.replace('.', '')
+      valor = Number(valor.replace(',', '.'));
+    }
     return valor;
   }
 

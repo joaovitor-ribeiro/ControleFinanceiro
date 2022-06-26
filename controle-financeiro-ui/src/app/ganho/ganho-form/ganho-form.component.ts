@@ -84,14 +84,17 @@ export class GanhoFormComponent implements OnInit {
     this.ganhoFormulario.patchValue({
       descricao: this.ganho.descricao,
       categoria: this.ganho.categoria.id,
-      valor: this.ganho.valor, //Number(this.ganho.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2}),
+      valor: Number(this.ganho.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2}),
       data: new Date(this.ganho.data),
-    })
+    });
   }
 
   private async carregarCategoria() {
     await this.categoriaService.listar({nome: '', tipo: 'G'} as FiltroCategoria).toPromise().then(categorias => {
       this.categorias = categorias;
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
     });
   }
 
@@ -154,9 +157,11 @@ export class GanhoFormComponent implements OnInit {
   }
 
   formataValor(valor: any) {
-    valor = valor.replace('/[^0-9]/g', '');
-    valor = valor.replace('.', '')
-    valor = Number(valor.replace(',', '.'));
+    if (String(valor).includes('.') || String(valor).includes(',')) {
+      valor = valor.replace('/[^0-9]/g', '');
+      valor = valor.replace('.', '')
+      valor = Number(valor.replace(',', '.'));
+    }
     return valor;
   }
 

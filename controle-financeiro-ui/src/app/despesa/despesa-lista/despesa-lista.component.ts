@@ -118,8 +118,10 @@ export class DespesaListaComponent implements OnInit {
   private async carregarCategoria() {
     await this.categoriaService.listar().toPromise().then(categorias => {
       this.categorias = categorias;
-    },
-    () => {});
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
+    });
   }
 
   inserir(){

@@ -7,7 +7,7 @@
           <img class="imagemBackgroud" src="../assets/menu/background.jpg">
         </div>
         <div>
-          <img src="../assets/menu/usuario.jpg" class="circle">
+          <a href="usuario/inserir"><img src="../assets/menu/usuario.jpg" class="circle"> </a>
         </div>
        <br/>
        <span class="spanUsuario">Usuário</span>
@@ -22,6 +22,12 @@
       <mat-list-option [selected]="isSelected('/dashboard/index')" routerLink="/dashboard/index">
         <div class="divOption">
           <mat-icon class="marginIcon">insert_chart_outlined</mat-icon> Dashboard
+        </div>
+      </mat-list-option>
+
+      <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
+        <div class="divOption">
+          <mat-icon class="marginIcon">reorder</mat-icon> Categorias
         </div>
       </mat-list-option>
 
@@ -43,14 +49,6 @@
           <mat-icon class="marginIcon">store</mat-icon> Despesas
         </div>
       </mat-list-option>
-
-      <div >
-        <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
-          <div class="divOption">
-            <mat-icon class="marginIcon">reorder</mat-icon> Categorias
-          </div>
-        </mat-list-option>
-      </div>
 
     </mat-selection-list>
   </mat-sidenav>
