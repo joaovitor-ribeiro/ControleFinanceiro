@@ -48,12 +48,11 @@ public class UsuarioService {
 			throw new RuntimeException("O nome não pode ter mais do que 20 caracteres!");
 		}
 		
-		//TODO: Validar se é um CPF válido
 		if (usuario.getCpf().isEmpty()) {
 			throw new RuntimeException("O campo CPF é de preenchimento obrigatório!");
-		} else if (usuario.getCpf().length() != 11) {
+		} else if (!validarCPF(usuario.getCpf())) {
 			throw new RuntimeException("CPF inválido!");
-		}
+		} 
 		
 		if (usuario.getEmail().isEmpty()) {
 			throw new RuntimeException("O campo email é de preenchimento obrigatório!");
@@ -106,5 +105,31 @@ public class UsuarioService {
 		} else {
 			throw new RuntimeException("Usuário não foi encontrado para a exclusão!");
 		}
+	}
+	
+	public boolean validarCPF(String cpf) {
+		int soma = 0;
+		int resto;
+		
+		if (cpf == "00000000000" || cpf.length() != 11) return false;
+
+		for (int i = 1; i <= 9; i++) {
+			soma = soma + Integer.parseInt(cpf.substring(i - 1, i)) * (11 - i);
+		}
+		resto = soma * 10 % 11;
+
+		if ((resto == 10) || (resto == 11)) resto = 0;
+		if (resto != Integer.parseInt(cpf.substring(9, 10))) return false;
+
+		soma = 0;
+		for (int i = 1; i <= 10; i++){
+			soma = soma + Integer.parseInt(cpf.substring(i - 1, i)) * (12 - i);
+		}
+		resto = soma * 10 % 11;
+
+		if ((resto == 10) || (resto == 11)) resto = 0;
+		if (resto != Integer.parseInt(cpf.substring(10, 11))) return false;
+
+		return true;
 	}
 }

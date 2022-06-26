@@ -13,7 +13,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .divCartao{
   padding: 50px;
   width: 35vw;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1400px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 75%;
+  }
+  @media screen and (max-width: 800px) {
     width: 100%;
   }
 }

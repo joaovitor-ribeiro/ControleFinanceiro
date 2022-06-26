@@ -25,6 +25,12 @@
         </div>
       </mat-list-option>
 
+      <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
+        <div class="divOption">
+          <mat-icon class="marginIcon">reorder</mat-icon> Categorias
+        </div>
+      </mat-list-option>
+
       <mat-list-option [selected]="isSelected('/cartao')" routerLink="/cartao/listar">
         <div class="divOption">
           <mat-icon class="marginIcon">credit_card</mat-icon>
@@ -40,17 +46,9 @@
 
       <mat-list-option [selected]="isSelected('/despesa')" routerLink="/despesa/listar">
         <div class="divOption">
-          <mat-icon class="marginIcon">payments</mat-icon> Despesas
+          <mat-icon class="marginIcon">store</mat-icon> Despesas
         </div>
       </mat-list-option>
-
-      <div >
-        <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
-          <div class="divOption">
-            <mat-icon class="marginIcon">reorder</mat-icon> Categorias
-          </div>
-        </mat-list-option>
-      </div>
 
     </mat-selection-list>
   </mat-sidenav>

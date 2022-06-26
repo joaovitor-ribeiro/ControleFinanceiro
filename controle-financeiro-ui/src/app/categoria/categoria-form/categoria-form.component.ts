@@ -76,14 +76,14 @@ export class CategoriaFormComponent implements OnInit {
     this.colocarFocoCampoNome();
   }
 
-  preencherFormulario(){
+  preencherFormulario() {
     this.categoriaFormulario.patchValue({
       nome: this.categoria.nome,
       tipo: this.categoria.tipo,
     });
   }
 
-  enviarFormulario(){
+  enviarFormulario() {
     if (this.categoriaFormulario.invalid) {
       this.categoriaFormulario.markAllAsTouched();
     }else{
@@ -108,11 +108,11 @@ export class CategoriaFormComponent implements OnInit {
     }
   }
 
-  limparBotoes(campo:string){
+  limparBotoes(campo:string) {
     this.categoriaFormulario.get(campo)?.setValue('');
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['categoria/listar']);
   }
 

@@ -41,6 +41,10 @@
                     Insira um CPF.
                   </mat-error>
 
+                  <mat-error *ngIf="propriedade.cpf.touched && propriedade.cpf.errors?.cpfInvalido">
+                    CPF inválido.
+                  </mat-error>
+
                   <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('cpf')">
                     <mat-icon>close</mat-icon>
                   </button>
@@ -56,6 +60,10 @@
 
                   <mat-error *ngIf="propriedade.email.touched && propriedade.email.errors?.required">
                     Insira um E-mail.
+                  </mat-error>
+
+                  <mat-error *ngIf="propriedade.email.touched && propriedade.email.errors?.email">
+                    E-mail inválido.
                   </mat-error>
 
                   <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('email')">
@@ -92,8 +100,7 @@
         <div class="w-100">
           <div class="row w-100">
             <div class="col-md d-flex justify-content-center">
-              <img *ngIf="image" [src]='image' class="tamanhoImagem"/>
-              <img *ngIf="!image" hidden id="foto" src="#" class="tamanhoImagem"/>
+              <img hidden id="foto" src="#" class="tamanhoImagem"/>
             </div>
           </div>
           <br>

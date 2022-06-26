@@ -1,13 +1,13 @@
-import { UsuarioService } from './../usuario.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
+
 import { Usuario } from '../usuario.model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { UsuarioService } from './../usuario.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -21,7 +21,6 @@ export class UsuarioFormComponent implements OnInit {
   editar!: boolean;
   foto!: File;
   usuario!: Usuario;
-  image!: any;
 
   get propriedade() {
     return this.usuarioFormulario.controls;
@@ -43,13 +42,13 @@ export class UsuarioFormComponent implements OnInit {
 
     this.usuarioFormulario = this.formBuilder.group({
       nome: ['', Validators.required],
-      cpf: ['', Validators.required],
-      email: ['', Validators.required],
+      cpf: ['', [Validators.required], [this.validarCPF.bind(this)]],
+      email: ['',[Validators.required, Validators.email]],
       senha: ['', Validators.required]
     });
 
     this.route.params?.subscribe(value => {
-      if (value?.id){
+      if (value?.id) {
         this.id = value.id;
         this.editar = true;
         this.carregando = true;
@@ -57,7 +56,8 @@ export class UsuarioFormComponent implements OnInit {
         this.usuarioService.retornarUsuarioId(this.id).subscribe(usuario => {
           this.usuario = usuario;
           let objectURL = 'data:image/png;base64,' + usuario.foto;
-          this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          document.getElementById('foto')?.removeAttribute('hidden');
+          document.getElementById('foto')?.setAttribute('src', objectURL);
           this.preencherFormulario();
         });
       }
@@ -76,6 +76,10 @@ export class UsuarioFormComponent implements OnInit {
       email: this.usuario.email,
       senha: this.usuario.senha
     })
+  }
+
+  async validarCPF(formControl: FormControl) {
+    return this.validaCPF(String(formControl.value)) ? null : { cpfInvalido: true };
   }
 
   enviarFormulario() {
@@ -156,10 +160,33 @@ export class UsuarioFormComponent implements OnInit {
       this.foto = {} as File;
     }
 
-    if (this.editar && this.foto?.size > 0) {
-      this.image = null;
-    }
-
     reader.readAsDataURL(this.foto);
   }
+
+  validaCPF(cpf: string) {
+    let soma = 0;
+    let resto;
+
+    if (cpf == "00000000000") return false;
+
+    for (let i = 1; i <= 9; i++) {
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    resto = soma * 10 % 11;
+
+    if ((resto == 10) || (resto == 11)) resto = 0;
+    if (resto != parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++){
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    resto = soma * 10 % 11;
+
+    if ((resto == 10) || (resto == 11)) resto = 0;
+    if (resto != parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  }
+
 }

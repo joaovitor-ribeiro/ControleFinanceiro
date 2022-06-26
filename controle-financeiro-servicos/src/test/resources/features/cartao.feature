@@ -11,7 +11,7 @@ Funcionalidade: Cadastro de cartão
 	
 	@cartao-cadastro-sucesso
 	Esquema do Cenario: Cadastro do cartão "<nome>" realizado com sucesso
-    Quando O preencho os campos nome "<nome>" bandeira "<bandeira>" numero "<numero>" limite "<limite>"
+    Quando preencho os campos nome "<nome>" bandeira "<bandeira>" numero "<numero>" limite "<limite>"
     E aciono o botão salvar do cadastro de cartão 
     Entao será exibido o alerta "Cartão cadastrado com sucesso"
     E o usuário será redirecionado para a grid do cartão
@@ -26,9 +26,9 @@ Funcionalidade: Cadastro de cartão
 	| ELO       | Diners Club      | 30289539153372   | 1900   |
 	| Santander | Hipercard        | 6062824301637513 | 2200   |
 	
-	@cartao-cadastro-sucesso
+	@cartao-cadastro-validacoes-mensagens
 	Esquema do Cenario: Validação da mensagem "<mensagem>"
-    Quando O preencho os campos nome "<nome>" bandeira "<bandeira>" numero "<numero>" limite "<limite>"
+    Quando preencho os campos nome "<nome>" bandeira "<bandeira>" numero "<numero>" limite "<limite>"
     E aciono o botão salvar do cadastro de cartão 
     Entao será exibido a mensagem "<mensagem>" de erro
   

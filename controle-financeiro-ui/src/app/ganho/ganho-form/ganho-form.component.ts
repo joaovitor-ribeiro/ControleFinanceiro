@@ -92,6 +92,9 @@ export class GanhoFormComponent implements OnInit {
   private async carregarCategoria() {
     await this.categoriaService.listar({nome: '', tipo: 'G'} as FiltroCategoria).toPromise().then(categorias => {
       this.categorias = categorias;
+    }).catch (() => {
+      this.spinner.hide();
+      this.carregando = false;
     });
   }
 

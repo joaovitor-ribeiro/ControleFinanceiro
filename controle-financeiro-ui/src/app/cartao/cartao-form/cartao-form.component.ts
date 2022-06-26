@@ -68,7 +68,6 @@ export class CartaoFormComponent implements OnInit {
   async validarLimite(formControl: FormControl) {
     //Exemplo de operador ternário
     return formControl.value <= 0 ? { limiteInvalido: true } : null;
-
     /*
     if (formControl.value <= 0) {
       return {limiteInvalido: true}
