@@ -10,7 +10,7 @@
   <mat-card class="card">
     <mat-card-header class="cardHeader">
       <mat-card-title>
-        <h2>Cadastro de ganhos</h2>
+        <h2>Cadastro de ganho</h2>
       </mat-card-title>
     </mat-card-header>
 
@@ -43,12 +43,12 @@
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Categorias</mat-label>
 
-              <mat-select  formControlName="categoria">
+              <mat-select  formControlName="categoria" required>
                 <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
               </mat-select>
 
               <mat-error *ngIf="propriedade.categoria.touched && propriedade.categoria.errors?.required">
-                Escolha uma Categoria.
+                Escolha a categoria.
               </mat-error>
 
               <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('categoria')">
@@ -83,10 +83,23 @@
         <div class="row w-100">
           <div class="col-md mb-1">
             <mat-form-field class="w-100" color="blue" appearance="outline">
-              <mat-label>Escolha uma data</mat-label>
-              <input matInput [matDatepicker]="picker1" formControlName="data">
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="picker1" formControlName="data" required>
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
+
+              <mat-error *ngIf="propriedade.data.touched && propriedade.data.errors?.required && !propriedade.data.errors?.matDatepickerParse">
+                Escolha a data.
+              </mat-error>
+
+              <mat-error *ngIf="propriedade.data.touched && propriedade.data.errors?.matDatepickerParse">
+                Data inválida.
+              </mat-error>
+
+              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('data')">
+                <mat-icon>close</mat-icon>
+              </button>
+
             </mat-form-field>
           </div>
         </div>

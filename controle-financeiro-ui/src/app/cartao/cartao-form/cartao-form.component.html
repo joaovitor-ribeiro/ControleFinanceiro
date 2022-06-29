@@ -6,7 +6,7 @@
   <mat-card class="card">
     <mat-card-header class="cardHeader">
       <mat-card-title>
-        <h2>Cadastro de cartões</h2>
+        <h2>Cadastro de cartão</h2>
       </mat-card-title>
     </mat-card-header>
 
@@ -38,12 +38,12 @@
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Bandeira</mat-label>
 
-              <mat-select  formControlName="bandeira">
+              <mat-select formControlName="bandeira" required>
                 <mat-option (onSelectionChange)="verificarErrorsNumeroCartao()" *ngFor="let bandeira of bandeiras" [value]="bandeira">{{bandeira}}</mat-option>
               </mat-select>
 
               <mat-error *ngIf="propriedade.bandeira.touched && propriedade.bandeira.errors?.required">
-                Insira a bandeira.
+                Escolha a bandeira.
               </mat-error>
 
               <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('bandeira')">
