@@ -51,7 +51,7 @@ export class GanhoFormComponent implements OnInit {
     this.ganhoFormulario = this.formBuilder.group({
       descricao: ['', [Validators.required, Validators.minLength(3)]],
       categoria: ['', [Validators.required]],
-      valor: ['', Validators.required],
+      valor: ['', [Validators.required], [this.validarValor.bind(this)]],
       data: ['', Validators.required]
     });
 
@@ -109,9 +109,9 @@ export class GanhoFormComponent implements OnInit {
   }
 
   enviarFormulario() {
-    if (this.ganhoFormulario.invalid){
+    if (this.ganhoFormulario.invalid) {
       this.ganhoFormulario.markAllAsTouched();
-    }else{
+    } else {
       const ganho = this.returnGanho();
 
       if (this.editar){
@@ -153,7 +153,7 @@ export class GanhoFormComponent implements OnInit {
   }
 
   async validarValor(formControl: FormControl) {
-    return formControl.value <= 0 ? { valorInvalido: true } : null;
+    return formControl.value?.replace(',', '.') <= 0 ? { valorInvalido: true } : null;
   }
 
   formataValor(valor: any) {

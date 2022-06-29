@@ -41,9 +41,9 @@
         <div class="row w-100">
           <div class="col-md mb-1">
             <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Categorias</mat-label>
+              <mat-label>Categoria</mat-label>
 
-              <mat-select  formControlName="categoria" required>
+              <mat-select formControlName="categoria" required>
                 <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
               </mat-select>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -54,8 +54,8 @@ export class DespesaFormComponent implements OnInit {
     this.despesaFormulario = this.formBuilder.group({
       cartao: ['', [Validators.required]],
       descricao: ['', [Validators.required, Validators.minLength(3)]],
-      categoria: ['', [Validators.required]],
-      valor: ['', [Validators.required]],
+      categoria: ['', [Validators.required],],
+      valor: ['', [Validators.required], [this.validarValor.bind(this)]],
       data: ['', [Validators.required]],
     });
 
@@ -79,7 +79,7 @@ export class DespesaFormComponent implements OnInit {
     this.colocarFocoCampoCartao();
   }
 
-  preencherFormulario(){
+  preencherFormulario() {
     this.despesaFormulario.patchValue({
       cartao: this.despesa.cartao.id,
       descricao: this.despesa.descricao,
@@ -87,6 +87,10 @@ export class DespesaFormComponent implements OnInit {
       valor: Number(this.despesa.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2}),
       data: new Date(this.despesa.data),
     });
+  }
+
+  async validarValor(formControl: FormControl) {
+    return formControl.value?.replace(',', '.') <= 0 ? { valorInvalido: true } : null;
   }
 
   private async carregarCartao() {
@@ -155,7 +159,7 @@ export class DespesaFormComponent implements OnInit {
     return despesa;
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['despesa/listar']);
   }
 
