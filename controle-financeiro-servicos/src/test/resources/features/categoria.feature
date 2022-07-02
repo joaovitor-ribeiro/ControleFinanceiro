@@ -9,7 +9,7 @@ Funcionalidade: Cadastro de categoria
 	Contexto: Acessar cadastro de categoria
 		Dado que estou na página de cadastro de categoria
 	
-	@categoria-cadastra-sucesso
+	@categoria-cadastro-sucesso
 	Esquema do Cenario: Cadastro da categoria "<nome>" realizado com sucesso
     Quando preencho os campos nome "<nome>" tipo "<tipo>" 
     E aciono o botão salvar do cadastro de categoria
@@ -21,5 +21,22 @@ Funcionalidade: Cadastro de categoria
 	| nome                 | tipo | 
 	| Salário              | G    | 
 	| Cartão de crédito    | D    | 
+	
+	@categoria-cadastro-validacoes-mensagens
+	Esquema do Cenario: Validação da mensagem "<mensagem>"
+    Quando preencho os campos nome "<nome>" tipo "<tipo>"
+    E aciono o botão salvar do cadastro de categoria
+    Entao será exibida a mensagem "<mensagem>" de erro no cadastro de categoria
+    
+   Exemplos:
+   
+   | nome     | tipo | mensagem 		  															 |
+   | 				  | 	G	 | Insira o nome. 															 |
+   |	Sa			|		G	 | O nome não pode ter menos do que 3 caracteres.|
+   | Salário	|			 | Escolha o tipo. 															 |
+    
+    
+    
+    
 	
 	

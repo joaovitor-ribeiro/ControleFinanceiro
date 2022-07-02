@@ -26,9 +26,9 @@ public class GanhoSteps {
 	}
 
 
-	@Quando("preencho os campos descricao {string} categorias {string} valor {string} data {string}")
-	public void preencho_os_campos_descricao_categorias_valor_data(String descricao, String categorias, String valor, String data) {
-	   ganhoPage.preencherFormulario(descricao, categorias, valor, data);
+	@Quando("preencho os campos descricao {string} categoria {string} valor {string} data {string}")
+	public void preencho_os_campos_descricao_categorias_valor_data(String descricao, String categoria, String valor, String data) {
+	   ganhoPage.preencherFormulario(descricao, categoria, valor, data);
 	}
 	
 	@Quando("aciono o botão salvar do cadastro de ganho")
@@ -41,6 +41,10 @@ public class GanhoSteps {
 		ganhoPage.esperaAlert();
 		assertEquals("http://localhost:4200/ganho/listar", ganhoPage.paginaAtual());
 	}
-
+	
+	@Entao("será exibida a mensagem {string} de erro no cadastro de ganho")
+	public void será_exibida_a_mensagem_de_erro_no_cadastro_de_ganho(String mensagem) {
+	   assertEquals(mensagem, ganhoPage.mensagemDeErro());
+	}
 	
 }

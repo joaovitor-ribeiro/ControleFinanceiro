@@ -36,7 +36,7 @@ Funcionalidade: Cadastro de cartão
 
 	|nome       | bandeira         | numero           | limite | mensagem       															  | 
 	|           | Visa             | 4539063642617856 | 1200   | Insira o nome.                   						  | 
-	| Itaú      |                  | 4539063642617856 | 1200   | Insira a bandeira.                             | 
+	| Itaú      |                  | 4539063642617856 | 1200   | Escolha a bandeira.                            | 
 	| Itaú      | Visa             |                  | 1200   | Insira o número.                               | 
 	| Itaú      | Visa             | 4539063642617856 |        | Insira o limite.                               | 
 	| It        | Visa             | 4539063642617856 | 1200   | O nome não pode ter menos do que 3 caracteres. | 

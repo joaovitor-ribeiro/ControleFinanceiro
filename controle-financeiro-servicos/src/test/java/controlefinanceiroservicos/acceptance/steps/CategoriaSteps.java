@@ -48,4 +48,10 @@ public class CategoriaSteps {
 	public void o_usuário_será_redirecionado_para_a_grid_da_categoria() {
 		assertEquals("http://localhost:4200/categoria/listar?tipo=T", categoriaPage.paginaAtual());
 	}
+	
+	@Entao("será exibida a mensagem {string} de erro no cadastro de categoria")
+	public void será_exibida_a_mensagem_de_erro_no_cadastro_de_categoria(String mensagem) {
+		assertEquals(mensagem, categoriaPage.mensagemDeErro());
+	   
+	}
 }
