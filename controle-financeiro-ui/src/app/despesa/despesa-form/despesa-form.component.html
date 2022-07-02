@@ -42,6 +42,10 @@
                 Insira uma descrição.
               </mat-error>
 
+              <mat-error *ngIf="propriedade.descricao.errors?.minlength">
+                A descrição não pode ter menos do que 3 caracteres.
+              </mat-error>
+
               <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('descricao')">
                 <mat-icon>close</mat-icon>
               </button>
@@ -76,7 +80,7 @@
               <input matInput type="text" formControlName="valor" required mask="separator.2" thousandSeparator="." [align]="'right'">
 
               <mat-error *ngIf="propriedade.valor.touched && propriedade.valor.errors?.required">
-                Insira um valor.
+                Insira o valor.
               </mat-error>
 
               <mat-error *ngIf="propriedade.valor.touched && propriedade.valor.errors?.valorInvalido">
