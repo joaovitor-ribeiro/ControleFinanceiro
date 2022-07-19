@@ -1,11 +1,10 @@
-import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 import { Categoria } from '../categoria.model';
 import { CategoriaService } from '../categoria.service';
@@ -48,14 +47,11 @@ export class CategoriaListaComponent implements OnInit {
     private categoriaService: CategoriaService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private erroService: ErrorModalService,
     private alertService: AlertModalService,
     private dialogService: ConfirmModalService
   ) { }
 
   ngOnInit(): void {
-    this.spinner.show();
-
     this.filtroFormulario = this.formBuilder.group({
       nome: [''],
       tipo: ['T'],
@@ -90,9 +86,6 @@ export class CategoriaListaComponent implements OnInit {
     .subscribe(categorias => {
       this.categorias = categorias;
       this.anexarConsulta();
-    },
-    error => {
-      this.erroService.showError(error?.error?.message || 'Falha na conexão');
     });
   }
 
@@ -117,10 +110,8 @@ export class CategoriaListaComponent implements OnInit {
           this.carregando = false;
           this.spinner.hide();
         })).subscribe(() => {
+          this.listarCategoria();
           this.alertService.showAlertSuccess('Categoria excluída com sucesso!');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     })

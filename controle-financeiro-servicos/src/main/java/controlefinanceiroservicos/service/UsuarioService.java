@@ -107,6 +107,7 @@ public class UsuarioService {
 	public boolean validarCPF(String cpf) {
 		int soma = 0;
 		int resto;
+		cpf = cpf.replace(" ", "");
 		
 		if (cpf == "00000000000" || cpf.length() != 11) return false;
 

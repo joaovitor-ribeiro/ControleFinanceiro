@@ -30,6 +30,11 @@ const routes: Routes = [
   },
 
   {path: 'painel', component: PainelComponent},
+  
+  {
+    path: 'entrar',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
 
   {path: '', redirectTo: 'painel', pathMatch: 'full'},
 

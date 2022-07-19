@@ -1,15 +1,15 @@
-import { finalize } from 'rxjs/operators';
-import { Ganho } from './../ganho.model';
-import { Categoria, FiltroCategoria } from './../../categoria/categoria.model';
-import { GanhoService } from './../ganho.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
+
+import { Categoria, FiltroCategoria } from './../../categoria/categoria.model';
 import { CategoriaService } from './../../categoria/categoria.service';
+import { Ganho } from './../ganho.model';
+import { GanhoService } from './../ganho.service';
 
 @Component({
   selector: 'app-ganho-form',
@@ -37,7 +37,6 @@ export class GanhoFormComponent implements OnInit {
     private categoriaService: CategoriaService,
     private router: Router,
     private alertService: AlertModalService,
-    private erroService: ErrorModalService,
     private spinner: NgxSpinnerService,
     private adapter: DateAdapter<any>
   ) { }
@@ -118,17 +117,11 @@ export class GanhoFormComponent implements OnInit {
         this.ganhoService.editar(this.id, ganho).subscribe(() => {
           this.router.navigate(['/ganho/listar'], { queryParamsHandling: 'preserve'});
           this.alertService.showAlertSuccess('Ganho editado com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         })
       }else{
         this.ganhoService.inserir(ganho).subscribe(() => {
           this.router.navigate(['/ganho/listar'], { queryParamsHandling: 'preserve' });
           this.alertService.showAlertSuccess('Ganho cadastrado com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }
