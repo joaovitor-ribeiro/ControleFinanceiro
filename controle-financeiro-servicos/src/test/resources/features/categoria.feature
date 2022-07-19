@@ -7,7 +7,8 @@ Funcionalidade: Cadastro de categoria
 		Para identificar meus ganhos e despesas.
     
 	Contexto: Acessar cadastro de categoria
-		Dado que estou na página de cadastro de categoria
+		Dado que estou logado na aplicação com o email "usuario@gmail.com" e a senha "123456" para validar a categoria
+		E que estou na página de cadastro de categoria
 	
 	@categoria-cadastro-sucesso
 	Esquema do Cenario: Cadastro da categoria "<nome>" realizado com sucesso

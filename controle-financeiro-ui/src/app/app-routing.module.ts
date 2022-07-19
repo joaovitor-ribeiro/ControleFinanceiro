@@ -28,9 +28,14 @@ const routes: Routes = [
     loadChildren: () => import('./usuario/usuario.module').then(m => m.UsuarioModule)
   },
 
-  {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'},
+  {
+    path: 'entrar',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
 
-  {path: '**', redirectTo: 'cartao/listar', pathMatch: 'full'}
+  {path: '', redirectTo: 'entrar', pathMatch: 'full'},
+
+  {path: '**', redirectTo: 'entrar', pathMatch: 'full'}
 ];
 
 @NgModule({

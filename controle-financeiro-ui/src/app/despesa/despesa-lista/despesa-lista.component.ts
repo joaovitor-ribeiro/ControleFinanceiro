@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/operators';
 import { Categoria } from 'src/app/categoria/categoria.model';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 import { Despesa } from '../despesa.model';
 import { CategoriaService } from './../../categoria/categoria.service';
@@ -41,7 +40,6 @@ export class DespesaListaComponent implements OnInit {
     private categoriaService: CategoriaService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private erroService: ErrorModalService,
     private alertService: AlertModalService,
     private adapter: DateAdapter<any>,
     private dialogService: ConfirmModalService
@@ -109,9 +107,6 @@ export class DespesaListaComponent implements OnInit {
       this.paginacao.page = despesas?.number;
       this.paginacao.size = despesas?.size;
       this.dispesas = despesas.content;
-    },
-    error => {
-      this.erroService.showError(error?.error?.message || 'Falha na conexão');
     });
   }
 
@@ -142,9 +137,6 @@ export class DespesaListaComponent implements OnInit {
         this.despesaSerivce.excluir(id).subscribe(() => {
           this.listar(true);
           this.alertService.showAlertSuccess('Despesa excluída com sucesso!');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     })

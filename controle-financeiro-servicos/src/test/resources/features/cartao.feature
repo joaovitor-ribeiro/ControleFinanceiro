@@ -7,7 +7,8 @@ Funcionalidade: Cadastro de cartão
 		Para utilizá-lo no pagamento das minhas despesas.
     
 	Contexto: Acessar cadastro de cartão 
-		Dado que estou na página de cadastro de cartão
+		Dado que estou logado na aplicação com o email "usuario@gmail.com" e a senha "123456" para validar o cartao
+		E que estou na página de cadastro de cartão
 	
 	@cartao-cadastro-sucesso
 	Esquema do Cenario: Cadastro do cartão "<nome>" realizado com sucesso

@@ -7,7 +7,8 @@ Funcionalidade: Cadastro de ganhos
 		Para meu controle financeiro
     
 	Contexto: Acessar cadastro de ganho
-		Dado que estou na página de cadastro de ganho
+		Dado que estou logado na aplicação com o email "usuario@gmail.com" e a senha "123456" para validar o ganho 
+		E que estou na página de cadastro de ganho
 	
 	@ganho-cadastro-sucesso
 	Cenario: Cadastro de ganho realizado com sucesso

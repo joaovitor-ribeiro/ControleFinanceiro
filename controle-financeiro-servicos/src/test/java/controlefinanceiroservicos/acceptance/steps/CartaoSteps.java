@@ -19,9 +19,14 @@ public class CartaoSteps {
 		cartaoPage.sair();
 	}
 	
+	@Dado("que estou logado na aplicação com o email {string} e a senha {string} para validar o cartao")
+	public void estou_logado_na_aplicação_com_o_email_e_a_senha(String email, String senha) {
+		cartaoPage.iniciarDriver();
+		cartaoPage.realizarLogin(email, senha);
+	}
+	
 	@Dado("que estou na página de cadastro de cartão")
 	public void que_estou_na_página_de_cadastro_de_cartão() {
-		cartaoPage.iniciarDriver();
 		cartaoPage.navegaParaCartaoListar();
 		cartaoPage.clicoBotaoNovoCartao();
 	}

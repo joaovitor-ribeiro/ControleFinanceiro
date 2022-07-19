@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
-import { Categoria } from '../categoria.model';
 
+import { Categoria } from '../categoria.model';
 import { CategoriaService } from '../categoria.service';
 
 interface Tipo {
@@ -45,7 +43,6 @@ export class CategoriaFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: CategoriaService,
     private spinner: NgxSpinnerService,
-    private erroService: ErrorModalService,
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertModalService,
@@ -92,17 +89,11 @@ export class CategoriaFormComponent implements OnInit {
         this.service.editar(this.id, categoria).subscribe(() => {
           this.router.navigate(['categoria/listar'], { queryParamsHandling: 'preserve' });
            this.alertService.showAlertSuccess('Categoria editada com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       } else {
         this.service.inserir(categoria).subscribe(() => {
           this.router.navigate(['categoria/listar'], { queryParamsHandling: 'preserve' });
            this.alertService.showAlertSuccess('Categoria cadastrada com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }

@@ -50,12 +50,14 @@ public class ControleFinanceiroConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
+            .allowedOrigins("*")
+            .allowedHeaders("*")
+            .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
     
      @Override
      public void addResourceHandlers(ResourceHandlerRegistry registry) {
-         registry.addResourceHandler("/resources/").addResourceLocations("/resources/"); 
+         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/"); 
          registry.addResourceHandler("/api/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
 		 registry.addResourceHandler("/api/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 		 registry.addResourceHandler("/api/**").addResourceLocations("/api/**");

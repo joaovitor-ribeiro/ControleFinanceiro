@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
@@ -21,6 +20,7 @@ export class UsuarioFormComponent implements OnInit {
   editar!: boolean;
   foto!: File;
   usuario!: Usuario;
+  objectURL = '../../../assets/menu/usuario.jpg'
 
   get propriedade() {
     return this.usuarioFormulario.controls;
@@ -33,7 +33,6 @@ export class UsuarioFormComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertModalService,
     private usuarioService: UsuarioService,
-    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -55,9 +54,9 @@ export class UsuarioFormComponent implements OnInit {
         this.spinner.show();
         this.usuarioService.retornarUsuarioId(this.id).subscribe(usuario => {
           this.usuario = usuario;
-          let objectURL = 'data:image/png;base64,' + usuario.foto;
-          document.getElementById('foto')?.removeAttribute('hidden');
-          document.getElementById('foto')?.setAttribute('src', objectURL);
+          if (usuario?.foto) {
+            this.objectURL = 'data:image/png;base64,' + usuario.foto;
+          }
           this.preencherFormulario();
         });
       }
@@ -92,17 +91,11 @@ export class UsuarioFormComponent implements OnInit {
           this.salvarFoto();
           this.router.navigate(['/despesa/listar'], { queryParamsHandling: 'preserve' });
           this.alertService.showAlertSuccess('Usuário editado com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       } else {
         this.usuarioService.inserir(usuario).subscribe(id => {
           this.id = id;
           this.salvarFoto();
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }
@@ -112,9 +105,6 @@ export class UsuarioFormComponent implements OnInit {
     if (this.foto){
       this.usuarioService.inserirFoto(this.foto, this.id).subscribe( () => {
         this.salvoComSucesso();
-      },
-      error => {
-        this.erroService.showError(error?.error?.message || 'Não foi possível salvar a foto');
       });
     } else {
       this.salvoComSucesso();
@@ -148,15 +138,14 @@ export class UsuarioFormComponent implements OnInit {
 
     const reader = new FileReader();
     reader.onload = function (e: any) {
-      document.getElementById('foto')?.removeAttribute('hidden');
       document.getElementById('foto')?.setAttribute('src', e.target.result);
     };
 
     if (!this.foto?.type?.startsWith("image")) {
-      this.erroService.showError('Esse tipo de arquivo não é suportado! Escolha uma imagem.');
+      this.erroService.showError('Esse tipo de arquivo não é suportado! Escolha uma imagem!');
       this.foto = {} as File;
     } else if (this.foto?.size > 1048576) {
-      this.erroService.showError('O tamanho dessa imagem não é suportada! Escolha uma imagem que o tamanho seja inferior a 1048 KB.');
+      this.erroService.showError('O tamanho dessa imagem não é suportada! Escolha uma imagem que o tamanho seja inferior a 1048 KB!');
       this.foto = {} as File;
     }
 
@@ -166,7 +155,7 @@ export class UsuarioFormComponent implements OnInit {
   validaCPF(cpf: string) {
     let soma = 0;
     let resto;
-
+    cpf = cpf.replace(' ', '');
     if (cpf == "00000000000") return false;
 
     for (let i = 1; i <= 9; i++) {

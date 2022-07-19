@@ -20,9 +20,14 @@ public class CategoriaSteps {
 		categoriaPage.sair();
 	}
 	
+	@Dado("que estou logado na aplicação com o email {string} e a senha {string} para validar a categoria")
+	public void estou_logado_na_aplicação_com_o_email_e_a_senha(String email, String senha) {
+		categoriaPage.iniciarDriver();
+		categoriaPage.realizarLogin(email, senha);
+	}
+	
 	@Dado("que estou na página de cadastro de categoria")
 	public void que_estou_na_página_de_cadastro_de_categoria() {
-		categoriaPage.iniciarDriver();
 		categoriaPage.navegaParaCategoriaListar();
 		categoriaPage.clicoBotaoNovaCategoria();
 	}

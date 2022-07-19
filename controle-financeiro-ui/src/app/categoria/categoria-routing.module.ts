@@ -1,14 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '../guard/auth.guard';
 import { CategoriaFormComponent } from './categoria-form/categoria-form.component';
 import { CategoriaListaComponent } from './categoria-lista/categoria-lista.component';
 
 const categoriaRoutes: Routes = [
-  {path: 'inserir', component: CategoriaFormComponent},
-  {path: 'listar',  component: CategoriaListaComponent},
-  {path: ':id',     component: CategoriaFormComponent},
+  {path: 'inserir', component: CategoriaFormComponent,  canActivate: [AuthGuard]},
+  {path: 'listar',  component: CategoriaListaComponent, canActivate: [AuthGuard]},
+  {path: ':id',     component: CategoriaFormComponent,  canActivate: [AuthGuard]},
 ];
 
 @NgModule({

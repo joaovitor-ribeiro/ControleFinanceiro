@@ -57,6 +57,16 @@ public class PageObject {
 		return wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.className("mat-error")))).getText();
 	}
 	
+	public void realizarLogin(String email, String senha) {
+		esperar();
+		browser.get("http://localhost:4200/entrar");
+		browser.findElement(By.cssSelector("input[formcontrolname=email]")).sendKeys(email);
+		browser.findElement(By.cssSelector("input[formcontrolname=senha]")).sendKeys(senha);
+		browser.findElement(By.id("botaoEntrar")).click();
+		wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.id("novoCartao"))));
+		esperar();
+	}
+	
 	public void sair() {
 		if (browser != null) {
 			browser.quit();

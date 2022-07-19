@@ -1,12 +1,12 @@
-import { CartaoService } from './../cartao.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Bandeira, Cartao } from '../cartao.model';
-import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
-import { finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
+import { finalize } from 'rxjs/operators';
+import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+
+import { Bandeira, Cartao } from '../cartao.model';
+import { CartaoService } from './../cartao.service';
 
 @Component({
   selector: 'app-cartao-form',
@@ -33,7 +33,6 @@ export class CartaoFormComponent implements OnInit {
     private route: ActivatedRoute, //Através da url podemos pegar/passar variáveis. Ex.: pegar o id para editar
     private router: Router,
     private alertService: AlertModalService,
-    private erroService: ErrorModalService,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -98,17 +97,11 @@ export class CartaoFormComponent implements OnInit {
         this.cartaoService.editar(this.id, cartao).subscribe(() => {
           this.router.navigate(['/cartao/listar']);
           this.alertService.showAlertSuccess('Cartão editado com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       } else {
         this.cartaoService.inserir(cartao).subscribe(() => {
           this.router.navigate(['/cartao/listar'], { queryParamsHandling: 'preserve' });
           this.alertService.showAlertSuccess('Cartão cadastrado com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }
