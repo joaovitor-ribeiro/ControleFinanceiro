@@ -1,5 +1,7 @@
 package controlefinanceiroservicos.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +62,7 @@ public class GanhoService {
 	}
 	
 	private void validacoes(Ganho ganho) {
-		if (ganho.getDescricao().isEmpty()) {
+		if (ganho.getDescricao() == null || ganho.getDescricao().isEmpty()) {
 			throw new RuntimeException("O campo descrição é de preenchimento obrigatório!");
 		} else if(ganho.getDescricao().length() < 3){
 			throw new RuntimeException("O campo descrição não pode ter menos que 3 caracteres!");
@@ -68,18 +70,22 @@ public class GanhoService {
 			throw new RuntimeException("O campo descrição não pode ter mais que 20 caracteres!");
 		}
 		
-		//TODO: Precisa validar se a categoria existe no BD?	
-		if (ganho.getCategoria().getId() == null && ganho.getCategoria().getId() <= 0) {
+		//TODO: Precisa validar se a categoria existe no BD?		
+		if (ganho.getCategoria() == null || ganho.getCategoria().getId() == null || ganho.getCategoria().getId() <= 0) {
 			throw new RuntimeException("O campo categoria é de preenchimento obrigatório!");
 		}		
 		
-		if (ganho.getValor() <= 0) {
+		if (ganho.getValor() == null) {
+			throw new RuntimeException("O campo valor é de preenchimento obrigatório!");
+		} else if (ganho.getValor() <= 0) {
 			throw new RuntimeException("O valor não pode ser menor ou igual a zero!");		
 		}
 		
 		if (ganho.getData() == null) {
 			throw new RuntimeException("A data é de preenchimento obrigatório!");
-		}		
+		} else if (!data(ganho.getData().toString())) {
+			throw new RuntimeException("Data inválida!");
+		}
 	}
 
 	public Page<Ganho> listar(String descricao, List<Integer> categorias, Date dataInicial, Date dataFinal, Pageable paginacao) {
@@ -88,4 +94,15 @@ public class GanhoService {
 		}
 		return ganhoCustomRepository.listar(descricao, categorias, dataInicial, dataFinal, paginacao);				
 	}
+	
+	private boolean data(String data) {
+        try {            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.setLenient(false);
+            sdf.parse(data);
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        }
+    }
 }

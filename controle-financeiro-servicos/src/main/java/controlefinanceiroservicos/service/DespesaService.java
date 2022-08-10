@@ -1,5 +1,7 @@
 package controlefinanceiroservicos.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -66,24 +68,40 @@ public class DespesaService {
 	}
 	
 	private void validaDespesa(Despesa despesa) {
-		if (despesa.getDescricao().isEmpty()) {
+		if (despesa.getDescricao() == null || despesa.getDescricao().isEmpty()) {
 			throw new RuntimeException("O campo descrição é de preenchimento obrigatório!");
+		} else if(despesa.getDescricao().length() < 3){
+			throw new RuntimeException("O campo descrição não pode ter menos que 3 caracteres!");		
 		} else if (despesa.getDescricao().length() > 20) {
 			throw new RuntimeException("A descrição não pode ter mais do que 20 caracteres!");
 		}
-		if (despesa.getValor().isNaN()) {
-			throw new RuntimeException("O campo valor tem que ser númerico!");
+		if (despesa.getValor() == null) {
+			throw new RuntimeException("O campo valor é de preenchimento obrigatório!");
 		} else if (despesa.getValor() <= 0) {
 			throw new RuntimeException("Valor tem que ser maior que 0!");
 		}
-		//Pensar em validação de data
-		if (despesa.getCartao().getId() == null && despesa.getCartao().getId() <= 0) {
+		if (despesa.getCartao() == null || despesa.getCartao().getId() == null || despesa.getCartao().getId() <= 0) {
 			throw new RuntimeException("O campo cartão é de preenchimento obrigatório!");
 		}
-		if (despesa.getCategoria().getId() == null && despesa.getCategoria().getId() <= 0) {
+		if (despesa.getCategoria() == null || despesa.getCategoria().getId() == null || despesa.getCategoria().getId() <= 0) {
 			throw new RuntimeException("O campo categoria é de preenchimento obrigatório!");
 		}
-		
+		if (despesa.getData() == null) {
+			throw new RuntimeException("A data é de preenchimento obrigatório!");
+		} else if (!data(despesa.getData().toString())) {
+			throw new RuntimeException("Data inválida!");
+		}				
 	}
+	
+	private boolean data(String data) {
+        try {            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            sdf.setLenient(false);
+            sdf.parse(data);
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        }
+    }
 
 }
