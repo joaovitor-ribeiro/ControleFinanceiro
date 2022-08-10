@@ -27,7 +27,6 @@ public class UsuarioService {
 		return usuario.getId();
 	}
 	
-
 	public void inserirFoto(MultipartFile foto, Integer id) throws IOException {
 		Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
 		
@@ -40,7 +39,7 @@ public class UsuarioService {
 	}
 		
 	private void validacoes(Usuario usuario){
-		if (usuario.getNome().isEmpty()) {
+		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
 			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
 		} else if (usuario.getNome().length() < 3) {
 			throw new RuntimeException("O nome não pode ter menos do que 3 caracteres!");
@@ -48,13 +47,13 @@ public class UsuarioService {
 			throw new RuntimeException("O nome não pode ter mais do que 20 caracteres!");
 		}
 		
-		if (usuario.getCpf().isEmpty()) {
+		if (usuario.getCpf() == null || usuario.getCpf().isEmpty()) {
 			throw new RuntimeException("O campo CPF é de preenchimento obrigatório!");
 		} else if (!validarCPF(usuario.getCpf())) {
 			throw new RuntimeException("CPF inválido!");
 		} 
 		
-		if (usuario.getEmail().isEmpty()) {
+		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
 			throw new RuntimeException("O campo email é de preenchimento obrigatório!");
 		} else if (usuario.getEmail().length() > 50) {
 			throw new RuntimeException("O email não pode ter mais do que 50 caracteres!");
@@ -62,14 +61,13 @@ public class UsuarioService {
 			throw new RuntimeException("Email inválido!");
 		}
 
-		if (usuario.getSenha().isEmpty()) {
+		if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
 			throw new RuntimeException("O campo senha é de preenchimento obrigatório!");
 		} else if (usuario.getSenha().length() < 6 || usuario.getSenha().length() > 8) {
 			throw new RuntimeException("A senha deve conter entre 6 e 8 caracteres!");
 		}
 				
 	}
-
 
 	public Usuario retornarUsuarioId(Integer id) {
 		Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
@@ -80,7 +78,6 @@ public class UsuarioService {
 		
 		throw new RuntimeException("Usuário não encontrado!");
 	}
-
 
 	public void editar(Integer id, Usuario usuarioNovo) {
 		Optional<Usuario> optionalUsuarioAntigo = usuarioRepository.findById(id);
