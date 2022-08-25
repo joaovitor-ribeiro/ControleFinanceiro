@@ -81,5 +81,23 @@ public class DespesaCustomRepository {
 		
 		return pageDespesa;
 	}
+	
+	public double totalDepesa(String data) {
+		String query  = "SELECT D FROM Despesa D ";
+		       query += "WHERE CAST(DATA AS string) LIKE :data";
+		
+		TypedQuery<Despesa> q = em.createQuery(query, Despesa.class);
+		q.setParameter("data", data + "%");
+		
+		List<Despesa> despesas = q.getResultList();
+		
+		double total = 0;
+		
+		for (Despesa despesa : despesas) {
+			total += despesa.getValor();
+		}
+		
+		return total;
+	}
 
 }

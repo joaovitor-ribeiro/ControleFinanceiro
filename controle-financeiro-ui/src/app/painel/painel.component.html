@@ -1,0 +1,90 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+  <p style="color: white">Carregando... </p>
+</ngx-spinner>
+
+<div *ngIf="!carregando">
+  <div class="divLinha w-100">
+    <div class="col-md-2 mr-4 ml-4">
+      <mat-card class="card">
+        <mat-card-content class="cardContent">
+
+          <div class="divComponentes">
+            <div class="tamanhoIcone">
+              <mat-icon style="font-size: 50px">trending_up</mat-icon>
+            </div>
+
+            <div class="tamanhoTexto">
+              Ganhos de {{ painel?.totalGanho | currency : 'BRL' }}
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2 mr-4">
+      <mat-card class="card">
+        <mat-card-content class="cardContent">
+
+          <div class="divComponentes">
+            <div class="tamanhoIcone">
+              <mat-icon style="font-size: 50px">trending_down</mat-icon>
+            </div>
+
+            <div class="tamanhoTexto">
+              Despesas de {{ painel?.totalDespesa | currency : 'BRL' }}
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-md-2">
+      <mat-card class="card">
+        <mat-card-content class="cardContent">
+
+          <div class="divComponentes">
+            <div class="tamanhoIcone">
+              <mat-icon style="font-size: 50px">account_balance</mat-icon>
+            </div>
+
+            <div class="tamanhoTexto">
+              Saldo de {{ painel?.saldo | currency : 'BRL' }}
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="divGrupoPesquisa">
+    <div class="divPesquisa">
+      <div class="divData">
+        <mat-form-field appearance="outline">
+          <input matInput [matDatepicker]="dp" [formControl]="data">
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+                          startView="multi-year"
+                          (monthSelected)="setMonthAndYear($event, dp)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="botaoFiltrar">
+        <button type="button" mat-raised-button color="primary" (click)="carregarPainel()">Filtrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-50 ml-4">
+    <div class="divInternaGrafico">
+      <canvas baseChart [type]="'pie'" [datasets]="chartDatasets" [labels]="chartLabels" [options]="chartOptions"
+        [plugins]="chartPlugins" [legend]="chartLegend" width="500" height="500">
+      </canvas>
+    </div>
+  </div>
+
+</div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PainelComponent } from './painel/painel.component';
 
 
 const routes: Routes = [
@@ -28,9 +29,11 @@ const routes: Routes = [
     loadChildren: () => import('./usuario/usuario.module').then(m => m.UsuarioModule)
   },
 
-  {path: '', redirectTo: 'cartao/listar', pathMatch: 'full'},
+  {path: 'painel', component: PainelComponent},
 
-  {path: '**', redirectTo: 'cartao/listar', pathMatch: 'full'}
+  {path: '', redirectTo: 'painel', pathMatch: 'full'},
+
+  {path: '**', redirectTo: 'painel', pathMatch: 'full'},
 ];
 
 @NgModule({

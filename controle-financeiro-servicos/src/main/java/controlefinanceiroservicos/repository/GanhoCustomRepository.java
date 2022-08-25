@@ -81,4 +81,22 @@ public class GanhoCustomRepository {
 		
 		return pageGanho;
 	}
+	
+	public double totalGanho(String data) {
+		String query  = "SELECT G FROM Ganho G ";
+		       query += "WHERE CAST(DATA AS string) LIKE :data";
+		
+		TypedQuery<Ganho> q = em.createQuery(query, Ganho.class);
+		q.setParameter("data", data + "%");
+		
+		List<Ganho> ganhos = q.getResultList();
+		
+		double total = 0;
+		
+		for (Ganho ganho : ganhos) {
+			total += ganho.getValor();
+		}
+		
+		return total;
+	}
 }

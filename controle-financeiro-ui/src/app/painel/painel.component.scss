@@ -1,0 +1,55 @@
+.divComponentes {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.divPainel {
+  width: 25%;
+}
+
+.tamanhoIcone {
+  width: 36%;
+}
+
+.tamanhoTexto {
+  width: 51%;
+}
+
+.divLinha {
+  margin-top: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.divInternaGrafico {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.divData {
+  margin-left: 3rem;
+  padding-left: 3rem;
+  margin-top: 1.5rem;
+}
+
+.botaoFiltrar {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-left: 15px;
+}
+
+.divPesquisa {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.divGrupoPesquisa {
+  margin-left: 3.5rem;
+  width: 50% !important;
+}
