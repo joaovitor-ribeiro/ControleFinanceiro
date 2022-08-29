@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import controlefinanceiroservicos.model.Categoria;
 import controlefinanceiroservicos.model.Despesa;
+import controlefinanceiroservicos.model.Ganho;
 import controlefinanceiroservicos.repository.CategoriaRepository;
 import controlefinanceiroservicos.repository.DespesaRepository;
+import controlefinanceiroservicos.repository.GanhoRepository;
 
 @Service
 public class CategoriaService {
@@ -19,6 +21,9 @@ public class CategoriaService {
 	
 	@Autowired
 	private DespesaRepository despesaRepository;
+
+	@Autowired
+	private GanhoRepository ganhoRepository;
 	
 	public void inserir(Categoria categoria) {
 		validacoes(categoria);
@@ -26,14 +31,14 @@ public class CategoriaService {
 	}
 
 	private void validacoes(Categoria categoria) {
-		if (categoria.getNome().isEmpty()) {
+		if (categoria.getNome() == null || categoria.getNome().isEmpty()) {
 			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
 		} else if(categoria.getNome().length() < 3){
 			throw new RuntimeException("O nome não pode ter menos que 3 caracteres!");
 		} else if(categoria.getNome().length() > 20){
 			throw new RuntimeException("O nome não pode ter mais que 20 caracteres!");
 		} 
-		if (categoria.getTipo().isEmpty()) {
+		if (categoria.getTipo() == null || categoria.getTipo().isEmpty()) {
 			throw new RuntimeException("O campo tipo é de preenchimento obrigatório!");
 		} else if(categoria.getTipo().length() > 1){
 			throw new RuntimeException("O tipo tem que ter um caracter. Informe G para ganho ou D para despesa!");
@@ -77,7 +82,11 @@ public class CategoriaService {
 					throw new RuntimeException("Essa categoria não pode ser excluída pois está vinculada a despesa: " + despesa.getDescricao() + "!");
 				}
 			} else {
-				//TODO Leid faz a boa
+				Optional<Ganho> optionalGanho = ganhoRepository.findGanhoByIdCategoria(id);
+				if (optionalGanho.isPresent()) {
+					Ganho ganho = optionalGanho.get();
+					throw new RuntimeException("Essa categoria não pode ser excluída pois está vinculada a um ganho: " + ganho.getDescricao() + "!");
+				}
 			}
 			categoriaRepository.deleteById(id);
 		} else {

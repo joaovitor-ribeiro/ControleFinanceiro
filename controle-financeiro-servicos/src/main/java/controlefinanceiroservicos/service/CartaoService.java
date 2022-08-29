@@ -77,8 +77,8 @@ public class CartaoService {
 		}
 	}
 	
-	public void validacoes(Cartao cartao){
-		if (cartao.getNome().isEmpty()) {
+	private void validacoes(Cartao cartao){
+		if (cartao.getNome() == null || cartao.getNome().isEmpty()) {
 			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
 		} else if (cartao.getNome().length() < 3) {
 			throw new RuntimeException("O nome não pode ter menos do que 3 caracteres!");
@@ -86,7 +86,7 @@ public class CartaoService {
 			throw new RuntimeException("O nome não pode ter mais do que 20 caracteres!");
 		}
 		
-		if (cartao.getBandeira().isEmpty()) {
+		if (cartao.getBandeira() == null || cartao.getBandeira().isEmpty()) {
 			throw new RuntimeException("O campo bandeira é de preenchimento obrigatório!");
 		} else if (cartao.getBandeira().length() < 3) {
 			throw new RuntimeException("A bandeira não pode ter menos do que 3 caracteres!");
@@ -94,24 +94,27 @@ public class CartaoService {
 			throw new RuntimeException("A bandeira não pode ter mais do que 20 caracteres!");
 		}
 
-		if (cartao.getNumero().isEmpty()) {
+		if (cartao.getNumero() == null || cartao.getNumero().isEmpty()) {
+			//throw - lançar
 			throw new RuntimeException("O campo número é de preenchimento obrigatório!");
 		} else if (cartao.getNumero().length() < 13 || cartao.getNumero().length() > 16 || !validarNumeroCartao(cartao.getNumero())) {			
 			throw new RuntimeException("Número de cartão inválido!");
-		} else if (!cartao.getNumero().matches("[0-9]*")) {
-			throw new RuntimeException("Permitido somente números!");
 		} else if (!validarNumeroCorrespondenteABandeira(cartao.getNumero(), cartao.getBandeira())) {
 			throw new RuntimeException("O número de cartão informado não corresponde com a bandeira!");
 		}
 		
-		if (cartao.getLimite() <= 0) {
+		if (cartao.getLimite() == null || cartao.getLimite() <= 0) {
 			throw new RuntimeException("O limite não pode ser menor ou igual a zero!");		
 		}			
 	}
 	
-	public boolean validarNumeroCartao(String numero) {
+	private boolean validarNumeroCartao(String numero) {
 		int total = 0;
 		boolean deveDobrar = false;
+		numero = numero.replace(" ", "");
+		if ( !numero.matches("[0-9]*") ) {
+			return false;
+		}
 		for (int i = numero.length() - 1; i >= 0; i--) {
 			int digito = Integer.parseInt(numero.substring(i, (i + 1)));
 			if (deveDobrar) {
@@ -121,10 +124,13 @@ public class CartaoService {
 			total += digito;
 			deveDobrar = !deveDobrar;
 		}
+		if (total <= 0) {
+			return false;
+		}
 		return total % 10 == 0;
 	}
 	
-	public boolean validarNumeroCorrespondenteABandeira(String numero, String bandeira) {
+	private boolean validarNumeroCorrespondenteABandeira(String numero, String bandeira) {
 		switch (bandeira) {
 		case "Mastercard":
 			return numero.startsWith("51") || numero.startsWith("52") || numero.startsWith("53") || 

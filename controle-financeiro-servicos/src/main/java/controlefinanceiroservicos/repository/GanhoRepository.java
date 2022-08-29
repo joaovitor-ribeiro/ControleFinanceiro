@@ -2,6 +2,7 @@ package controlefinanceiroservicos.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,10 @@ public interface GanhoRepository extends JpaRepository<Ganho, Integer>{
 			+ "and "
 			+ ":dataFinal is null or data <= :dataFinal", nativeQuery = true)
 	Page<Ganho> find(String descricao, List<Integer> categorias, Date dataInicial, Date dataFinal, Pageable paginacao);
+	
+	
+	@Query(value = ""
+			+ "select * from ganho "
+			+ "where categoria_id = :categoria", nativeQuery = true)
+	Optional<Ganho> findGanhoByIdCategoria(Integer categoria);
 }

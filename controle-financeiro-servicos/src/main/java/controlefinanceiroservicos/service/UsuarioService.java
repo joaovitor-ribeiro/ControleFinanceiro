@@ -44,7 +44,7 @@ public class UsuarioService {
 		} else if (usuario.getNome().length() < 3) {
 			throw new RuntimeException("O nome não pode ter menos do que 3 caracteres!");
 		} else if (usuario.getNome().length() > 50) {
-			throw new RuntimeException("O nome não pode ter mais do que 20 caracteres!");
+			throw new RuntimeException("O nome não pode ter mais do que 50 caracteres!");
 		}
 		
 		if (usuario.getCpf() == null || usuario.getCpf().isEmpty()) {
