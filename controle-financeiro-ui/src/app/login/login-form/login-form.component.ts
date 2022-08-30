@@ -57,7 +57,7 @@ export class LoginFormComponent implements OnInit {
         this.spinner.hide();
       }))
       .subscribe(result => {
-        this.router.navigate(['cartao/listar']);
+        this.router.navigate(['painel']);
         localStorage.setItem('token', result.token);
         localStorage.setItem('usuario', JSON.stringify(result));
         this.loginService.loginUsuario.next(true);
