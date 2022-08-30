@@ -135,7 +135,7 @@ public class DespesaServiceTest {
 			despesa.setValor(523.10);
 			despesa.setCartao(new Cartao(2, null, null, null, null));
 			despesaService.inserir(despesa);
-			fail("A categoria não foi preenchida!");
+			fail("A categoria foi preenchida!");
 		} catch (Exception e) {
 			assertEquals("O campo categoria é de preenchimento obrigatório!", e.getMessage());
 		}
