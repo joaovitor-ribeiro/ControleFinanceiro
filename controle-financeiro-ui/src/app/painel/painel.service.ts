@@ -16,7 +16,7 @@ export class PainelService {
   ) { }
 
   painelControleFinanceiro(data?: string) {
-    let params: any = {
+    const params = {
       data: data || ''
     };
     return this.http.get<Painel>(this.url, {params});

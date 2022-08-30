@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { ErrorModalService } from '../shared/error-modal/error-modal.service';
-import { environment } from './../../environments/environment';
-import { Ganho, FiltroGanho, PageGanho, Paginacao } from './ganho.model';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+
+import { environment } from './../../environments/environment';
+import { FiltroGanho, Ganho, PageGanho, Paginacao } from './ganho.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +20,11 @@ export class GanhoService {
     return this.http.post<void>(this.url + 'inserir', ganho);
   }
 
-  editar(id: Number, ganho: Ganho){
+  editar(id: number, ganho: Ganho){
     return this.http.put<void>(this.url + `editar/${id}`, ganho);
   }
 
-  retornarGanhoId(id: Number){
+  retornarGanhoId(id: number){
     return this.http.get<Ganho>(this.url + `${id}`);
   }
 

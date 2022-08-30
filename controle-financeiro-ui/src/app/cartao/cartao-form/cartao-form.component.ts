@@ -87,7 +87,7 @@ export class CartaoFormComponent implements OnInit {
     if (this.cartaoFormulario.invalid) {
       this.cartaoFormulario.markAllAsTouched();
     }else{
-      let cartao = this.cartaoFormulario.getRawValue();
+      const cartao = this.cartaoFormulario.getRawValue();
 
       cartao.limite = cartao.limite.replace('/[^0-9]/g', '');
       cartao.limite = cartao.limite.replace('.', '')
@@ -147,7 +147,7 @@ export class CartaoFormComponent implements OnInit {
 
   verificarErrorsNumeroCartao() {
     setTimeout(() => {
-      let errors = this.cartaoFormulario.get('numero')?.errors;
+      const errors = this.cartaoFormulario.get('numero')?.errors;
       if (this.validarNumeroCorrespondenteABandeira()) {
         if (errors) {
           delete errors.numeroNaoCorrespondeABandeira;

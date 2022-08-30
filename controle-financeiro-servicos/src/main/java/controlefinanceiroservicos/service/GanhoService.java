@@ -1,7 +1,5 @@
 package controlefinanceiroservicos.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -83,9 +81,7 @@ public class GanhoService {
 		
 		if (ganho.getData() == null) {
 			throw new RuntimeException("A data é de preenchimento obrigatório!");
-		} else if (!data(ganho.getData().toString())) {
-			throw new RuntimeException("Data inválida!");
-		}
+		} 
 	}
 
 	public Page<Ganho> listar(String descricao, List<Integer> categorias, Date dataInicial, Date dataFinal, Pageable paginacao) {
@@ -95,14 +91,4 @@ public class GanhoService {
 		return ganhoCustomRepository.listar(descricao, categorias, dataInicial, dataFinal, paginacao);				
 	}
 	
-	private boolean data(String data) {
-        try {            
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setLenient(false);
-            sdf.parse(data);
-            return true;
-        } catch (ParseException ex) {
-            return false;
-        }
-    }
 }

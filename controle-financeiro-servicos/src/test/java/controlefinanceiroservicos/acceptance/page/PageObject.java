@@ -63,7 +63,7 @@ public class PageObject {
 		browser.findElement(By.cssSelector("input[formcontrolname=email]")).sendKeys(email);
 		browser.findElement(By.cssSelector("input[formcontrolname=senha]")).sendKeys(senha);
 		browser.findElement(By.id("botaoEntrar")).click();
-		wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.id("novoCartao"))));
+		wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.cssSelector("div.divData > mat-form-field"))));
 		esperar();
 	}
 	

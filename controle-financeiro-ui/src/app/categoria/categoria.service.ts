@@ -20,7 +20,7 @@ export class CategoriaService {
   }
 
   listar(filtro?: FiltroCategoria) {
-    let params: any = {
+    const params = {
       nome: filtro?.nome || '',
       tipo: filtro?.tipo ||  '',
     };

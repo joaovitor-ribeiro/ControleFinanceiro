@@ -65,7 +65,7 @@ export class GanhoListaComponent implements OnInit {
           this.filtroFormulario.get('descricao')?.setValue(filtro?.descricao);
         }
 
-        const categorias: Number[] = filtro?.categorias ? filtro.categorias.split(',') : [];
+        const categorias: number[] = filtro?.categorias ? filtro.categorias.split(',') : [];
         if (categorias.length > 0) {
           this.filtroFormulario.get('categorias')?.setValue(categorias.map(categoria => Number(categoria)));
         }
@@ -112,7 +112,7 @@ export class GanhoListaComponent implements OnInit {
       this.paginacao.page = 0;
     }
 
-    let filtro = this.filtroFormulario?.getRawValue();
+    const filtro = this.filtroFormulario?.getRawValue();
 
     filtro.dataInicial = String(filtro?.dataInicial) !== 'Invalid Date' ? filtro.dataInicial : null;
     filtro.dataFinal   = String(filtro?.dataFinal)   !== 'Invalid Date' ? filtro.dataFinal   : null;

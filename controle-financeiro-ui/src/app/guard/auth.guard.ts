@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
+
 import { ErrorModalService } from '../shared/error-modal/error-modal.service';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private erroService: ErrorModalService,
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate() {
     const token = localStorage.getItem('token');
 
     if(token){

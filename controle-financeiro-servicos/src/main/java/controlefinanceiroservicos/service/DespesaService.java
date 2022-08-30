@@ -1,7 +1,5 @@
 package controlefinanceiroservicos.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -88,20 +86,7 @@ public class DespesaService {
 		}
 		if (despesa.getData() == null) {
 			throw new RuntimeException("A data é de preenchimento obrigatório!");
-		} else if (!data(despesa.getData().toString())) {
-			throw new RuntimeException("Data inválida!");
-		}				
+		}			
 	}
 	
-	private boolean data(String data) {
-        try {            
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            sdf.setLenient(false);
-            sdf.parse(data);
-            return true;
-        } catch (ParseException ex) {
-            return false;
-        }
-    }
-
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize, skip } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
 
@@ -59,7 +59,7 @@ export class CartaoListaComponent implements OnInit {
   }
 
   listar(){
-    let filtro = this.filtroFormulario?.getRawValue();
+    const filtro = this.filtroFormulario?.getRawValue();
     this.carregando = true;
     this.spinner.show();
 
