@@ -11,9 +11,9 @@ import controlefinanceiroservicos.service.CategoriaService;
 public class CategoriaServiceTest {
 
     private CategoriaService categoriaService= new CategoriaService(); 	
-
+    
     @Test
-	public void categoriaNomePreenchimentoObrigatorio()  {
+	public void cadastroCategoriaSemParametroNome()  {
 		try {
 			Categoria categoriaNome= new Categoria();
 			categoriaService.inserir(categoriaNome);
@@ -24,7 +24,19 @@ public class CategoriaServiceTest {
 	}
     
     @Test
-    public void categoriaMinimoNome() {
+    public void cadastroCategoriaParametroNomeVazio()  {
+    	try {
+    		Categoria categoriaNome= new Categoria();
+    		categoriaNome.setNome("");
+    		categoriaService.inserir(categoriaNome);
+    		fail("Nome da categoria é de preenchimento obrigatório. ");
+    	} catch (Exception e) {
+    		assertEquals("O campo nome é de preenchimento obrigatório!", e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void cadastroCategoriaValidaTamanhoMinimoNome() {
     	try {
 			Categoria categoriaNome= new Categoria();
 			categoriaNome.setNome("Te");
@@ -36,7 +48,7 @@ public class CategoriaServiceTest {
     }
     
    @Test
-   public void categoriaMaximoNome() {
+   public void cadastroCategoriaValidaTamanhoMaximoNome() {
 	   try {
 		   Categoria categoriaNome = new Categoria();
 		   categoriaNome.setNome("0123456789012345678912");
@@ -48,7 +60,7 @@ public class CategoriaServiceTest {
    }
    
    @Test
-   public void categoriaTipoPreenchimentoObrigatorio() {
+   public void cadastroCategoriaSemParametroTipo() {
 	   try {
 		   Categoria categoriaTipo = new Categoria();
 		   categoriaTipo.setNome("Faculdade");
@@ -61,7 +73,21 @@ public class CategoriaServiceTest {
    }
    
    @Test
-   public void valorCampoTipo() {
+   public void cadastroCategoriaParametroTipoVazio() {
+	   try {
+		   Categoria categoriaTipo = new Categoria();
+		   categoriaTipo.setNome("Faculdade");
+		   categoriaTipo.setTipo("");
+		   categoriaService.inserir(categoriaTipo);
+		   fail("O Tipo do cadastro de categoria é de preenchimento obrigatório!");
+		   
+	   } catch (Exception e) {
+		   assertEquals("O campo tipo é de preenchimento obrigatório!", e.getMessage());
+	   }
+   }
+   
+   @Test
+   public void cadastroCategoriaInformandoTipoComMaisCaracteres() {
 	   try {
 		   Categoria categoriaTipo = new Categoria();
 		   categoriaTipo.setNome("Faculdade");
@@ -74,7 +100,7 @@ public class CategoriaServiceTest {
    }
    
    @Test
-   public void indicandoCampoTipo() {
+   public void cadastroCategoriaInformandoTipoInvalido() {
 	   try {
 		   Categoria categoriaTipo = new Categoria();
 		   categoriaTipo.setNome("Faculdade");

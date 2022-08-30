@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-//import org.junit.Test;
-
 import controlefinanceiroservicos.model.Cartao;
 import controlefinanceiroservicos.service.CartaoService;
 
@@ -18,7 +16,18 @@ public class CartaoServiceTest {
 	private CartaoService cartaoService = new CartaoService(); 
 	
 	@Test
-	public void cadastroCartaoSemParametroNome () {
+	public void cadastroCartaoSemParametroNome() {
+		try {
+			Cartao cartaoNome = new Cartao();
+			cartaoService.inserir(cartaoNome);
+			fail("Não validou a obrigatoriedade no preenchimento do Nome!");
+		} catch (Exception e) {
+			assertEquals("O campo nome é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroCartaoParametroNomeVazio() {
 		try {
 			Cartao cartaoNome = new Cartao();
 			cartaoNome.setNome("");
@@ -55,6 +64,19 @@ public class CartaoServiceTest {
 	
 	@Test
 	public void cadastroCartaoSemParametroBandeira() {
+		try {
+			Cartao cartaoBandeira = new Cartao();
+			cartaoBandeira.setNome("Nubank");
+			cartaoService.inserir(cartaoBandeira);
+			fail("Não validou a obrigatoriedade no preenchimento da Bandeira!");
+			
+		} catch (Exception e) {
+			assertEquals("O campo bandeira é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroCartaoParametroBandeiraVazio() {
 		try {
 			Cartao cartaoBandeira = new Cartao();
 			cartaoBandeira.setNome("Nubank");
@@ -101,11 +123,24 @@ public class CartaoServiceTest {
 			//set - definir
 			cartaoNumero.setNome("Nubank");
 			cartaoNumero.setBandeira("Mastercard");
-			cartaoNumero.setNumero("");
 			cartaoService.inserir(cartaoNumero);
 			//fail - falhou
 			fail("Não validou a obrigatoriedade no preenchimento do Número!");
 			//catch - pegar
+		} catch (Exception e) {
+			assertEquals("O campo número é de preenchimento obrigatório!", e.getMessage());
+		}
+	} 
+	
+	@Test
+	public void cadastroCartaoParametroNumeroVazio() {
+		try {
+			Cartao cartaoNumero = new Cartao();
+			cartaoNumero.setNome("Nubank");
+			cartaoNumero.setBandeira("Mastercard"); 
+			cartaoNumero.setNumero(""); 
+			cartaoService.inserir(cartaoNumero);
+			fail("Não validou a obrigatoriedade no preenchimento do Número!");
 		} catch (Exception e) {
 			assertEquals("O campo número é de preenchimento obrigatório!", e.getMessage());
 		}
@@ -182,7 +217,7 @@ public class CartaoServiceTest {
 	}
 	
 	@Test
-	public void cadastroCartaoValidaLimite(){
+	public void cadastroCartaoValidaLimiteMaiorQueZero(){
 		try {
 			Cartao cartaoValidaLimite = new Cartao();
 			cartaoValidaLimite.setNome("Nubank");
@@ -196,5 +231,19 @@ public class CartaoServiceTest {
 		}
 	}
 	
+	@Test
+	public void cadastroCartaoSemParametroLimite(){
+		try {
+			Cartao cartaoValidaLimite = new Cartao();
+			cartaoValidaLimite.setNome("Nubank");
+			cartaoValidaLimite.setBandeira("Mastercard");
+			cartaoValidaLimite.setNumero("5388708838533791");
+			cartaoValidaLimite.setLimite(0.00);
+			cartaoService.inserir(cartaoValidaLimite);
+			fail("Não validou o Limite do cartão!");
+		} catch (Exception e) {
+			assertEquals("O limite não pode ser menor ou igual a zero!", e.getMessage());
+		}
+	}
 	
 }

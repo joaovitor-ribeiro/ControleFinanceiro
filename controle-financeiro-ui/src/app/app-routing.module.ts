@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PainelComponent } from './painel/painel.component';
 
 const routes: Routes = [
   {
@@ -28,7 +27,10 @@ const routes: Routes = [
     loadChildren: () => import('./usuario/usuario.module').then(m => m.UsuarioModule)
   },
 
-  {path: 'painel', component: PainelComponent},
+  {
+    path: 'painel',
+    loadChildren: () => import('./painel/painel.module').then(m => m.PainelModule)
+  },
 
   {
     path: 'entrar',

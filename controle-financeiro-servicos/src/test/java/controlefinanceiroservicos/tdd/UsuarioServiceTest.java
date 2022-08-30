@@ -16,7 +16,7 @@ public class UsuarioServiceTest {
 	UsuarioService usuarioService = new UsuarioService();
 	
 	@Test
-	public void validarCampoNomePreenchimentoObrigatorio() {
+	public void cadastroUsuarioSemParametroNome() {
 		try {
 			Usuario usuario = new Usuario();
 			usuarioService.inserir(usuario);
@@ -27,7 +27,19 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarTamanhoMinimoPreenchimento() {
+	public void cadastroUsuarioParametroNomeVazio() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNome("");
+			usuarioService.inserir(usuario);
+			fail("O nome é de preenchimento obrigatório e não foi preenchido.");
+		} catch (Exception e) {
+			assertEquals("O campo nome é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroUsuarioValidaTamanhoMinimoNome() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("El");
@@ -39,7 +51,7 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarTamanhoMaximoPreenchimento() {
+	public void cadastroUsuarioValidaTamanhoMaximoNome() {
 		 try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares Barboza dos Santos Silva e Silva Andrade de Drumond");
@@ -51,7 +63,7 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarCampoCPFPreenchimentoObrigatorio() {
+	public void cadastroUsuarioSemParametroCPF() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -63,7 +75,20 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarCampoEmailPreenchimentoObrigatorio() {
+	public void cadastroUsuarioParametroCPFVazio() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNome("Elza Soares");
+			usuario.setCpf("");
+			usuarioService.inserir(usuario);
+			fail("O CPF é de preenchimento obrigatório!");
+		} catch (Exception e) {
+			assertEquals("O campo CPF é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroUsuarioSemParametroEmail() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -76,7 +101,21 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarTamanhoMaximoEmail() {
+	public void cadastroUsuarioParametroEmailVazio() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNome("Elza Soares");
+			usuario.setCpf("85572991090");
+			usuario.setEmail("");
+			usuarioService.inserir(usuario);
+			fail("O e-mail é de preenchimento obrigatório!");
+		} catch (Exception e) {
+			assertEquals("O campo email é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroUsuarioValidaTamanhoMaximoEmail() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -90,7 +129,7 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarEmailInvalido() {
+	public void cadastroUsuarioInformandoEmailInvalido() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -104,7 +143,7 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarCampoSenhaPreenchimentoObrigatorio() {
+	public void cadastroUsuarioSemParametroSenha() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -118,7 +157,22 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarCampoSenhaTamanho() {
+	public void cadastroUsuarioParametroSenhaVazio() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNome("Elza Soares");
+			usuario.setCpf("85572991090");
+			usuario.setEmail("elzasoaresbarbozasantosilvasilva@gmail.com");
+			usuario.setSenha("");
+			usuarioService.inserir(usuario);
+			fail("A senha é de preenchimento obrigatório!");
+		} catch (Exception e) {
+			assertEquals("O campo senha é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroUsuarioValidaTamanhoMaximoSenha() {
 		try {
 			Usuario usuario = new Usuario();
 			usuario.setNome("Elza Soares");
@@ -133,7 +187,22 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
-	public void validarCPF() {
+	public void cadastroUsuarioValidaTamanhoMinimoSenha() {
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setNome("Elza Soares");
+			usuario.setCpf("85572991090");
+			usuario.setEmail("elzasoaresbarbozasantosilvasilva@gmail.com");
+			usuario.setSenha("12345");
+			usuarioService.inserir(usuario);
+			fail("A senha deve conter entre 6 e 8 caracteres!");
+		} catch (Exception e) {
+			assertEquals("A senha deve conter entre 6 e 8 caracteres!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroUsuarioValidaCPF() {
 		try {
 			List<String> cpfInvalidos = Arrays.asList("00000000000", "223658", "21067138001","34422358796", "12312312312");
 			cpfInvalidos.forEach(cpf -> {

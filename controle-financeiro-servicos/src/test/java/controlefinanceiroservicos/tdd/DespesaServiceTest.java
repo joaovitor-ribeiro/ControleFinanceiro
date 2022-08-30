@@ -15,7 +15,7 @@ public class DespesaServiceTest {
 	DespesaService despesaService = new DespesaService();
 	
 	@Test
-	public void ValidaPreenchimentoObrigatorioDescricao() {
+	public void cadastroDespesaSemParametroDescricao() {
 		try {
 			Despesa despesa = new Despesa();
 			despesaService.inserir(despesa);
@@ -26,7 +26,19 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void VerificaTamanhoMinimoDescricao() {
+	public void cadastroDespesaParametroDescricaoVazio() {
+		try {
+			Despesa despesa = new Despesa();
+			despesa.setDescricao("");
+			despesaService.inserir(despesa);
+			fail("A Descrição não foi preenchida!");
+		} catch (Exception e) {
+			assertEquals("O campo descrição é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroDespesaValidaTamanhoMinimoDescricao() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Fa");
@@ -38,7 +50,7 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void VerificaTamanhoMaximoDescricao() {
+	public void cadastroDespesaValidaTamanhoMaximoDescricao() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdadepagamentomensal");
@@ -50,11 +62,10 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void validaPreenchimentoObrigatorioValor() {
+	public void cadastroDespesaSemParametroValor() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
-			despesa.setValor(null);
 			despesaService.inserir(despesa);
 			fail("O valor é de preenchimento obrigatório!");
 		} catch (Exception e) {
@@ -63,7 +74,7 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void ValorMaiorZero() {
+	public void cadastroDespesaValidaValorMaiorQueZero() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
@@ -76,7 +87,7 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void validaPreenchimentoObrigatorioCartao() {
+	public void cadastroDespesaSemParametroCartao() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
@@ -89,7 +100,35 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void validaPreenchimentoObrigatorioCategoria() {
+	public void cadastroDespesaSemParametroIDCartao() {
+		try {
+			Despesa despesa = new Despesa();
+			despesa.setDescricao("Faculdade");
+			despesa.setValor(523.10);
+			despesa.setCartao(new Cartao(null, null, null, null, null));
+			despesaService.inserir(despesa);
+			fail("O cartão não foi preenchido!");
+		} catch (Exception e) {
+			assertEquals("O campo cartão é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroDespesaIDCartaoMenorIgualAZero() {
+		try {
+			Despesa despesa = new Despesa();
+			despesa.setDescricao("Faculdade");
+			despesa.setValor(523.10);
+			despesa.setCartao(new Cartao(-1, null, null, null, null));
+			despesaService.inserir(despesa);
+			fail("O cartão não foi preenchido!");
+		} catch (Exception e) {
+			assertEquals("O campo cartão é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroDespesaSemParametroCategoria() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
@@ -103,7 +142,37 @@ public class DespesaServiceTest {
 	}
 	
 	@Test
-	public void validaPreenchimentoObrigatorioData() {
+	public void cadastroDespesaSemParametroIDCategoria() {
+		try {
+			Despesa despesa = new Despesa();
+			despesa.setDescricao("Faculdade");
+			despesa.setValor(523.10);
+			despesa.setCartao(new Cartao(2, null, null, null, null));
+			despesa.setCategoria(new Categoria(null, null, null));
+			despesaService.inserir(despesa);
+			fail("A categoria não foi preenchida!");
+		} catch (Exception e) {
+			assertEquals("O campo categoria é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroDespesaIDCategoriaMenorIgualAZero() {
+		try {
+			Despesa despesa = new Despesa();
+			despesa.setDescricao("Faculdade");
+			despesa.setValor(523.10);
+			despesa.setCartao(new Cartao(2, null, null, null, null));
+			despesa.setCategoria(new Categoria(-1, null, null));
+			despesaService.inserir(despesa);
+			fail("A categoria não foi preenchida!");
+		} catch (Exception e) {
+			assertEquals("O campo categoria é de preenchimento obrigatório!", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void cadastroDespesaSemParametroData() {
 		try {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");

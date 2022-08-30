@@ -19,7 +19,6 @@ export class PainelService {
     let params: any = {
       data: data || ''
     };
-
     return this.http.get<Painel>(this.url, {params});
   }
 }

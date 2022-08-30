@@ -12,8 +12,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { PainelRoutingModule } from './painel-routing.module';
 import { PainelComponent } from './painel.component';
-
 
 registerLocaleData(ptBr); //Outra maneira de formatar dinheiro no HTML
 
@@ -33,7 +33,8 @@ registerLocaleData(ptBr); //Outra maneira de formatar dinheiro no HTML
     NgChartsModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    PainelRoutingModule
   ],
   exports: [
     PainelComponent
