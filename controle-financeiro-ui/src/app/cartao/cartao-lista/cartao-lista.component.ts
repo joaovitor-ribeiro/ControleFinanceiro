@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize, skip } from 'rxjs/operators';
+import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
+import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
+
 import { Cartao } from '../cartao.model';
 import { CartaoService } from '../cartao.service';
-import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/operators';
-import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-cartao-lista',
@@ -18,7 +18,6 @@ export class CartaoListaComponent implements OnInit {
 
   cartao!: Cartao[];
   displayedColumns: string[] = ['nome', 'bandeira', 'numero', 'limite', 'acoes'];
-  dataSource!: Cartao[];
   carregando = false;
   filtroFormulario!: FormGroup;
   bandeiras = ['Visa', 'Mastercard', 'American Express', 'JCB', 'Diners Club', 'Aura', 'Hipercard'];
@@ -29,7 +28,6 @@ export class CartaoListaComponent implements OnInit {
     private dialogService: ConfirmModalService,
     private spinner: NgxSpinnerService,
     private alertService: AlertModalService,
-    private erroService: ErrorModalService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) { }
@@ -62,7 +60,6 @@ export class CartaoListaComponent implements OnInit {
 
   listar(){
     let filtro = this.filtroFormulario?.getRawValue();
-
     this.carregando = true;
     this.spinner.show();
 
@@ -72,10 +69,6 @@ export class CartaoListaComponent implements OnInit {
       this.carregando = false;
     })).subscribe(result => {
       this.cartao = result;
-      this.dataSource = result;
-    },
-    error => {
-      this.erroService.showError(error?.error?.message || 'Falha na conexão');
     });
   }
 
@@ -90,9 +83,6 @@ export class CartaoListaComponent implements OnInit {
         })).subscribe(() => {
           this.listar();
           this.alertService.showAlertSuccess('Cartão excluído com sucesso!');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     })

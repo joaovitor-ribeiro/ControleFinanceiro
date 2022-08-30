@@ -47,3 +47,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .row {
   margin: 0;
 }
+
+.menu {
+  .cdk-overlay-container {
+    margin-top: 9vh;
+    margin-left: 20px;
+  }
+}

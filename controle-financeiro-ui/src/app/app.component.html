@@ -1,58 +1,75 @@
-<mat-sidenav-container style="width: 100%;">
-  <mat-sidenav mode="side" opened class="sidenav">
 
-    <mat-selection-list class="selectionList" [multiple]="false">
-      <mat-list-option routerLink="/usuarios/atualizarusuario" class="optionUsuario">
-        <div class="backgroud">
-          <img class="imagemBackgroud" src="../assets/menu/background.jpg">
-        </div>
-        <div>
-          <a href="usuario/inserir"><img src="../assets/menu/usuario.jpg" class="circle"> </a>
-        </div>
-       <br/>
-       <span class="spanUsuario">Usuário</span>
-      </mat-list-option>
+<div *ngIf="exibe; else semLogin" class="h-100">
+  <mat-sidenav-container style="width: 100%;">
+    <mat-sidenav mode="side" opened class="sidenav">
 
-      <mat-list-option [selected]="isSelected('/usuarios/atualizarusuario')" routerLink="/usuarios/atualizarusuario">
-        <div class="divOption">
-          <mat-icon class="marginIcon">admin_panel_settings</mat-icon> Minhas Informações
-        </div>
-      </mat-list-option>
+      <mat-selection-list class="selectionList" [multiple]="false">
+        <mat-list-option routerLink="/usuarios/atualizarusuario" class="optionUsuario">
+          <div class="backgroud">
+            <img class="imagemBackgroud" src="../assets/menu/background.jpg">
+          </div>
+          <div>
+            <button mat-button [matMenuTriggerFor]="menu" class="buttonUsuario">
+              <img *ngIf="objectURL" [src]="objectURL" class="circle">
 
-      <mat-list-option [selected]="isSelected('/dashboard/index')" routerLink="/dashboard/index">
-        <div class="divOption">
-          <mat-icon class="marginIcon">insert_chart_outlined</mat-icon> Dashboard
-        </div>
-      </mat-list-option>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="url()">{{nome}}</button>
+              <button mat-menu-item (click)="sair()">Sair</button>
+            </mat-menu>
+          </div>
+         <br/>
+         <span class="spanUsuario">{{nome}}</span>
+        </mat-list-option>
 
-      <mat-list-option [selected]="isSelected('/cartao')" routerLink="/cartao/listar">
-        <div class="divOption">
-          <mat-icon class="marginIcon">credit_card</mat-icon>
-          Cartões
-        </div>
-      </mat-list-option>
+        <mat-list-option [selected]="isSelected('/usuarios/atualizarusuario')" routerLink="/usuarios/atualizarusuario">
+          <div class="divOption">
+            <mat-icon class="marginIcon">admin_panel_settings</mat-icon> Minhas Informações
+          </div>
+        </mat-list-option>
 
-      <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
-        <div class="divOption">
-          <mat-icon class="marginIcon">reorder</mat-icon> Categorias
-        </div>
-      </mat-list-option>
+        <mat-list-option [selected]="isSelected('/dashboard/index')" routerLink="/dashboard/index">
+          <div class="divOption">
+            <mat-icon class="marginIcon">insert_chart_outlined</mat-icon> Dashboard
+          </div>
+        </mat-list-option>
 
-      <mat-list-option [selected]="isSelected('/ganho')" routerLink="/ganho/listar">
-        <div class="divOption">
-          <mat-icon class="marginIcon">attach_money</mat-icon> Ganhos
-        </div>
-      </mat-list-option>
+        <mat-list-option [selected]="isSelected('/cartao')" routerLink="/cartao/listar">
+          <div class="divOption">
+            <mat-icon class="marginIcon">credit_card</mat-icon>
+            Cartões
+          </div>
+        </mat-list-option>
 
-      <mat-list-option [selected]="isSelected('/despesa')" routerLink="/despesa/listar">
-        <div class="divOption">
-          <mat-icon class="marginIcon">store</mat-icon> Despesas
-        </div>
-      </mat-list-option>
+        <mat-list-option [selected]="isSelected('/categoria')" routerLink="/categoria/listar">
+          <div class="divOption">
+            <mat-icon class="marginIcon">reorder</mat-icon> Categorias
+          </div>
+        </mat-list-option>
 
-    </mat-selection-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
+        <mat-list-option [selected]="isSelected('/ganho')" routerLink="/ganho/listar">
+          <div class="divOption">
+            <mat-icon class="marginIcon">attach_money</mat-icon> Ganhos
+          </div>
+        </mat-list-option>
+
+        <mat-list-option [selected]="isSelected('/despesa')" routerLink="/despesa/listar">
+          <div class="divOption">
+            <mat-icon class="marginIcon">store</mat-icon> Despesas
+          </div>
+        </mat-list-option>
+
+      </mat-selection-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<ng-template #semLogin>
+  <div *ngIf="exibirSemLogin()" class="centralizarLogin">
     <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+</ng-template>
+

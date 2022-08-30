@@ -9,7 +9,6 @@ import { Categoria } from 'src/app/categoria/categoria.model';
 import { CategoriaService } from 'src/app/categoria/categoria.service';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
 import { ConfirmModalService } from 'src/app/shared/confirm-modal/confirm-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 import { Ganho, PageGanho, Paginacao } from '../ganho.model';
 import { GanhoService } from '../ganho.service';
@@ -40,7 +39,6 @@ export class GanhoListaComponent implements OnInit {
     private categoriaService: CategoriaService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private erroService: ErrorModalService,
     private alertService: AlertModalService,
     private adapter: DateAdapter<any>,
     private dialogService: ConfirmModalService
@@ -129,9 +127,6 @@ export class GanhoListaComponent implements OnInit {
       this.paginacao.page = ganhos?.number;
       this.paginacao.size = ganhos?.size;
       this.ganhos = ganhos.content;
-    },
-    error => {
-      this.erroService.showError(error?.error?.message || 'Falha na conexão');
     });
   }
 
@@ -141,9 +136,6 @@ export class GanhoListaComponent implements OnInit {
         this.ganhoService.excluir(id).subscribe(() => {
           this.listar(true);
           this.alertService.showAlertSuccess('Ganho excluído com sucesso!');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     })

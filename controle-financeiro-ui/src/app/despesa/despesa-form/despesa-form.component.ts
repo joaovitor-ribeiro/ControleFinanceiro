@@ -3,12 +3,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/operators';
 import { Cartao } from 'src/app/cartao/cartao.model';
 import { CartaoService } from 'src/app/cartao/cartao.service';
 import { Categoria, FiltroCategoria } from 'src/app/categoria/categoria.model';
 import { AlertModalService } from 'src/app/shared/alert-modal/alert-modal.service';
-import { ErrorModalService } from 'src/app/shared/error-modal/error-modal.service';
 
 import { CategoriaService } from './../../categoria/categoria.service';
 import { Despesa } from './../despesa.model';
@@ -39,7 +37,6 @@ export class DespesaFormComponent implements OnInit {
     private categoriaService: CategoriaService,
     private despesaService: DespesaService,
     private spinner: NgxSpinnerService,
-    private erroService: ErrorModalService,
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertModalService,
@@ -125,17 +122,11 @@ export class DespesaFormComponent implements OnInit {
         this.despesaService.editar(this.id, despesa).subscribe(() => {
           this.router.navigate(['/despesa/listar'], { queryParamsHandling: 'preserve' });
            this.alertService.showAlertSuccess('Despesa editada com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       } else {
         this.despesaService.inserir(despesa).subscribe(() => {
           this.router.navigate(['/despesa/listar'], { queryParamsHandling: 'preserve' });
            this.alertService.showAlertSuccess('Despesa cadastrada com sucesso');
-        },
-        error => {
-          this.erroService.showError(error?.error?.message || 'Falha na conexão');
         });
       }
     }

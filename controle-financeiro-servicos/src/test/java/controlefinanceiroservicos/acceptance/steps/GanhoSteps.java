@@ -18,9 +18,14 @@ public class GanhoSteps {
 		ganhoPage.sair();
 	}
 	
+	@Dado("que estou logado na aplicação com o email {string} e a senha {string} para validar o ganho")
+	public void estou_logado_na_aplicação_com_o_email_e_a_senha(String email, String senha) {
+		ganhoPage.iniciarDriver();
+		ganhoPage.realizarLogin(email, senha);
+	}
+	
 	@Dado("que estou na página de cadastro de ganho")
 	public void que_estou_na_página_de_cadastro_de_ganho() {
-		ganhoPage.iniciarDriver();
 	    ganhoPage.navegaParaGanhoListar();
 	    ganhoPage.clicoBotaoNovoGanho();
 	}
