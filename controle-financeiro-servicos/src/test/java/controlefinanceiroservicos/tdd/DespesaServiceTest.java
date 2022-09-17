@@ -3,6 +3,8 @@ package controlefinanceiroservicos.tdd;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 
 import controlefinanceiroservicos.model.Cartao;
@@ -45,7 +47,7 @@ public class DespesaServiceTest {
 			despesaService.inserir(despesa);
 			fail("O tamanho da descrição não possui menos de 3 caracteres.");
 		} catch (Exception e) {
-			assertEquals("O campo descrição não pode ter menos que 3 caracteres!", e.getMessage());
+			assertEquals("O campo descrição não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -57,7 +59,7 @@ public class DespesaServiceTest {
 			despesaService.inserir(despesa);
 			fail("O tamanho da descrição possui menos de 20 caracteres");
 		} catch (Exception e) {
-			assertEquals("A descrição não pode ter mais do que 20 caracteres!", e.getMessage());
+			assertEquals("O campo descrição não pode ter mais do que 20 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -82,7 +84,7 @@ public class DespesaServiceTest {
 			despesaService.inserir(despesa);
 			fail("O valor informado não foi maior que zero!");
 		} catch (Exception e) {
-			assertEquals("Valor tem que ser maior que 0!", e.getMessage());
+			assertEquals("O campo valor não pode ser menor ou igual a zero!", e.getMessage());
 		}
 	}
 	
@@ -92,6 +94,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesaService.inserir(despesa);
 			fail("O cartão não foi preenchido!");
 		} catch (Exception e) {
@@ -105,6 +108,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesa.setCartao(new Cartao(null, null, null, null, null));
 			despesaService.inserir(despesa);
 			fail("O cartão não foi preenchido!");
@@ -119,6 +123,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesa.setCartao(new Cartao(-1, null, null, null, null));
 			despesaService.inserir(despesa);
 			fail("O cartão não foi preenchido!");
@@ -133,6 +138,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesa.setCartao(new Cartao(2, null, null, null, null));
 			despesaService.inserir(despesa);
 			fail("A categoria foi preenchida!");
@@ -147,6 +153,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesa.setCartao(new Cartao(2, null, null, null, null));
 			despesa.setCategoria(new Categoria(null, null, null));
 			despesaService.inserir(despesa);
@@ -162,6 +169,7 @@ public class DespesaServiceTest {
 			Despesa despesa = new Despesa();
 			despesa.setDescricao("Faculdade");
 			despesa.setValor(523.10);
+			despesa.setData(new Date());
 			despesa.setCartao(new Cartao(2, null, null, null, null));
 			despesa.setCategoria(new Categoria(-1, null, null));
 			despesaService.inserir(despesa);

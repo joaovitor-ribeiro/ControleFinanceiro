@@ -160,11 +160,11 @@ export class DespesaFormComponent implements OnInit {
     }, 100);
   }
 
-  formataValor(valor: any) {
+  formataValor(valor: string) {
     if (String(valor).includes('.') || String(valor).includes(',')) {
       valor = valor.replace('/[^0-9]/g', '');
       valor = valor.replace('.', '')
-      valor = Number(valor.replace(',', '.'));
+      valor = Number(valor.replace(',', '.')) + "";
     }
     return valor;
   }

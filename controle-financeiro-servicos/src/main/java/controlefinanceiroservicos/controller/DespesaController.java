@@ -33,7 +33,7 @@ public class DespesaController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(method = RequestMethod.POST, path = "/inserir")	
-	public void inserir(@RequestBody Despesa despesa) {
+	public void inserir(@RequestBody Despesa despesa) throws Exception {
 		despesaService.inserir(despesa);
 	}
 	
@@ -50,7 +50,7 @@ public class DespesaController {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
-	public Despesa retornarDespesaId(@PathVariable Integer id){
+	public Despesa retornarDespesaId(@PathVariable Integer id) {
 		return despesaService.retornarDespesaId(id);
 	}
 	
@@ -58,14 +58,14 @@ public class DespesaController {
 	@RequestMapping(method = RequestMethod.PUT, path = "/editar/{id}")
 	@Transactional
 	@CrossOrigin
-	public void editar(@PathVariable Integer id, @RequestBody Despesa despesaNovo){
+	public void editar(@PathVariable Integer id, @RequestBody Despesa despesaNovo) throws Exception {
 		despesaService.editar(id, despesaNovo);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(method = RequestMethod.DELETE, path = "/excluir/{id}")
 	@Transactional
-	public void excluir(@PathVariable Integer id){
+	public void excluir(@PathVariable Integer id) {
 		despesaService.excluir(id);
 	}
 }

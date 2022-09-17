@@ -12,6 +12,7 @@ import controlefinanceiroservicos.model.Ganho;
 import controlefinanceiroservicos.repository.CategoriaRepository;
 import controlefinanceiroservicos.repository.DespesaRepository;
 import controlefinanceiroservicos.repository.GanhoRepository;
+import controlefinanceiroservicos.utils.ValidUtils;
 
 @Service
 public class CategoriaService {
@@ -25,19 +26,16 @@ public class CategoriaService {
 	@Autowired
 	private GanhoRepository ganhoRepository;
 	
+	private ValidUtils valid = new ValidUtils(); 
+	
 	public void inserir(Categoria categoria) {
 		validacoes(categoria);
 		categoriaRepository.save(categoria);
 	}
 
 	private void validacoes(Categoria categoria) {
-		if (categoria.getNome() == null || categoria.getNome().isEmpty()) {
-			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
-		} else if(categoria.getNome().length() < 3){
-			throw new RuntimeException("O nome não pode ter menos que 3 caracteres!");
-		} else if(categoria.getNome().length() > 20){
-			throw new RuntimeException("O nome não pode ter mais que 20 caracteres!");
-		} 
+		valid.validStringModel(categoria.getNome(), "nome", 3, 20);
+		
 		if (categoria.getTipo() == null || categoria.getTipo().isEmpty()) {
 			throw new RuntimeException("O campo tipo é de preenchimento obrigatório!");
 		} else if(categoria.getTipo().length() > 1){

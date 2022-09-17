@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import controlefinanceiroservicos.model.Usuario;
 import controlefinanceiroservicos.repository.UsuarioRepository;
+import controlefinanceiroservicos.utils.ValidUtils;
 
 @Service
 public class UsuarioService {
@@ -19,6 +20,8 @@ public class UsuarioService {
 	
 	@Autowired
     private PasswordEncoder encoder;
+	
+	private ValidUtils valid = new ValidUtils(); 
 	
 	public Integer inserir(Usuario usuario) {
 		validacoes(usuario);
@@ -39,21 +42,15 @@ public class UsuarioService {
 	}
 		
 	private void validacoes(Usuario usuario){
-		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
-		} else if (usuario.getNome().length() < 3) {
-			throw new RuntimeException("O nome não pode ter menos do que 3 caracteres!");
-		} else if (usuario.getNome().length() > 50) {
-			throw new RuntimeException("O nome não pode ter mais do que 50 caracteres!");
-		}
+		valid.validStringModel(usuario.getNome(), "nome", 3, 50);
 		
-		if (usuario.getCpf() == null || usuario.getCpf().isEmpty()) {
+		if (valid.validStringEmpty(usuario.getCpf())) {
 			throw new RuntimeException("O campo CPF é de preenchimento obrigatório!");
 		} else if (!validarCPF(usuario.getCpf())) {
 			throw new RuntimeException("CPF inválido!");
 		} 
 		
-		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+		if (valid.validStringEmpty(usuario.getEmail())) {
 			throw new RuntimeException("O campo email é de preenchimento obrigatório!");
 		} else if (usuario.getEmail().length() > 50) {
 			throw new RuntimeException("O email não pode ter mais do que 50 caracteres!");
@@ -61,7 +58,7 @@ public class UsuarioService {
 			throw new RuntimeException("Email inválido!");
 		}
 
-		if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
+		if (valid.validStringEmpty(usuario.getSenha())) {
 			throw new RuntimeException("O campo senha é de preenchimento obrigatório!");
 		} else if (usuario.getSenha().length() < 6 || usuario.getSenha().length() > 8) {
 			throw new RuntimeException("A senha deve conter entre 6 e 8 caracteres!");

@@ -43,7 +43,7 @@ public class CategoriaServiceTest {
 			categoriaService.inserir(categoriaNome);
 			fail("O Nome da categoria deve ter no minimo 3 caracteres!");
 		} catch (Exception e) {
-			assertEquals("O nome não pode ter menos que 3 caracteres!", e.getMessage());
+			assertEquals("O campo nome não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
     }
     
@@ -55,7 +55,7 @@ public class CategoriaServiceTest {
 		   categoriaService.inserir(categoriaNome);
 		   fail("O Nome da categoria não pode ter mais de 20 caractres!");
 	   } catch (Exception e) {
-		   assertEquals("O nome não pode ter mais que 20 caracteres!", e.getMessage()); 
+		   assertEquals("O campo nome não pode ter mais do que 20 caracteres!", e.getMessage()); 
 	   }
    }
    

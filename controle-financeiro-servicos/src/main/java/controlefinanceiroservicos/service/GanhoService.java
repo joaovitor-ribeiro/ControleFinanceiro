@@ -1,5 +1,6 @@
 package controlefinanceiroservicos.service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -12,22 +13,26 @@ import org.springframework.stereotype.Service;
 import controlefinanceiroservicos.model.Ganho;
 import controlefinanceiroservicos.repository.GanhoCustomRepository;
 import controlefinanceiroservicos.repository.GanhoRepository;
+import controlefinanceiroservicos.utils.ValidUtils;
 
 @Service
 public class GanhoService {
 
 	@Autowired
 	private GanhoRepository ganhoRepository;
+	
 	@Autowired
 	private GanhoCustomRepository ganhoCustomRepository;
 	
-	public void inserir(Ganho ganho) {			
+	private ValidUtils valid = new ValidUtils(); 
+	
+	public void inserir(Ganho ganho) throws Exception {			
 		validacoes(ganho);
 		ganho.setValor(Double.parseDouble(ganho.getValor().toString().replace("/[^0-9]/g", "")));
 		ganhoRepository.save(ganho);
 	}
 
-	public void editar(Integer id, Ganho ganhoNovo) {
+	public void editar(Integer id, Ganho ganhoNovo) throws Exception {
 		Optional<Ganho> optionGanhoAntigo = ganhoRepository.findById(id);
 		
 		if (optionGanhoAntigo.isPresent()) {			
@@ -59,29 +64,13 @@ public class GanhoService {
 		throw new RuntimeException("Ganho não encontrado!");
 	}
 	
-	private void validacoes(Ganho ganho) {
-		if (ganho.getDescricao() == null || ganho.getDescricao().isEmpty()) {
-			throw new RuntimeException("O campo descrição é de preenchimento obrigatório!");
-		} else if(ganho.getDescricao().length() < 3){
-			throw new RuntimeException("O campo descrição não pode ter menos que 3 caracteres!");
-		} else if(ganho.getDescricao().length() > 20){
-			throw new RuntimeException("O campo descrição não pode ter mais que 20 caracteres!");
-		}
+	private void validacoes(Ganho ganho) throws Exception {
+		valid.validaObject(ganho, Arrays.asList("descrição", "valor", "data"), 3, 20);
 		
-		//TODO: Precisa validar se a categoria existe no BD?		
 		if (ganho.getCategoria() == null || ganho.getCategoria().getId() == null || ganho.getCategoria().getId() <= 0) {
 			throw new RuntimeException("O campo categoria é de preenchimento obrigatório!");
 		}		
 		
-		if (ganho.getValor() == null) {
-			throw new RuntimeException("O campo valor é de preenchimento obrigatório!");
-		} else if (ganho.getValor() <= 0) {
-			throw new RuntimeException("O valor não pode ser menor ou igual a zero!");		
-		}
-		
-		if (ganho.getData() == null) {
-			throw new RuntimeException("A data é de preenchimento obrigatório!");
-		} 
 	}
 
 	public Page<Ganho> listar(String descricao, List<Integer> categorias, Date dataInicial, Date dataFinal, Pageable paginacao) {

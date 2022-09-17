@@ -33,7 +33,7 @@ public class GanhoController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(method = RequestMethod.POST, path = "/inserir")
-	public void inserir(@RequestBody Ganho ganho) {
+	public void inserir(@RequestBody Ganho ganho) throws Exception {
 		ganhoService.inserir(ganho);
 	}	
 		
@@ -44,7 +44,7 @@ public class GanhoController {
 			@RequestParam(required = false) List<Integer> categorias,
 			@RequestParam(required = false) Date dataInicial, 
 			@RequestParam(required = false) Date dataFinal,
-			@PageableDefault(sort = "data", direction = Direction.DESC, page = 0, size = 5) Pageable paginacao){
+			@PageableDefault(sort = "data", direction = Direction.DESC, page = 0, size = 5) Pageable paginacao) {
 		return ganhoService.listar(descricao, categorias, dataInicial, dataFinal, paginacao);
 	}
 	
@@ -52,18 +52,18 @@ public class GanhoController {
 	@RequestMapping(method = RequestMethod.PUT, path= "/editar/{id}")
 	@Transactional
 	@CrossOrigin
-	public void editar(@PathVariable Integer id, @RequestBody Ganho ganhoNovo) {
+	public void editar(@PathVariable Integer id, @RequestBody Ganho ganhoNovo) throws Exception {
 		ganhoService.editar(id, ganhoNovo);
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)	
-	@RequestMapping (method = RequestMethod.DELETE, path =  "/excluir/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path =  "/excluir/{id}")
 	public void excluir(@PathVariable Integer id) {
 		ganhoService.excluir(id);
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping (method = RequestMethod.GET, path = "/{id}")
+	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	public Ganho retornarGanhoId(@PathVariable Integer id) {
 		return ganhoService.retornarGanhoId(id);
 	} 

@@ -46,7 +46,7 @@ public class CartaoServiceTest {
 			cartaoService.inserir(cartaoTamanhoNome);
 			fail("Não validou o tamanho minimo para o preenchimento do Nome!");
 		} catch (Exception e) {
-			assertEquals("O nome não pode ter menos do que 3 caracteres!", e.getMessage());
+			assertEquals("O campo nome não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class CartaoServiceTest {
 			cartaoService.inserir(cartaoTamanhoNome);
 			fail("Não validou o tamanho maximo para o preenchimento do Nome!");
 		} catch (Exception e) {
-			assertEquals("O nome não pode ter mais do que 20 caracteres!", e.getMessage());
+			assertEquals("O campo nome não pode ter mais do que 20 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class CartaoServiceTest {
 			cartaoService.inserir(cartaoTamanho);
 			fail("Não validou o tamanho minimo para o preenchimento da Bandeira!");
 		} catch (Exception e) {
-			assertEquals("A bandeira não pode ter menos do que 3 caracteres!", e.getMessage());
+			assertEquals("O campo bandeira não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class CartaoServiceTest {
 			cartaoService.inserir(cartaoTamanho);
 			fail("Não validou o tamanho maximo para o preenchimento da Bandeira!");
 		} catch (Exception e) {
-			assertEquals("A bandeira não pode ter mais do que 20 caracteres!", e.getMessage());
+			assertEquals("O campo bandeira não pode ter mais do que 20 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -123,6 +123,7 @@ public class CartaoServiceTest {
 			//set - definir
 			cartaoNumero.setNome("Nubank");
 			cartaoNumero.setBandeira("Mastercard");
+			cartaoNumero.setLimite(10.00);
 			cartaoService.inserir(cartaoNumero);
 			//fail - falhou
 			fail("Não validou a obrigatoriedade no preenchimento do Número!");
@@ -138,6 +139,7 @@ public class CartaoServiceTest {
 			Cartao cartaoNumero = new Cartao();
 			cartaoNumero.setNome("Nubank");
 			cartaoNumero.setBandeira("Mastercard"); 
+			cartaoNumero.setLimite(10.00); 
 			cartaoNumero.setNumero(""); 
 			cartaoService.inserir(cartaoNumero);
 			fail("Não validou a obrigatoriedade no preenchimento do Número!");
@@ -152,6 +154,7 @@ public class CartaoServiceTest {
 			Cartao cartaoTamanhoNumeroMenor = new Cartao();
 			cartaoTamanhoNumeroMenor.setNome("Nubank");
 			cartaoTamanhoNumeroMenor.setBandeira("Mastercard");
+			cartaoTamanhoNumeroMenor.setLimite(10.00);
 			cartaoTamanhoNumeroMenor.setNumero("123456789012");
 			cartaoService.inserir(cartaoTamanhoNumeroMenor);
 			fail("Não validou o tamanho minimo para o preenchimento do Número!");
@@ -162,11 +165,12 @@ public class CartaoServiceTest {
 	}
 	
 	@Test
-	public void cadastroCartaoValidatTamanhoNumeroMaior() {
+	public void cadastroCartaoValidaTamanhoNumeroMaior() {
 		try {
 			Cartao cartaoTamanhoNumeroMaior = new Cartao();
 			cartaoTamanhoNumeroMaior.setNome("Nubank");
 			cartaoTamanhoNumeroMaior.setBandeira("Mastercard");
+			cartaoTamanhoNumeroMaior.setLimite(10.00);
 			cartaoTamanhoNumeroMaior.setNumero("12345678901234567");
 			cartaoService.inserir(cartaoTamanhoNumeroMaior);
 			fail("Não validou o tamanho máximo para o preenchimento do Número!");
@@ -185,6 +189,7 @@ public class CartaoServiceTest {
 				Cartao cartaoValidaNumero = new Cartao();
 				cartaoValidaNumero.setNome("Nubank");
 				cartaoValidaNumero.setBandeira("Mastercard");
+				cartaoValidaNumero.setLimite(10.00);
 				cartaoValidaNumero.setNumero(cartoesInvalidos.get(i));
 				cartaoService.inserir(cartaoValidaNumero);
 				fail("Não validou o Número do cartão como inválido!");
@@ -206,6 +211,7 @@ public class CartaoServiceTest {
 				Cartao cartaoValidaBandeira = new Cartao();
 				cartaoValidaBandeira.setNome("Nubank");
 				cartaoValidaBandeira.setBandeira(cartoesBandeirasValidas.get(i));
+				cartaoValidaBandeira.setLimite(10.00);
 				cartaoValidaBandeira.setNumero(cartoesValidos.get(i));
 				cartaoService.inserir(cartaoValidaBandeira);
 				fail("Não validou o Número do cartão de acordo com a Bandeira!");
@@ -227,7 +233,7 @@ public class CartaoServiceTest {
 			cartaoService.inserir(cartaoValidaLimite);
 			fail("Não validou o Limite do cartão!");
 		} catch (Exception e) {
-			assertEquals("O limite não pode ser menor ou igual a zero!", e.getMessage());
+			assertEquals("O campo limite não pode ser menor ou igual a zero!", e.getMessage());
 		}
 	}
 	
@@ -238,11 +244,10 @@ public class CartaoServiceTest {
 			cartaoValidaLimite.setNome("Nubank");
 			cartaoValidaLimite.setBandeira("Mastercard");
 			cartaoValidaLimite.setNumero("5388708838533791");
-			cartaoValidaLimite.setLimite(0.00);
 			cartaoService.inserir(cartaoValidaLimite);
 			fail("Não validou o Limite do cartão!");
 		} catch (Exception e) {
-			assertEquals("O limite não pode ser menor ou igual a zero!", e.getMessage());
+			assertEquals("O campo limite é de preenchimento obrigatório!", e.getMessage());
 		}
 	}
 	

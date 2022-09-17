@@ -1,5 +1,6 @@
 package controlefinanceiroservicos.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import controlefinanceiroservicos.model.Cartao;
 import controlefinanceiroservicos.model.Despesa;
 import controlefinanceiroservicos.repository.CartaoRepository;
 import controlefinanceiroservicos.repository.DespesaRepository;
+import controlefinanceiroservicos.utils.ValidUtils;
 
 @Service
 public class CartaoService {	
@@ -20,7 +22,9 @@ public class CartaoService {
 	@Autowired
 	private DespesaRepository despesaRepository; 
 	
-	public void inserir (Cartao cartao){		
+	private ValidUtils valid = new ValidUtils(); 
+	
+	public void inserir (Cartao cartao) throws Exception{		
 		validacoes(cartao);	
 		cartao.setLimite(Double.parseDouble(cartao.getLimite().toString().replace("/[^0-9]/g", "")));		
 		cartaoRepository.save(cartao);		
@@ -47,7 +51,7 @@ public class CartaoService {
 		throw new RuntimeException("Cartão não encontrado!");	
 	}
 
-	public void editar(Integer id, Cartao cartaoNovo){
+	public void editar(Integer id, Cartao cartaoNovo) throws Exception{
 		Optional<Cartao> optionalCartaoAntigo = cartaoRepository.findById(id);
 		
 		if (optionalCartaoAntigo.isPresent()) {			
@@ -77,25 +81,10 @@ public class CartaoService {
 		}
 	}
 	
-	private void validacoes(Cartao cartao){
-		if (cartao.getNome() == null || cartao.getNome().isEmpty()) {
-			throw new RuntimeException("O campo nome é de preenchimento obrigatório!");
-		} else if (cartao.getNome().length() < 3) {
-			throw new RuntimeException("O nome não pode ter menos do que 3 caracteres!");
-		} else if (cartao.getNome().length() > 20) {
-			throw new RuntimeException("O nome não pode ter mais do que 20 caracteres!");
-		}
-		
-		if (cartao.getBandeira() == null || cartao.getBandeira().isEmpty()) {
-			throw new RuntimeException("O campo bandeira é de preenchimento obrigatório!");
-		} else if (cartao.getBandeira().length() < 3) {
-			throw new RuntimeException("A bandeira não pode ter menos do que 3 caracteres!");
-		} else if (cartao.getBandeira().length() > 20) {
-			throw new RuntimeException("A bandeira não pode ter mais do que 20 caracteres!");
-		}
+	private void validacoes(Cartao cartao) throws Exception{
+		valid.validaObject(cartao, Arrays.asList("nome", "bandeira", "limite"), 3, 20);
 
-		if (cartao.getNumero() == null || cartao.getNumero().isEmpty()) {
-			//throw - lançar
+		if (valid.validStringEmpty(cartao.getNumero())) {
 			throw new RuntimeException("O campo número é de preenchimento obrigatório!");
 		} else if (cartao.getNumero().length() < 13 || cartao.getNumero().length() > 16 || !validarNumeroCartao(cartao.getNumero())) {			
 			throw new RuntimeException("Número de cartão inválido!");
@@ -103,9 +92,6 @@ public class CartaoService {
 			throw new RuntimeException("O número de cartão informado não corresponde com a bandeira!");
 		}
 		
-		if (cartao.getLimite() == null || cartao.getLimite() <= 0) {
-			throw new RuntimeException("O limite não pode ser menor ou igual a zero!");		
-		}			
 	}
 	
 	private boolean validarNumeroCartao(String numero) {

@@ -3,6 +3,8 @@ package controlefinanceiroservicos.tdd;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 
 import controlefinanceiroservicos.model.Categoria;
@@ -44,7 +46,7 @@ public class GanhoServiceTest {
 			ganhoService.inserir(ganho);
 			fail("O tamanho da descrição não possui menos de 3 caracteres.");
 		} catch (Exception e) {
-			assertEquals("O campo descrição não pode ter menos que 3 caracteres!", e.getMessage());
+			assertEquals("O campo descrição não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -56,7 +58,7 @@ public class GanhoServiceTest {
 			ganhoService.inserir(ganho);
 			fail("O tamanho da descrição possui menos de 20 caracteres.");
 		} catch (Exception e) {
-			assertEquals("O campo descrição não pode ter mais que 20 caracteres!", e.getMessage());
+			assertEquals("O campo descrição não pode ter mais do que 20 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -65,6 +67,8 @@ public class GanhoServiceTest {
 		try {
 			Ganho ganho = new Ganho();
 			ganho.setDescricao("Faculdade");
+			ganho.setValor(10.1);
+			ganho.setData(new Date());
 			ganhoService.inserir(ganho);
 			fail("A categoria foi preenchida!");
 		} catch (Exception e) {
@@ -77,6 +81,8 @@ public class GanhoServiceTest {
 		try {
 			Ganho ganho = new Ganho();
 			ganho.setDescricao("Faculdade");
+			ganho.setValor(10.1);
+			ganho.setData(new Date());
 			ganho.setCategoria(new Categoria(null, null, null));
 			ganhoService.inserir(ganho);
 			fail("A categoria foi preenchida!");
@@ -90,6 +96,8 @@ public class GanhoServiceTest {
 		try {
 			Ganho ganho = new Ganho();
 			ganho.setDescricao("Faculdade");
+			ganho.setValor(10.1);
+			ganho.setData(new Date());
 			ganho.setCategoria(new Categoria(-1, null, null));
 			ganhoService.inserir(ganho);
 			fail("A categoria foi preenchida!");
@@ -121,7 +129,7 @@ public class GanhoServiceTest {
 			ganhoService.inserir(ganho);
 			fail("O valor informado não foi maior que zero!");
 		} catch (Exception e) {
-			assertEquals("O valor não pode ser menor ou igual a zero!", e.getMessage());
+			assertEquals("O campo valor não pode ser menor ou igual a zero!", e.getMessage());
 		}
 	}
 	

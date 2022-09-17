@@ -46,7 +46,7 @@ public class UsuarioServiceTest {
 			usuarioService.inserir(usuario);
 			fail("O nome deve conter no mínimo 3 caracteres");
 		} catch (Exception e) {
-			assertEquals("O nome não pode ter menos do que 3 caracteres!", e.getMessage());
+			assertEquals("O campo nome não pode ter menos do que 3 caracteres!", e.getMessage());
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class UsuarioServiceTest {
 			usuarioService.inserir(usuario);
 			fail("O nome deve conter no máximo 50 caracteres");
 		} catch (Exception e) {
-			assertEquals("O nome não pode ter mais do que 50 caracteres!", e.getMessage());
+			assertEquals("O campo nome não pode ter mais do que 50 caracteres!", e.getMessage());
 		}
 	}
 	

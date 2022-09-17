@@ -17,6 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Categoria {
+	
 	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)/*@Id indica para a JPA o identificador da tabela categoria 
 	@GeneratedValue gera um valor sequêncial único sem repetição*/
 	private Integer id;
