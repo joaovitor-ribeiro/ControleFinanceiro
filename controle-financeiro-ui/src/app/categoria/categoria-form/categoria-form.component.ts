@@ -70,7 +70,6 @@ export class CategoriaFormComponent implements OnInit {
     this.spinner.hide();
     this.carregando = false;
 
-    this.colocarFocoCampoNome();
   }
 
   preencherFormulario() {
@@ -107,9 +106,4 @@ export class CategoriaFormComponent implements OnInit {
     this.router.navigate(['categoria/listar']);
   }
 
-  colocarFocoCampoNome() {
-    setTimeout(() => {
-      document.getElementById('nome')?.focus();
-    }, 100);
-  }
 }

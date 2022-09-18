@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +13,7 @@ import { CartaoService } from './../cartao.service';
   templateUrl: './cartao-form.component.html',
   styleUrls: ['./cartao-form.component.scss']
 })
-export class CartaoFormComponent implements OnInit {
+export class CartaoFormComponent implements OnInit, AfterContentChecked {
 
   //Declaração de variáveis
   cartaoFormulario!: FormGroup;
@@ -33,8 +33,13 @@ export class CartaoFormComponent implements OnInit {
     private route: ActivatedRoute, //Através da url podemos pegar/passar variáveis. Ex.: pegar o id para editar
     private router: Router,
     private alertService: AlertModalService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private cdr: ChangeDetectorRef,
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
 
   ngOnInit(): void {
     this.cartaoFormulario = this.formBuilder.group({ //Criaando o formulário
@@ -53,14 +58,12 @@ export class CartaoFormComponent implements OnInit {
         this.cartaoService.retornarCartaoId(this.id).pipe(finalize(() => {
           this.spinner.hide();
           this.carregando = false;
-          this.colocarFocoCampoNome();
         })).subscribe( result => {
           this.cartao = result;
           this.preencherFormulario();
         });
       }
     });
-    this.colocarFocoCampoNome();
   }
 
   //Validação assíncrona
@@ -122,12 +125,6 @@ export class CartaoFormComponent implements OnInit {
 
   voltar(){
     this.router.navigate(['/cartao/listar'], { queryParamsHandling: 'preserve' });
-  }
-
-  colocarFocoCampoNome() {
-    setTimeout(() => {
-      document.getElementById('nome')?.focus();
-    }, 100);
   }
 
   validarNumero(numero: string) {

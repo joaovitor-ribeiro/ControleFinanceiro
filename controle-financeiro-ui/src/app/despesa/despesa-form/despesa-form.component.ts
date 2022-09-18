@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { DespesaService } from './../despesa.service';
   templateUrl: './despesa-form.component.html',
   styleUrls: ['./despesa-form.component.scss'],
 })
-export class DespesaFormComponent implements OnInit {
+export class DespesaFormComponent implements OnInit, AfterContentChecked {
 
   despesaFormulario!: FormGroup;
   carregando = true;
@@ -40,8 +40,13 @@ export class DespesaFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertModalService,
-    private adapter: DateAdapter<any>
+    private adapter: DateAdapter<any>,
+    private cdr: ChangeDetectorRef
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
 
   async ngOnInit() {
     this.adapter.setLocale('pt-br');

@@ -61,10 +61,14 @@ public class PageObject {
 		esperar();
 		browser.get("http://localhost:4200/entrar");
 		browser.findElement(By.cssSelector("input[formcontrolname=email]")).sendKeys(email);
-		browser.findElement(By.cssSelector("input[formcontrolname=senha]")).sendKeys(senha);
+		browser.findElement(By.cssSelector("input-field[formcontrolname=senha]" + complementoInput())).sendKeys(senha);
 		browser.findElement(By.id("botaoEntrar")).click();
 		wait.until(ExpectedConditions.visibilityOf(browser.findElement(By.cssSelector("div.divData > mat-form-field"))));
 		esperar();
+	}
+	
+	public String complementoInput() {
+		return " > mat-form-field > div > div > div > input";
 	}
 	
 	public void sair() {
@@ -75,7 +79,7 @@ public class PageObject {
 	
 	public void esperar() {
 		try {
-			Thread.sleep(250);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

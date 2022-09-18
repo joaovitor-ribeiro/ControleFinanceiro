@@ -14,14 +14,14 @@ import { CartaoModule } from './cartao/cartao.module';
 import { CategoriaModule } from './categoria/categoria.module';
 import { DespesaModule } from './despesa/despesa.module';
 import { GanhoModule } from './ganho/ganho.module';
-import { PainelModule } from './painel/painel.module';
 import { LoginModule } from './login/login.module';
+import { PainelModule } from './painel/painel.module';
 import { InterceptService } from './shared/intercept/intercept.service';
 import { UsuarioModule } from './usuario/usuario.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

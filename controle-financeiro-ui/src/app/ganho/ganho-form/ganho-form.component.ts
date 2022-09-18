@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { GanhoService } from './../ganho.service';
   templateUrl: './ganho-form.component.html',
   styleUrls: ['./ganho-form.component.scss']
 })
-export class GanhoFormComponent implements OnInit {
+export class GanhoFormComponent implements OnInit, AfterContentChecked {
 
   ganhoFormulario!: FormGroup; // ! A variável não foi inicializada e será usada dentro do componente
   editar = false;
@@ -38,8 +38,13 @@ export class GanhoFormComponent implements OnInit {
     private router: Router,
     private alertService: AlertModalService,
     private spinner: NgxSpinnerService,
-    private adapter: DateAdapter<any>
+    private adapter: DateAdapter<any>,
+    private cdr: ChangeDetectorRef,
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
 
   async ngOnInit() {
     this.adapter.setLocale('pt-br');
@@ -63,7 +68,6 @@ export class GanhoFormComponent implements OnInit {
         this.ganhoService.retornarGanhoId(this.id).pipe(finalize(() => {
           this.spinner.hide();
           this.carregando = false;
-          this.colocarFocoCampoDescricao();
         })).subscribe( result => {
           this.ganho = result;
           this.preencherFormulario();
@@ -76,7 +80,6 @@ export class GanhoFormComponent implements OnInit {
     this.spinner.hide();
     this.carregando = false;
 
-    this.colocarFocoCampoDescricao();
   }
 
   preencherFormulario(){
@@ -99,12 +102,6 @@ export class GanhoFormComponent implements OnInit {
 
   limparBotoes(campo: string) {
     this.ganhoFormulario.get(campo)?.setValue('');
-  }
-
-  colocarFocoCampoDescricao(){
-    setTimeout(() => {
-      document.getElementById('descricao')?.focus();
-    }, 300);
   }
 
   enviarFormulario() {

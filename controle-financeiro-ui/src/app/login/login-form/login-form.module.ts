@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModalModule } from 'src/app/shared/alert-modal/alert-modal.module';
 
+import { InputFieldModule } from './../../shared/input-field/input-field.module';
 import { LoginFormComponent } from './login-form.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LoginFormComponent } from './login-form.component';
     MatDividerModule,
     AlertModalModule,
     NgxSpinnerModule,
+    InputFieldModule
   ],
   exports: [LoginFormComponent]
 })

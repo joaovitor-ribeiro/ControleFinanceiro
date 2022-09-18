@@ -1,4 +1,3 @@
-import { UsuarioFormComponent } from './usuario-form.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AlertModalModule } from './../../shared/alert-modal/alert-modal.module';
+import { InputFieldModule } from './../../shared/input-field/input-field.module';
+import { UsuarioFormComponent } from './usuario-form.component';
 
 @NgModule({
   declarations: [UsuarioFormComponent],
@@ -26,6 +27,7 @@ import { AlertModalModule } from './../../shared/alert-modal/alert-modal.module'
     AlertModalModule,
     NgxSpinnerModule,
     MatSelectModule,
+    InputFieldModule
   ]
 })
 export class UsuarioFormModule { }

@@ -11,6 +11,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModalModule } from 'src/app/shared/alert-modal/alert-modal.module';
 
+import { InputFieldModule } from './../../shared/input-field/input-field.module';
+import { NumberFieldModule } from './../../shared/number-field/number-field.module';
 import { CartaoFormComponent } from './cartao-form.component';
 
 @NgModule({
@@ -30,7 +32,9 @@ import { CartaoFormComponent } from './cartao-form.component';
     NgxMaskModule.forRoot(),
     AlertModalModule,
     NgxSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    InputFieldModule,
+    NumberFieldModule
   ]
 })
 export class CartaoFormModule { }

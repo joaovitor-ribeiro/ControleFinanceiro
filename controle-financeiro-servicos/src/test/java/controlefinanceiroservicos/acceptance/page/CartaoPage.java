@@ -16,10 +16,10 @@ public class CartaoPage extends PageObject {
 		// Espera o foco ir para o campo nome
 		esperar();
 		
-		browser.findElement(By.cssSelector("input[formcontrolname=nome]")).sendKeys(nome);
+		browser.findElement(By.cssSelector("input-field[formcontrolname=nome]" + complementoInput())).sendKeys(nome);
 		browser.findElement(By.cssSelector("mat-select[formcontrolname=bandeira]")).sendKeys(bandeira);
 		browser.findElement(By.cssSelector("input[formcontrolname=numero]")).sendKeys(numero);
-		browser.findElement(By.cssSelector("input[formcontrolname=limite]")).sendKeys(limite);
+		browser.findElement(By.cssSelector("number-field[formcontrolname=limite]" + complementoInput())).sendKeys(limite);
 		
 		// Espera ser feitas todas as validações exemplo: verificar se o número é válido 
 		// verificar se o número corresponde a bandeira

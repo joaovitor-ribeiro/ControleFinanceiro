@@ -14,7 +14,7 @@ public class CategoriaPage extends PageObject {
 	
 	public void preencherFormulario(String nome, String tipo) {
 		esperar();
-		browser.findElement(By.cssSelector("input[formcontrolname=nome]")).sendKeys(nome);
+		browser.findElement(By.cssSelector("input-field[formcontrolname=nome]" + complementoInput())).sendKeys(nome);
 		browser.findElement(By.cssSelector("mat-select[formcontrolname=tipo]")).sendKeys(tipo);
 		esperar();
 	}

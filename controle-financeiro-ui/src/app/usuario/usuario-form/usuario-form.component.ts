@@ -65,7 +65,6 @@ export class UsuarioFormComponent implements OnInit {
     this.spinner.hide();
     this.carregando = false;
 
-    this.colocarFocoCampoNome();
   }
 
   preencherFormulario(){
@@ -125,12 +124,6 @@ export class UsuarioFormComponent implements OnInit {
 
   limparBotoes(campo: string) {
     this.usuarioFormulario.get(campo)?.setValue('');
-  }
-
-  colocarFocoCampoNome() {
-    setTimeout(() => {
-      document.getElementById('nome')?.focus();
-    }, 100);
   }
 
   selecionarFoto(fileInput: any): void {

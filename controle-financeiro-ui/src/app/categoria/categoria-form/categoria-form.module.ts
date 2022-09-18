@@ -1,3 +1,4 @@
+import { InputFieldModule } from 'src/app/shared/input-field/input-field.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriaFormComponent } from './categoria-form.component';
@@ -30,7 +31,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AlertModalModule,
     NgxSpinnerModule,
     MatSelectModule,
-
+    InputFieldModule
   ]
 })
 export class CategoriaFormModule { }

@@ -14,22 +14,13 @@
       <mat-card-content class="cardContent">
         <div class="row w-100">
           <div class="col-md mb-1">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Nome</mat-label>
-              <input matInput type="text" formControlName="nome" required maxlength="20" id="nome">
-
-              <mat-error *ngIf="propriedade.nome.touched && propriedade.nome.errors?.required">
-                Insira o nome.
-              </mat-error>
-
-              <mat-error *ngIf="propriedade.nome.errors?.minlength">
-                O nome não pode ter menos do que 3 caracteres.
-              </mat-error>
-
-              <button matSuffix mat-icon-button type="button" tabindex="-1" (click)="limparBotoes('nome')">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
+            <input-field label="Nome"
+                         [foco]="true"
+                         formControlName="nome"
+                         [control]="propriedade?.nome"
+                         mensagemRequired="Insira o nome."
+                         mensagemMin="O nome não pode ter menos do que 3 caracteres.">
+            </input-field>
           </div>
         </div>
 

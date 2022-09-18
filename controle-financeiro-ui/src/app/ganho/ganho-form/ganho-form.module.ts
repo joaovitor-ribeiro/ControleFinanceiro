@@ -12,7 +12,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModalModule } from 'src/app/shared/alert-modal/alert-modal.module';
+import { NumberFieldModule } from 'src/app/shared/number-field/number-field.module';
 
+import { InputFieldModule } from './../../shared/input-field/input-field.module';
 import { GanhoFormComponent } from './ganho-form.component';
 
 @NgModule({
@@ -34,7 +36,9 @@ import { GanhoFormComponent } from './ganho-form.component';
     NgxMaskModule,
     NgxMaskModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    InputFieldModule,
+    NumberFieldModule
   ]
 })
 export class GanhoFormModule { }
